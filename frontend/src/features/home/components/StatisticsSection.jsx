@@ -26,7 +26,11 @@ export default function StatisticsSection() {
     ];
 
     return (
-        <section className="py-20 bg-white">
+
+        <section
+            className="py-20 bg-white"
+            data-aos="fade-up"
+        >
 
             <div className="max-w-7xl mx-auto px-6">
 
@@ -42,7 +46,9 @@ export default function StatisticsSection() {
 
                         <div
                             key={index}
-                            className="bg-green-700 rounded-xl p-8 text-center text-white shadow-lg hover:-translate-y-2 transition duration-300"
+                            data-aos="zoom-in"
+                            data-aos-delay={index * 100}
+                            className="bg-green-700 rounded-xl p-8 text-center text-white shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
                         >
 
                             <div className="text-5xl mb-4">
@@ -53,7 +59,7 @@ export default function StatisticsSection() {
                                 {item.value}
                             </h3>
 
-                            <p className="mt-2">
+                            <p className="mt-2 text-green-100">
                                 {item.label}
                             </p>
 
@@ -66,6 +72,7 @@ export default function StatisticsSection() {
             </div>
 
         </section>
+
     );
 
 }

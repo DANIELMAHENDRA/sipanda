@@ -1,41 +1,69 @@
+import Button from "../../../components/common/Button";
+
 export default function HeroSection() {
-  return (
-    <section className="bg-slate-100 min-h-[85vh] flex items-center">
-      <div className="max-w-7xl mx-auto px-6">
+    return (
 
-        <p className="text-green-700 font-semibold uppercase tracking-widest">
-          Website Resmi Desa Panca Tunggal
-        </p>
+        <section
+            className="bg-slate-100 min-h-[85vh] flex items-center"
+            data-aos="fade-up"
+        >
 
-        <h1 className="text-6xl font-bold mt-5 leading-tight">
-          Membangun Desa
-          <br />
-          yang Modern,
-          <br />
-          Transparan &
-          <span className="text-green-700"> Digital</span>
-        </h1>
+            <div className="max-w-7xl mx-auto px-6">
 
-        <p className="mt-8 text-lg text-gray-600 max-w-2xl">
-          SIPANDA merupakan Sistem Informasi Profil Desa
-          yang menyediakan informasi desa, pelayanan publik,
-          berita, galeri, potensi desa, serta transparansi
-          pemerintahan desa.
-        </p>
+                <p
+                    className="text-green-700 font-semibold uppercase tracking-widest"
+                    data-aos="fade-up"
+                    data-aos-delay="100"
+                >
+                    Website Resmi Desa Panca Tunggal
+                </p>
 
-        <div className="mt-10 flex gap-4">
+                <h1
+                    className="text-6xl font-bold mt-5 leading-tight"
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                >
+                    Membangun Desa
+                    <br />
+                    yang Modern,
+                    <br />
+                    Transparan &
+                    <span className="text-green-700"> Digital</span>
+                </h1>
 
-          <button className="bg-green-700 text-white px-7 py-3 rounded-lg">
-            Profil Desa
-          </button>
+                <p
+                    className="mt-8 text-lg text-gray-600 max-w-2xl"
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                >
+                    SIPANDA merupakan Sistem Informasi Profil Desa
+                    yang menyediakan informasi desa, pelayanan publik,
+                    berita, galeri, potensi desa, serta transparansi
+                    pemerintahan desa.
+                </p>
 
-          <button className="border border-green-700 text-green-700 px-7 py-3 rounded-lg">
-            Berita Desa
-          </button>
+                <div
+                    className="mt-10 flex flex-wrap gap-4"
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                >
 
-        </div>
+                    <Button to="/profil">
+                        Profil Desa
+                    </Button>
 
-      </div>
-    </section>
-  );
+                    <Button
+                        to="/berita"
+                        variant="outline"
+                    >
+                        Berita Desa
+                    </Button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    );
 }

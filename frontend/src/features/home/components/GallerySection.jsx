@@ -12,34 +12,45 @@ import gallery6 from "../../../assets/images/gallery/gallery6.jpg";
 export default function GallerySection() {
 
     const galleries = [
+
         {
             image: gallery1,
             title: "Gotong Royong Desa",
         },
+
         {
             image: gallery2,
             title: "Musyawarah Desa",
         },
+
         {
             image: gallery3,
             title: "Pelatihan UMKM",
         },
+
         {
             image: gallery4,
             title: "Panen Raya",
         },
+
         {
             image: gallery5,
             title: "Kegiatan Posyandu",
         },
+
         {
             image: gallery6,
             title: "Perayaan Hari Kemerdekaan",
         },
+
     ];
 
     return (
-        <section className="py-24">
+
+        <section
+            className="py-24 bg-white"
+            data-aos="fade-up"
+        >
 
             <div className="max-w-7xl mx-auto px-6">
 
@@ -52,23 +63,42 @@ export default function GallerySection() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                     {galleries.map((item, index) => (
-                        <GalleryCard
+
+                        <div
                             key={index}
-                            image={item.image}
-                            title={item.title}
-                        />
+                            data-aos="zoom-in"
+                            data-aos-delay={index * 100}
+                        >
+
+                            <GalleryCard
+                                image={item.image}
+                                title={item.title}
+                            />
+
+                        </div>
+
                     ))}
 
                 </div>
 
-                <div className="text-center mt-12">
+                <div
+                    className="text-center mt-14"
+                    data-aos="fade-up"
+                    data-aos-delay="700"
+                >
+
                     <Button to="/galeri">
+
                         Lihat Semua Galeri
+
                     </Button>
+
                 </div>
 
             </div>
 
         </section>
+
     );
+
 }

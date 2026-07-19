@@ -1,4 +1,5 @@
 import SectionTitle from "../../../components/common/SectionTitle";
+import { ArrowRight } from "lucide-react";
 
 export default function ServiceSection() {
 
@@ -7,44 +8,47 @@ export default function ServiceSection() {
         {
             icon: "📄",
             title: "Surat Online",
-            description: "Layanan pengajuan surat secara online.",
+            description: "Layanan pengajuan surat secara online yang memudahkan masyarakat tanpa harus datang ke kantor desa.",
         },
 
         {
             icon: "📰",
             title: "Berita Desa",
-            description: "Informasi dan berita terbaru desa.",
+            description: "Menyediakan informasi terbaru mengenai kegiatan, pembangunan, dan pengumuman resmi desa.",
         },
 
         {
             icon: "🏛",
             title: "Pemerintahan",
-            description: "Struktur organisasi pemerintah desa.",
+            description: "Menampilkan struktur organisasi, perangkat desa, serta informasi pemerintahan secara lengkap.",
         },
 
         {
             icon: "🌾",
             title: "Potensi Desa",
-            description: "Potensi pertanian, UMKM, dan wisata.",
+            description: "Memperkenalkan potensi pertanian, UMKM, peternakan, serta sumber daya yang dimiliki desa.",
         },
 
         {
             icon: "🖼",
             title: "Galeri",
-            description: "Dokumentasi kegiatan desa.",
+            description: "Dokumentasi berbagai kegiatan masyarakat dan pemerintah desa dalam bentuk foto dan video.",
         },
 
         {
             icon: "📞",
             title: "Kontak",
-            description: "Hubungi pemerintah desa.",
+            description: "Hubungi Pemerintah Desa melalui berbagai media komunikasi yang tersedia.",
         },
 
     ];
 
     return (
 
-        <section className="py-24 bg-white">
+        <section
+            className="py-24 bg-white"
+            data-aos="fade-up"
+        >
 
             <div className="max-w-7xl mx-auto px-6">
 
@@ -60,7 +64,9 @@ export default function ServiceSection() {
 
                         <div
                             key={index}
-                            className="bg-white border rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+                            data-aos="flip-left"
+                            data-aos-delay={index * 100}
+                            className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-3 transition-all duration-300"
                         >
 
                             <div className="text-6xl mb-6">
@@ -69,22 +75,29 @@ export default function ServiceSection() {
 
                             </div>
 
-                            <h3 className="text-2xl font-bold mb-4">
+                            <h3 className="text-2xl font-bold text-gray-800 mb-4">
 
                                 {service.title}
 
                             </h3>
 
-                            <p className="text-gray-600 leading-7">
+                            <p className="text-gray-600 leading-8">
 
                                 {service.description}
 
                             </p>
 
                             <button
-                                className="mt-8 text-green-700 font-semibold hover:underline"
+                                className="mt-8 inline-flex items-center gap-2 text-green-700 font-semibold hover:text-green-800 transition-all duration-300 group"
                             >
-                                Selengkapnya →
+
+                                Selengkapnya
+
+                                <ArrowRight
+                                    size={18}
+                                    className="group-hover:translate-x-1 transition-transform duration-300"
+                                />
+
                             </button>
 
                         </div>

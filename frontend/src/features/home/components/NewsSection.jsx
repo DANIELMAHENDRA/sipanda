@@ -1,5 +1,6 @@
 import SectionTitle from "../../../components/common/SectionTitle";
 import NewsCard from "../../../components/common/NewsCard";
+import Button from "../../../components/common/Button";
 
 import news1 from "../../../assets/images/news/news1.jpg";
 import news2 from "../../../assets/images/news/news2.jpg";
@@ -8,6 +9,7 @@ import news3 from "../../../assets/images/news/news3.jpg";
 export default function NewsSection() {
 
     const news = [
+
         {
             image: news1,
             category: "Pemerintahan",
@@ -34,11 +36,15 @@ export default function NewsSection() {
             description:
                 "Pelaku UMKM mendapatkan pelatihan pemasaran digital guna meningkatkan penjualan produk lokal.",
         },
+
     ];
 
     return (
 
-        <section className="py-24 bg-gray-50">
+        <section
+            className="py-24 bg-gray-50"
+            data-aos="fade-up"
+        >
 
             <div className="max-w-7xl mx-auto px-6">
 
@@ -52,16 +58,37 @@ export default function NewsSection() {
 
                     {news.map((item, index) => (
 
-                        <NewsCard
+                        <div
                             key={index}
-                            image={item.image}
-                            category={item.category}
-                            date={item.date}
-                            title={item.title}
-                            description={item.description}
-                        />
+                            data-aos="fade-up"
+                            data-aos-delay={index * 150}
+                        >
+
+                            <NewsCard
+                                image={item.image}
+                                category={item.category}
+                                date={item.date}
+                                title={item.title}
+                                description={item.description}
+                            />
+
+                        </div>
 
                     ))}
+
+                </div>
+
+                <div
+                    className="mt-14 text-center"
+                    data-aos="fade-up"
+                    data-aos-delay="500"
+                >
+
+                    <Button to="/berita">
+
+                        Lihat Semua Berita
+
+                    </Button>
 
                 </div>
 
