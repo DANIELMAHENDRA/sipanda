@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import AOS from "aos";
 
+
 import AppRoutes from "./routes/AppRoutes";
 
 function App() {
