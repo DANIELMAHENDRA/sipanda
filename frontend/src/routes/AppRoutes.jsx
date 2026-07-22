@@ -12,6 +12,7 @@ import DetailNews from "../pages/public/DetailNews";
 import Gallery from "../pages/public/Gallery";
 import Potential from "../pages/public/Potential";
 import Contact from "../pages/public/Contact";
+import DetailPotential from "../pages/public/DetailPotential";
 
 // Auth
 import Login from "../pages/auth/Login";
@@ -42,6 +43,8 @@ export default function AppRoutes() {
                     <Route path="/potensi" element={<Potential />} />
 
                     <Route path="/kontak" element={<Contact />} />
+
+                    <Route path="/potensi/:id" element={<DetailPotential />}/>
 
                     {/* Login */}
                     <Route path="/login" element={<Login />} />

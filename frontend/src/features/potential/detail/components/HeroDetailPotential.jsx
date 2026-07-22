@@ -1,21 +1,21 @@
 import {
     ChevronRight,
+    Sprout,
     CalendarDays,
     User,
-    Eye,
-    Newspaper,
+    MapPin,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 
-import heroImage from "../../../../assets/images/news/hero-detail-news.jpg";
+import heroImage from "../../../../assets/images/potential/hero-potential.jpg";
 
-export default function HeroDetailNews() {
+export default function HeroDetailPotential() {
 
     return (
 
         <section
-            className="relative h-[70vh] min-h-[550px] flex items-center bg-cover bg-center"
+            className="relative min-h-[75vh] flex items-center bg-cover bg-center pt-24 pb-16"
             style={{
                 backgroundImage: `url(${heroImage})`,
             }}
@@ -23,7 +23,11 @@ export default function HeroDetailNews() {
 
             {/* Overlay */}
 
-            <div className="absolute inset-0 bg-black/65"></div>
+            <div className="absolute inset-0 bg-black/70"></div>
+
+            {/* Gradient */}
+
+            <div className="absolute inset-0 bg-gradient-to-r from-green-900/70 via-black/30 to-green-900/60"></div>
 
             {/* Content */}
 
@@ -46,16 +50,16 @@ export default function HeroDetailNews() {
                     <ChevronRight size={16} />
 
                     <NavLink
-                        to="/berita"
+                        to="/potensi"
                         className="hover:text-white transition"
                     >
-                        Berita
+                        Potensi Desa
                     </NavLink>
 
                     <ChevronRight size={16} />
 
                     <span className="text-white">
-                        Detail Berita
+                        Detail Potensi
                     </span>
 
                 </div>
@@ -65,12 +69,12 @@ export default function HeroDetailNews() {
                 <div
                     data-aos="fade-right"
                     data-aos-delay="100"
-                    className="inline-flex items-center gap-2 bg-green-600/90 backdrop-blur-md text-white px-5 py-2 rounded-full mb-8 shadow-lg"
+                    className="inline-flex items-center gap-2 bg-green-600/90 backdrop-blur-md text-white px-5 py-2 rounded-full shadow-lg mb-8"
                 >
 
-                    <Newspaper size={18} />
+                    <Sprout size={18} />
 
-                    Pemerintahan
+                    Potensi Unggulan Desa
 
                 </div>
 
@@ -82,10 +86,10 @@ export default function HeroDetailNews() {
                     className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-5xl"
                 >
 
-                    Musyawarah Desa Penyusunan
+                    Potensi Pertanian
                     <br />
 
-                    RKP Desa Tahun 2026
+                    Desa Panca Tunggal
 
                 </h1>
 
@@ -97,11 +101,11 @@ export default function HeroDetailNews() {
                     className="mt-8 text-lg text-gray-200 leading-8 max-w-3xl"
                 >
 
-                    Pemerintah Desa Panca Tunggal bersama masyarakat
-                    melaksanakan musyawarah desa dalam rangka
-                    penyusunan Rencana Kerja Pemerintah Desa
-                    (RKP Desa) Tahun 2026 sebagai dasar pembangunan
-                    desa yang lebih maju, transparan, dan partisipatif.
+                    Pertanian merupakan sektor utama yang menjadi
+                    penopang perekonomian masyarakat Desa Panca Tunggal.
+                    Dengan lahan yang luas dan kondisi tanah yang subur,
+                    desa ini mampu menghasilkan berbagai komoditas unggulan
+                    yang memiliki nilai ekonomi tinggi.
 
                 </p>
 
@@ -118,7 +122,7 @@ export default function HeroDetailNews() {
                         <CalendarDays size={20} />
 
                         <span>
-                            20 Juli 2026
+                            Diperbarui 20 Juli 2026
                         </span>
 
                     </div>
@@ -128,17 +132,17 @@ export default function HeroDetailNews() {
                         <User size={20} />
 
                         <span>
-                            Admin Desa
+                            Pemerintah Desa
                         </span>
 
                     </div>
 
                     <div className="flex items-center gap-2">
 
-                        <Eye size={20} />
+                        <MapPin size={20} />
 
                         <span>
-                            1.245 Dibaca
+                            Desa Panca Tunggal
                         </span>
 
                     </div>
