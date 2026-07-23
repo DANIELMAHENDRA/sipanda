@@ -1,7 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Layout
 import PublicLayout from "../layouts/PublicLayout";
 import AdminLayout from "../layouts/AdminLayout";
+
+// Components
+import ScrollToTop from "../components/common/ScrollToTop";
 
 // Public Pages
 import Home from "../pages/public/Home";
@@ -11,8 +15,9 @@ import News from "../pages/public/News";
 import DetailNews from "../pages/public/DetailNews";
 import Gallery from "../pages/public/Gallery";
 import Potential from "../pages/public/Potential";
-import Contact from "../pages/public/Contact";
 import DetailPotential from "../pages/public/DetailPotential";
+import Contact from "../pages/public/Contact";
+import NotFound from "../pages/error/NotFound";
 
 // Auth
 import Login from "../pages/auth/Login";
@@ -23,35 +28,72 @@ import Dashboard from "../pages/admin/Dashboard";
 export default function AppRoutes() {
     return (
         <BrowserRouter>
+
+            {/* Auto Scroll To Top */}
+            <ScrollToTop />
+
             <Routes>
 
-                {/* Public */}
+                {/* ================= PUBLIC ================= */}
+
                 <Route element={<PublicLayout />}>
 
-                    <Route path="/" element={<Home />} />
+                    <Route
+                        path="/"
+                        element={<Home />}
+                    />
 
-                    <Route path="/profil" element={<Profile />} />
+                    <Route
+                        path="/profil"
+                        element={<Profile />}
+                    />
 
-                    <Route path="/pemerintahan" element={<Government />} />
+                    <Route
+                        path="/pemerintahan"
+                        element={<Government />}
+                    />
 
-                    <Route path="/berita" element={<News />} />
+                    <Route
+                        path="/berita"
+                        element={<News />}
+                    />
 
-                    <Route path="/berita/:id" element={<DetailNews />} />
+                    <Route
+                        path="/berita/:id"
+                        element={<DetailNews />}
+                    />
 
-                    <Route path="/galeri" element={<Gallery />} />
+                    <Route
+                        path="/galeri"
+                        element={<Gallery />}
+                    />
 
-                    <Route path="/potensi" element={<Potential />} />
+                    <Route
+                        path="/potensi"
+                        element={<Potential />}
+                    />
 
-                    <Route path="/kontak" element={<Contact />} />
+                    <Route
+                        path="/potensi/:id"
+                        element={<DetailPotential />}
+                    />
 
-                    <Route path="/potensi/:id" element={<DetailPotential />}/>
+                    <Route
+                        path="/kontak"
+                        element={<Contact />}
+                    />
 
-                    {/* Login */}
-                    <Route path="/login" element={<Login />} />
+                    <Route
+                        path="/login"
+                        element={<Login />}
+                    />
+
+                    <Route path="*" element={<NotFound />} />
 
                 </Route>
 
-                {/* Admin */}
+                {/* ================= ADMIN ================= */}
+
                 <Route element={<AdminLayout />}>
 
                     <Route
@@ -62,6 +104,7 @@ export default function AppRoutes() {
                 </Route>
 
             </Routes>
+
         </BrowserRouter>
     );
 }
