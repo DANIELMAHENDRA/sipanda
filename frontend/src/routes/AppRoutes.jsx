@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Layout
+
 import PublicLayout from "../layouts/PublicLayout";
 import AdminLayout from "../layouts/AdminLayout";
 
-// Components
+
 import ScrollToTop from "../components/common/ScrollToTop";
 
-// Public Pages
+
 import Home from "../pages/public/Home";
 import Profile from "../pages/public/Profile";
 import Government from "../features/government/Government";
