@@ -10,7 +10,7 @@ class HeroSection extends Model
     use HasFactory;
 
     /**
-     * Mass Assignable
+     * The attributes that are mass assignable.
      */
     protected $fillable = [
         'page',
@@ -27,14 +27,16 @@ class HeroSection extends Model
     ];
 
     /**
-     * Attribute Casting
+     * The attributes that should be cast.
      */
     protected function casts(): array
     {
         return [
-            'overlay_opacity' => 'float',
+            'overlay_opacity' => 'decimal:2',
             'is_active'       => 'boolean',
             'order_number'    => 'integer',
+            'created_at'      => 'datetime',
+            'updated_at'      => 'datetime',
         ];
     }
 }

@@ -17,14 +17,16 @@ return new class extends Migration
 
             /*
             |--------------------------------------------------------------------------
-            | General Website
+            | Website Information
             |--------------------------------------------------------------------------
             */
 
             $table->string('site_name');
+
             $table->string('site_tagline')->nullable();
 
             $table->string('logo')->nullable();
+
             $table->string('favicon')->nullable();
 
             /*
@@ -34,17 +36,42 @@ return new class extends Migration
             */
 
             $table->string('meta_title')->nullable();
+
             $table->text('meta_description')->nullable();
+
             $table->string('meta_keywords')->nullable();
 
             /*
             |--------------------------------------------------------------------------
-            | Contact
+            | Contact Information
             |--------------------------------------------------------------------------
             */
 
             $table->string('email')->nullable();
+
             $table->string('phone', 30)->nullable();
+
+            $table->text('address')->nullable();
+
+            $table->longText('google_maps_embed')->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Social Media
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('facebook')->nullable();
+
+            $table->string('instagram')->nullable();
+
+            $table->string('youtube')->nullable();
+
+            $table->string('tiktok')->nullable();
+
+            $table->string('x')->nullable();
+
+            $table->string('whatsapp')->nullable();
 
             /*
             |--------------------------------------------------------------------------
@@ -58,14 +85,17 @@ return new class extends Migration
 
             /*
             |--------------------------------------------------------------------------
-            | Status
+            | System
             |--------------------------------------------------------------------------
             */
 
-            $table->boolean('maintenance_mode')->default(false);
+            $table->boolean('maintenance_mode')
+                ->default(false);
+
+            $table->text('maintenance_message')
+                ->nullable();
 
             $table->timestamps();
-
         });
     }
 

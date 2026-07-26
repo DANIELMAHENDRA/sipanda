@@ -10,7 +10,7 @@ class Contact extends Model
     use HasFactory;
 
     /**
-     * Mass Assignable
+     * The attributes that are mass assignable.
      */
     protected $fillable = [
         'office_name',
@@ -33,14 +33,16 @@ class Contact extends Model
     ];
 
     /**
-     * Attribute Casting
+     * The attributes that should be cast.
      */
     protected function casts(): array
     {
         return [
-            'latitude'  => 'float',
-            'longitude' => 'float',
-            'is_active' => 'boolean',
+            'latitude'   => 'decimal:7',
+            'longitude'  => 'decimal:7',
+            'is_active'  => 'boolean',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 }

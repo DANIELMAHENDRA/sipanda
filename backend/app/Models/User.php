@@ -41,9 +41,9 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'last_login_at'      => 'datetime',
-            'password'           => 'hashed',
-            'is_active'          => 'boolean',
+            'last_login_at'     => 'datetime',
+            'password'          => 'hashed',
+            'is_active'         => 'boolean',
         ];
     }
 
@@ -58,7 +58,7 @@ class User extends Authenticatable
      */
     public function news(): HasMany
     {
-        return $this->hasMany(News::class, 'author_id');
+        return $this->hasMany(News::class, 'user_id');
     }
 
     /**
@@ -66,7 +66,7 @@ class User extends Authenticatable
      */
     public function galleries(): HasMany
     {
-        return $this->hasMany(Gallery::class);
+        return $this->hasMany(Gallery::class, 'user_id');
     }
 
     /**
@@ -74,7 +74,7 @@ class User extends Authenticatable
      */
     public function potentials(): HasMany
     {
-        return $this->hasMany(Potential::class);
+        return $this->hasMany(Potential::class, 'user_id');
     }
 
     /**
@@ -82,7 +82,7 @@ class User extends Authenticatable
      */
     public function services(): HasMany
     {
-        return $this->hasMany(Service::class);
+        return $this->hasMany(Service::class, 'user_id');
     }
 
     /**
@@ -90,6 +90,6 @@ class User extends Authenticatable
      */
     public function activityLogs(): HasMany
     {
-        return $this->hasMany(ActivityLog::class);
+        return $this->hasMany(ActivityLog::class, 'user_id');
     }
 }
