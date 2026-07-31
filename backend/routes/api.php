@@ -1,7 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Authentication
+|--------------------------------------------------------------------------
+*/
+
 use App\Http\Controllers\Api\Auth\AuthController;
+
+/*
+|--------------------------------------------------------------------------
+| Website Setting
+|--------------------------------------------------------------------------
+*/
+
+use App\Http\Controllers\Api\Setting\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,13 +26,76 @@ use App\Http\Controllers\Api\Auth\AuthController;
 
 Route::prefix('auth')->group(function () {
 
-    Route::post('/login', [AuthController::class, 'login']);
+    /*
+    |--------------------------------------------------------------------------
+    | Login
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post(
+        '/login',
+        [AuthController::class, 'login']
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Protected Authentication
+    |--------------------------------------------------------------------------
+    */
 
     Route::middleware('auth:sanctum')->group(function () {
 
-        Route::get('/me', [AuthController::class, 'me']);
+        Route::get(
+            '/me',
+            [AuthController::class, 'me']
+        );
 
-        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post(
+            '/logout',
+            [AuthController::class, 'logout']
+        );
+
+    });
+
+});
+
+/*
+|--------------------------------------------------------------------------
+| Protected API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Website Setting
+    |--------------------------------------------------------------------------
+    */
+
+    Route::prefix('settings')->group(function () {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Get Website Setting
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/',
+            [SettingController::class, 'index']
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update Website Setting
+        |--------------------------------------------------------------------------
+        */
+
+        Route::put(
+            '/',
+            [SettingController::class, 'update']
+        );
 
     });
 
