@@ -7,6 +7,10 @@ use App\Http\Controllers\Api\Setting\SettingController;
 use App\Http\Controllers\Api\Profile\ProfileController;
 use App\Http\Controllers\Api\News\NewsController;
 use App\Http\Controllers\Api\Gallery\GalleryController;
+use App\Http\Controllers\Api\Potential\PotentialController;
+use App\Http\Controllers\Api\Government\GovernmentController;
+use App\Http\Controllers\Api\Service\ServiceController;
+use App\Http\Controllers\Api\Contact\ContactController;
 
 Route::prefix('auth')->group(function () {
 
@@ -73,6 +77,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{gallery}', [GalleryController::class, 'update']);
 
         Route::delete('/{gallery}', [GalleryController::class, 'destroy']);
+
+    });
+
+    Route::prefix('potential')->group(function () {
+
+        Route::get('/', [PotentialController::class, 'index']);
+
+        Route::get('/{potential}', [PotentialController::class, 'show']);
+
+        Route::post('/', [PotentialController::class, 'store']);
+
+        Route::put('/{potential}', [PotentialController::class, 'update']);
+
+        Route::delete('/{potential}', [PotentialController::class, 'destroy']);
+
+    });
+
+    Route::prefix('government')->group(function () {
+
+    Route::get('/', [GovernmentController::class, 'index']);
+
+    Route::get('/{government}', [GovernmentController::class, 'show']);
+
+    Route::post('/', [GovernmentController::class, 'store']);
+
+    Route::put('/{government}', [GovernmentController::class, 'update']);
+
+    Route::delete('/{government}', [GovernmentController::class, 'destroy']);
+
+    });
+
+    Route::prefix('service')->group(function () {
+
+    Route::get('/', [ServiceController::class, 'index']);
+
+    Route::get('/{service}', [ServiceController::class, 'show']);
+
+    Route::post('/', [ServiceController::class, 'store']);
+
+    Route::put('/{service}', [ServiceController::class, 'update']);
+
+    Route::delete('/{service}', [ServiceController::class, 'destroy']);
+
+    });
+
+    Route::prefix('contact')->group(function () {
+
+    Route::get('/', [ContactController::class, 'index']);
+
+    Route::put('/', [ContactController::class, 'update']);
 
     });
 
