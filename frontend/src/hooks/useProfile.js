@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import newsService from "../services/newsService";
+import profileService from "../services/profileService";
 
-export default function useNews(params = {}) {
+export default function useProfile() {
 
-    const [news, setNews] = useState([]);
+    const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchNews = async () => {
+    const fetchProfile = async () => {
 
         try {
 
             setLoading(true);
             setError(null);
 
-            const response = await newsService.getAll(params);
+            const response = await profileService.get();
 
-            setNews(response.data.data ?? []);
+            setProfile(response.data.data ?? {});
 
         } catch (err) {
 
@@ -34,19 +34,19 @@ export default function useNews(params = {}) {
 
     useEffect(() => {
 
-        fetchNews();
+        fetchProfile();
 
-    }, [JSON.stringify(params)]);
+    }, []);
 
     return {
 
-        news,
+        profile,
 
         loading,
 
         error,
 
-        refresh: fetchNews,
+        refresh: fetchProfile,
 
     };
 

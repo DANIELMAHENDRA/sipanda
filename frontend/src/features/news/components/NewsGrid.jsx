@@ -4,79 +4,59 @@ import {
 } from "lucide-react";
 
 import Button from "../../../components/common/Button";
-
-import news1 from "../../../assets/images/news/news1.jpg";
-import news2 from "../../../assets/images/news/news2.jpg";
-import news3 from "../../../assets/images/news/news3.jpg";
-import news4 from "../../../assets/images/news/news4.jpg";
-import news5 from "../../../assets/images/news/news5.jpg";
-import news6 from "../../../assets/images/news/news6.jpg";
+import useNews from "../../../hooks/useNews";
 
 export default function NewsGrid() {
 
-    const news = [
+    const {
+        news,
+        loading,
+        error,
+    } = useNews();
 
-        {
-            id: 1,
-            image: news1,
-            category: "Pemerintahan",
-            date: "20 Juli 2026",
-            title: "Musyawarah Desa Menyusun Program Kerja Tahun 2026",
-            description:
-                "Pemerintah Desa bersama masyarakat melaksanakan musyawarah desa guna menyusun prioritas pembangunan desa.",
-        },
+    console.log("NewsGrid Render");
+    console.log(news);
+    console.log(news.length);
 
-        {
-            id: 2,
-            image: news2,
-            category: "Kegiatan",
-            date: "18 Juli 2026",
-            title: "Gotong Royong Membersihkan Lingkungan Desa",
-            description:
-                "Kegiatan gotong royong melibatkan seluruh masyarakat dalam menjaga kebersihan lingkungan desa.",
-        },
+    if (loading) {
 
-        {
-            id: 3,
-            image: news3,
-            category: "UMKM",
-            date: "15 Juli 2026",
-            title: "Pelatihan Digital Marketing bagi UMKM Desa",
-            description:
-                "Pelaku UMKM mendapatkan pelatihan mengenai pemasaran digital untuk meningkatkan daya saing produk lokal.",
-        },
+        return (
 
-        {
-            id: 4,
-            image: news4,
-            category: "Pertanian",
-            date: "12 Juli 2026",
-            title: "Panen Raya Padi Desa Panca Tunggal",
-            description:
-                "Petani Desa Panca Tunggal berhasil meningkatkan hasil panen melalui penggunaan teknologi pertanian modern.",
-        },
+            <section className="py-10 bg-gray-50">
 
-        {
-            id: 5,
-            image: news5,
-            category: "Pendidikan",
-            date: "10 Juli 2026",
-            title: "Sosialisasi Literasi Digital bagi Pelajar",
-            description:
-                "Program edukasi mengenai penggunaan media sosial secara bijak bagi siswa sekolah dasar dan menengah.",
-        },
+                <div className="max-w-7xl mx-auto px-6 text-center">
 
-        {
-            id: 6,
-            image: news6,
-            category: "Kesehatan",
-            date: "8 Juli 2026",
-            title: "Pelayanan Posyandu Rutin Bulan Juli",
-            description:
-                "Posyandu Desa Panca Tunggal memberikan pelayanan kesehatan ibu dan anak secara rutin setiap bulan.",
-        },
+                    <p className="text-gray-500">
+                        Memuat berita...
+                    </p>
 
-    ];
+                </div>
+
+            </section>
+
+        );
+
+    }
+
+    if (error) {
+
+        return (
+
+            <section className="py-10 bg-gray-50">
+
+                <div className="max-w-7xl mx-auto px-6 text-center">
+
+                    <p className="text-red-500">
+                        Gagal memuat data berita.
+                    </p>
+
+                </div>
+
+            </section>
+
+        );
+
+    }
 
     return (
 
@@ -95,19 +75,15 @@ export default function NewsGrid() {
                             className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
                         >
 
-                            {/* Image */}
-
                             <div className="overflow-hidden">
 
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    className="w-full h-60 object-cover hover:scale-110 transition duration-500"
-                                />
+                               <img
+                                src={item.thumbnail || "/images/no-image.png"}
+                                alt={item.title}
+                                className="w-full h-60 object-cover hover:scale-110 transition duration-500"
+                            />
 
                             </div>
-
-                            {/* Content */}
 
                             <div className="p-6">
 
@@ -123,7 +99,7 @@ export default function NewsGrid() {
 
                                         <CalendarDays size={16} />
 
-                                        {item.date}
+                                        {item.published_at}
 
                                     </div>
 
@@ -144,7 +120,7 @@ export default function NewsGrid() {
                                 <div className="mt-8">
 
                                     <Button
-                                        to={`/berita/${item.id}`}
+                                        to={`/berita/${item.slug}`}
                                         variant="outline"
                                         className="gap-2"
                                     >

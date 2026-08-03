@@ -3,50 +3,80 @@ import SectionTitle from "../../../components/common/SectionTitle";
 import {
     Users,
     House,
-    User,
-    UserRound,
-    GraduationCap,
-    BriefcaseBusiness,
+    Map,
+    Building2,
+    Home,
+    MapPinned,
 } from "lucide-react";
 
+import useProfile from "../../../hooks/useProfile";
+
 export default function DemographySection() {
+
+    const {
+        profile,
+        loading,
+        error,
+    } = useProfile();
+
+    if (loading) {
+        return (
+            <section className="py-24 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    Memuat data...
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section className="py-24 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-6 text-center text-red-600">
+                    Gagal memuat data profil desa.
+                </div>
+            </section>
+        );
+    }
 
     const demographics = [
         {
             icon: Users,
-            value: "4.250",
+            value: profile.population ?? "-",
             title: "Jumlah Penduduk",
             description: "Total penduduk yang terdaftar."
         },
         {
             icon: House,
-            value: "1.120",
+            value: profile.family_count ?? "-",
             title: "Kepala Keluarga",
             description: "Jumlah kepala keluarga."
         },
         {
-            icon: User,
-            value: "2.110",
-            title: "Laki-laki",
-            description: "Penduduk berjenis kelamin laki-laki."
+            icon: Building2,
+            value: profile.hamlet_count ?? "-",
+            title: "Jumlah Dusun",
+            description: "Jumlah dusun di desa."
         },
         {
-            icon: UserRound,
-            value: "2.140",
-            title: "Perempuan",
-            description: "Penduduk berjenis kelamin perempuan."
+            icon: Home,
+            value: profile.rt_count ?? "-",
+            title: "Jumlah RT",
+            description: "Jumlah RT di desa."
         },
         {
-            icon: GraduationCap,
-            value: "90%",
-            title: "Usia Sekolah",
-            description: "Penduduk usia sekolah aktif."
+            icon: MapPinned,
+            value: profile.rw_count ?? "-",
+            title: "Jumlah RW",
+            description: "Jumlah RW di desa."
         },
         {
-            icon: BriefcaseBusiness,
-            value: "70%",
-            title: "Petani",
-            description: "Mayoritas mata pencaharian masyarakat."
+            icon: Map,
+            value: profile.area
+                ? `${profile.area} Ha`
+                : "-",
+            title: "Luas Wilayah",
+            description: "Total luas wilayah desa."
         },
     ];
 
@@ -58,8 +88,8 @@ export default function DemographySection() {
 
                 <SectionTitle
                     subtitle="Demografi"
-                    title="Data Kependudukan"
-                    description="Gambaran umum kondisi penduduk Desa Panca Tunggal berdasarkan data administrasi desa."
+                    title="Data Kependudukan Desa"
+                    description="Data kependudukan dan wilayah Desa yang diperoleh dari sistem SIPANDA."
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -118,8 +148,6 @@ export default function DemographySection() {
 
                 </div>
 
-                {/* Ringkasan */}
-
                 <div className="mt-20 bg-green-700 rounded-3xl text-white p-10">
 
                     <h3 className="text-3xl font-bold mb-5">
@@ -130,13 +158,22 @@ export default function DemographySection() {
 
                     <p className="leading-8 text-green-100">
 
-                        Desa Panca Tunggal memiliki jumlah penduduk sekitar
-                        <span className="font-semibold text-white"> 4.250 jiwa </span>
+                        Desa
+                        <span className="font-semibold text-white">
+                            {" "}{profile.village_name}
+                        </span>
+                        memiliki jumlah penduduk sebanyak
+                        <span className="font-semibold text-white">
+                            {" "}{profile.population ?? "-"} jiwa
+                        </span>
                         yang tersebar dalam
-                        <span className="font-semibold text-white"> 1.120 Kepala Keluarga</span>.
-                        Sebagian besar masyarakat bekerja pada sektor pertanian,
-                        perkebunan, dan UMKM yang menjadi penggerak utama
-                        perekonomian desa.
+                        <span className="font-semibold text-white">
+                            {" "}{profile.family_count ?? "-"} Kepala Keluarga
+                        </span>
+                        dengan luas wilayah sekitar
+                        <span className="font-semibold text-white">
+                            {" "}{profile.area ?? "-"} Ha.
+                        </span>
 
                     </p>
 
