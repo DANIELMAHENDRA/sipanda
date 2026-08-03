@@ -40,11 +40,11 @@ class ProfileResource extends JsonResource
             */
 
             'logo' => $this->logo
-                ? Storage::url($this->logo)
+                ? asset(Storage::url($this->logo))
                 : null,
 
             'hero_image' => $this->hero_image
-                ? Storage::url($this->hero_image)
+                ? asset(Storage::url($this->hero_image))
                 : null,
 
             /*

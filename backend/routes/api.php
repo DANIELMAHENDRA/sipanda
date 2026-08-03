@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\HeroSection\HeroSectionController;
 use App\Http\Controllers\Api\Setting\SettingController;
@@ -11,6 +12,12 @@ use App\Http\Controllers\Api\Potential\PotentialController;
 use App\Http\Controllers\Api\Government\GovernmentController;
 use App\Http\Controllers\Api\Service\ServiceController;
 use App\Http\Controllers\Api\Contact\ContactController;
+
+/*
+|--------------------------------------------------------------------------
+| Authentication
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('auth')->group(function () {
 
@@ -26,108 +33,176 @@ Route::prefix('auth')->group(function () {
 
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+/*
+|--------------------------------------------------------------------------
+| PUBLIC API
+|--------------------------------------------------------------------------
+| Endpoint yang digunakan oleh Frontend React
+*/
 
-    Route::prefix('settings')->group(function () {
+Route::prefix('settings')->group(function () {
 
-        Route::get('/', [SettingController::class, 'index']);
+    Route::get('/', [SettingController::class, 'index']);
 
-        Route::put('/', [SettingController::class, 'update']);
+});
 
-    });
+Route::prefix('hero-sections')->group(function () {
 
-    Route::prefix('hero-sections')->group(function () {
+    Route::get('/{page}', [HeroSectionController::class, 'index']);
 
-        Route::get('/{page}', [HeroSectionController::class, 'index']);
+});
 
-        Route::put('/{page}', [HeroSectionController::class, 'update']);
+Route::prefix('profile')->group(function () {
 
-    });
+    Route::get('/', [ProfileController::class, 'index']);
 
-    Route::prefix('profile')->group(function () {
+});
 
-        Route::get('/', [ProfileController::class, 'index']);
+Route::prefix('news')->group(function () {
 
-        Route::put('/', [ProfileController::class, 'update']);
+    Route::get('/', [NewsController::class, 'index']);
 
-    });
+    Route::get('/{news}', [NewsController::class, 'show']);
 
-    Route::prefix('news')->group(function () {
+});
 
-        Route::get('/', [NewsController::class, 'index']);
+Route::prefix('gallery')->group(function () {
 
-        Route::get('/{news}', [NewsController::class, 'show']);
+    Route::get('/', [GalleryController::class, 'index']);
 
-        Route::post('/', [NewsController::class, 'store']);
+    Route::get('/{gallery}', [GalleryController::class, 'show']);
 
-        Route::put('/{news}', [NewsController::class, 'update']);
+});
 
-        Route::delete('/{news}', [NewsController::class, 'destroy']);
+Route::prefix('potential')->group(function () {
 
-    });
+    Route::get('/', [PotentialController::class, 'index']);
 
-    Route::prefix('gallery')->group(function () {
+    Route::get('/{potential}', [PotentialController::class, 'show']);
 
-        Route::get('/', [GalleryController::class, 'index']);
+});
 
-        Route::get('/{gallery}', [GalleryController::class, 'show']);
-
-        Route::post('/', [GalleryController::class, 'store']);
-
-        Route::put('/{gallery}', [GalleryController::class, 'update']);
-
-        Route::delete('/{gallery}', [GalleryController::class, 'destroy']);
-
-    });
-
-    Route::prefix('potential')->group(function () {
-
-        Route::get('/', [PotentialController::class, 'index']);
-
-        Route::get('/{potential}', [PotentialController::class, 'show']);
-
-        Route::post('/', [PotentialController::class, 'store']);
-
-        Route::put('/{potential}', [PotentialController::class, 'update']);
-
-        Route::delete('/{potential}', [PotentialController::class, 'destroy']);
-
-    });
-
-    Route::prefix('government')->group(function () {
+Route::prefix('government')->group(function () {
 
     Route::get('/', [GovernmentController::class, 'index']);
 
     Route::get('/{government}', [GovernmentController::class, 'show']);
 
-    Route::post('/', [GovernmentController::class, 'store']);
+});
 
-    Route::put('/{government}', [GovernmentController::class, 'update']);
-
-    Route::delete('/{government}', [GovernmentController::class, 'destroy']);
-
-    });
-
-    Route::prefix('service')->group(function () {
+Route::prefix('service')->group(function () {
 
     Route::get('/', [ServiceController::class, 'index']);
 
     Route::get('/{service}', [ServiceController::class, 'show']);
 
-    Route::post('/', [ServiceController::class, 'store']);
+});
 
-    Route::put('/{service}', [ServiceController::class, 'update']);
-
-    Route::delete('/{service}', [ServiceController::class, 'destroy']);
-
-    });
-
-    Route::prefix('contact')->group(function () {
+Route::prefix('contact')->group(function () {
 
     Route::get('/', [ContactController::class, 'index']);
 
-    Route::put('/', [ContactController::class, 'update']);
+});
 
-    });
+/*
+|--------------------------------------------------------------------------
+| ADMIN API
+|--------------------------------------------------------------------------
+| Semua endpoint di bawah ini membutuhkan login Sanctum
+*/
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Settings
+    |--------------------------------------------------------------------------
+    */
+
+    Route::put('/settings', [SettingController::class, 'update']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hero Section
+    |--------------------------------------------------------------------------
+    */
+
+    Route::put('/hero-sections/{page}', [HeroSectionController::class, 'update']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Profile
+    |--------------------------------------------------------------------------
+    */
+
+    Route::put('/profile', [ProfileController::class, 'update']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | News
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/news', [NewsController::class, 'store']);
+
+    Route::put('/news/{news}', [NewsController::class, 'update']);
+
+    Route::delete('/news/{news}', [NewsController::class, 'destroy']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Gallery
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/gallery', [GalleryController::class, 'store']);
+
+    Route::put('/gallery/{gallery}', [GalleryController::class, 'update']);
+
+    Route::delete('/gallery/{gallery}', [GalleryController::class, 'destroy']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Potential
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/potential', [PotentialController::class, 'store']);
+
+    Route::put('/potential/{potential}', [PotentialController::class, 'update']);
+
+    Route::delete('/potential/{potential}', [PotentialController::class, 'destroy']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Government
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/government', [GovernmentController::class, 'store']);
+
+    Route::put('/government/{government}', [GovernmentController::class, 'update']);
+
+    Route::delete('/government/{government}', [GovernmentController::class, 'destroy']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Service
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/service', [ServiceController::class, 'store']);
+
+    Route::put('/service/{service}', [ServiceController::class, 'update']);
+
+    Route::delete('/service/{service}', [ServiceController::class, 'destroy']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Contact
+    |--------------------------------------------------------------------------
+    */
+
+    Route::put('/contact', [ContactController::class, 'update']);
 
 });

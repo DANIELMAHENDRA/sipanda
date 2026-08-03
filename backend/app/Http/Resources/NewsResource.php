@@ -5,12 +5,10 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class NewsResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -22,8 +20,10 @@ class NewsResource extends JsonResource
             'slug' => $this->slug,
 
             'thumbnail' => $this->thumbnail
-                ? Storage::url($this->thumbnail)
-                : null,
+            ? asset(Storage::url($this->thumbnail))
+            : null,
+
+            'description' => Str::limit(strip_tags($this->content), 140),
 
             'content' => $this->content,
 
@@ -38,7 +38,7 @@ class NewsResource extends JsonResource
             'status' => $this->status,
 
             'published_at' => optional($this->published_at)
-                ->format('Y-m-d H:i:s'),
+                ->format('d F Y'),
 
             'created_at' => optional($this->created_at)
                 ->format('Y-m-d H:i:s'),
