@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ProfileSeeder::class,
+            GovernmentSeeder::class,
             OfficialSeeder::class,
             HeroSectionSeeder::class,
             ContactSeeder::class,

@@ -22,11 +22,11 @@ class PotentialResource extends JsonResource
             'slug' => $this->slug,
 
             'thumbnail' => $this->thumbnail
-                ? Storage::url($this->thumbnail)
+                ? asset(Storage::url($this->thumbnail))
                 : null,
 
             'cover_image' => $this->cover_image
-                ? Storage::url($this->cover_image)
+                ? asset(Storage::url($this->cover_image))
                 : null,
 
             'category' => $this->category,

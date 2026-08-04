@@ -83,6 +83,11 @@ abstract class BaseProfileRequest extends FormRequest
             |--------------------------------------------------------------------------
             */
 
+            'about' => [
+                'nullable',
+                'string',
+            ],
+
             'history' => [
                 'nullable',
                 'string',
@@ -240,6 +245,8 @@ abstract class BaseProfileRequest extends FormRequest
             'province' => 'Provinsi',
 
             'logo' => 'Logo',
+
+            'about' => 'Tentang Desa',
 
             'hero_image' => 'Hero Image',
 

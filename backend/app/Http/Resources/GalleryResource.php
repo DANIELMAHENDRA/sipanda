@@ -22,8 +22,8 @@ class GalleryResource extends JsonResource
             'slug' => $this->slug,
 
             'image' => $this->image
-                ? Storage::url($this->image)
-                : null,
+            ? asset(Storage::url($this->image))
+            : null,
 
             'category' => $this->category,
 

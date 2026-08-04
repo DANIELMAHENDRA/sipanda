@@ -21,7 +21,7 @@ class Profile extends Model
 
         'logo',
         'hero_image',
-
+        'about',
         'history',
         'vision',
         'mission',

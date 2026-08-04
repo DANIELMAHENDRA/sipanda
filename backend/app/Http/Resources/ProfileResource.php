@@ -53,6 +53,8 @@ class ProfileResource extends JsonResource
             |--------------------------------------------------------------------------
             */
 
+            'about' => $this->about,
+
             'history' => $this->history,
 
             'vision' => $this->vision,

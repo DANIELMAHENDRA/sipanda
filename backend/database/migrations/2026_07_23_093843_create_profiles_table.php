@@ -27,8 +27,12 @@ return new class extends Migration
             $table->string('hero_image')->nullable();
 
             // Profil Desa
+            $table->longText('about')->nullable();
+
             $table->longText('history')->nullable();
+
             $table->longText('vision')->nullable();
+
             $table->longText('mission')->nullable();
 
             // Geografi
