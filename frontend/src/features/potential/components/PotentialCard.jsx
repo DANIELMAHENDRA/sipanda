@@ -1,19 +1,15 @@
 import {
-    MapPin,
     ArrowRight,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 
 export default function PotentialCard({
-
     id,
     image,
     title,
     category,
-    location,
     description,
-
 }) {
 
     return (
@@ -58,24 +54,6 @@ export default function PotentialCard({
 
                 </h3>
 
-                {/* Location */}
-
-                <div
-                    className="flex items-center gap-2 mt-4 text-gray-500"
-                >
-
-                    <MapPin
-                        size={18}
-                        className="text-green-700"
-                    />
-
-                    <span>
-
-                        {location}
-
-                    </span>
-
-                </div>
 
                 {/* Description */}
 

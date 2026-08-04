@@ -5,43 +5,54 @@ import {
     MapPinned,
     Landmark,
     Trees,
-    Mountain,
-    Sun,
-    CloudRain,
+    Navigation,
+    Globe,
+    Building2,
 } from "lucide-react";
+
+import useProfile from "../../../hooks/useProfile";
 
 export default function GeographySection() {
 
+    const {
+        profile,
+        loading,
+    } = useProfile();
+
+    if (loading) {
+        return null;
+    }
+
     const informations = [
         {
-            icon: MapPinned,
+            icon: Building2,
             title: "Kecamatan",
-            value: "Merbau Mataram",
+            value: profile?.district,
         },
         {
             icon: Landmark,
             title: "Kabupaten",
-            value: "Lampung Selatan",
+            value: profile?.regency,
+        },
+        {
+            icon: Globe,
+            title: "Provinsi",
+            value: profile?.province,
         },
         {
             icon: Trees,
             title: "Luas Wilayah",
-            value: "850 Hektar",
+            value: `${profile?.area} Ha`,
         },
         {
-            icon: Mountain,
-            title: "Ketinggian",
-            value: "±120 mdpl",
+            icon: Navigation,
+            title: "Latitude",
+            value: profile?.latitude,
         },
         {
-            icon: Sun,
-            title: "Iklim",
-            value: "Tropis",
-        },
-        {
-            icon: CloudRain,
-            title: "Curah Hujan",
-            value: "±2.000 mm/Tahun",
+            icon: MapPinned,
+            title: "Longitude",
+            value: profile?.longitude,
         },
     ];
 
@@ -54,7 +65,7 @@ export default function GeographySection() {
                 <SectionTitle
                     subtitle="Geografis"
                     title="Kondisi Wilayah Desa"
-                    description="Informasi geografis Desa Panca Tunggal sebagai gambaran umum kondisi wilayah."
+                    description="Informasi geografis Desa berdasarkan data administrasi desa."
                 />
 
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -64,8 +75,8 @@ export default function GeographySection() {
                     <div>
 
                         <img
-                            src={geographyImage}
-                            alt="Geografis Desa"
+                            src={profile?.hero_image || geographyImage}
+                            alt={profile?.village_name}
                             className="w-full h-[500px] object-cover rounded-3xl shadow-2xl"
                         />
 

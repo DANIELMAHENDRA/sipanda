@@ -8,16 +8,14 @@ import {
 
 import { NavLink } from "react-router-dom";
 
-import heroImage from "../../../../assets/images/potential/hero-potential.jpg";
-
-export default function HeroDetailPotential() {
+export default function HeroDetailPotential({ potential }) {
 
     return (
 
         <section
             className="relative min-h-[75vh] flex items-center bg-cover bg-center pt-24 pb-16"
             style={{
-                backgroundImage: `url(${heroImage})`,
+                backgroundImage: `url(${potential.cover_image || potential.thumbnail})`,
             }}
         >
 
@@ -59,7 +57,9 @@ export default function HeroDetailPotential() {
                     <ChevronRight size={16} />
 
                     <span className="text-white">
-                        Detail Potensi
+
+                        {potential.title}
+
                     </span>
 
                 </div>
@@ -74,7 +74,7 @@ export default function HeroDetailPotential() {
 
                     <Sprout size={18} />
 
-                    Potensi Unggulan Desa
+                    {potential.category}
 
                 </div>
 
@@ -86,10 +86,7 @@ export default function HeroDetailPotential() {
                     className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-5xl"
                 >
 
-                    Potensi Pertanian
-                    <br />
-
-                    Desa Panca Tunggal
+                    {potential.title}
 
                 </h1>
 
@@ -101,11 +98,7 @@ export default function HeroDetailPotential() {
                     className="mt-8 text-lg text-gray-200 leading-8 max-w-3xl"
                 >
 
-                    Pertanian merupakan sektor utama yang menjadi
-                    penopang perekonomian masyarakat Desa Panca Tunggal.
-                    Dengan lahan yang luas dan kondisi tanah yang subur,
-                    desa ini mampu menghasilkan berbagai komoditas unggulan
-                    yang memiliki nilai ekonomi tinggi.
+                    {potential.excerpt}
 
                 </p>
 
@@ -122,7 +115,15 @@ export default function HeroDetailPotential() {
                         <CalendarDays size={20} />
 
                         <span>
-                            Diperbarui 20 Juli 2026
+
+                            {potential.published_at
+                                ? new Date(potential.published_at).toLocaleDateString("id-ID", {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                })
+                                : "-"}
+
                         </span>
 
                     </div>
@@ -132,7 +133,9 @@ export default function HeroDetailPotential() {
                         <User size={20} />
 
                         <span>
-                            Pemerintah Desa
+
+                            {potential.user?.name || "Pemerintah Desa"}
+
                         </span>
 
                     </div>
@@ -142,7 +145,9 @@ export default function HeroDetailPotential() {
                         <MapPin size={20} />
 
                         <span>
+
                             Desa Panca Tunggal
+
                         </span>
 
                     </div>

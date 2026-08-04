@@ -1,7 +1,11 @@
 import SectionTitle from "../../../components/common/SectionTitle";
 import historyImage from "../../../assets/images/profile/history.jpg";
+import useProfile from "../../../hooks/useProfile";
 
 export default function HistorySection() {
+
+    const { profile, loading } = useProfile();
+
     const timeline = [
         {
             year: "1982",
@@ -23,6 +27,14 @@ export default function HistorySection() {
         }
     ];
 
+    if (loading) {
+        return (
+            <section className="py-24 text-center">
+                Memuat sejarah desa...
+            </section>
+        );
+    }
+
     return (
         <section className="py-24 bg-white">
 
@@ -41,7 +53,7 @@ export default function HistorySection() {
                     <div>
 
                         <img
-                            src={historyImage}
+                            src={profile?.hero_image || historyImage}
                             alt="Sejarah Desa"
                             className="w-full h-[500px] object-cover rounded-2xl shadow-xl"
                         />
@@ -53,26 +65,12 @@ export default function HistorySection() {
                     <div>
 
                         <h3 className="text-3xl font-bold text-gray-800 mb-6">
-
                             Awal Berdirinya Desa
-
                         </h3>
 
-                        <p className="text-gray-600 leading-8 mb-5">
+                        <p className="text-gray-600 leading-8 whitespace-pre-line">
 
-                            Desa Panca Tunggal merupakan salah satu desa yang berada di
-                            Kecamatan Merbau Mataram, Kabupaten Lampung Selatan.
-                            Sejak awal berdirinya, desa ini berkembang melalui sektor
-                            pertanian, perkebunan, dan semangat gotong royong masyarakat.
-
-                        </p>
-
-                        <p className="text-gray-600 leading-8">
-
-                            Hingga saat ini Desa Panca Tunggal terus berbenah dalam
-                            meningkatkan kualitas pelayanan publik dengan memanfaatkan
-                            teknologi informasi melalui pembangunan website resmi desa
-                            SIPANDA.
+                            {profile?.history}
 
                         </p>
 

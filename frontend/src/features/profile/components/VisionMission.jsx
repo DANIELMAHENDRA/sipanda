@@ -6,15 +6,25 @@ import {
     CheckCircle2,
 } from "lucide-react";
 
+import useProfile from "../../../hooks/useProfile";
+
 export default function VisionMission() {
 
-    const missions = [
-        "Meningkatkan kualitas pelayanan publik yang cepat, transparan, dan akuntabel.",
-        "Mengembangkan sektor pertanian, perkebunan, dan UMKM sebagai penggerak ekonomi desa.",
-        "Meningkatkan kualitas pendidikan, kesehatan, dan kesejahteraan masyarakat.",
-        "Memanfaatkan teknologi informasi dalam pelayanan dan administrasi desa.",
-        "Membangun tata kelola pemerintahan desa yang profesional dan partisipatif."
-    ];
+    const {
+        profile,
+        loading,
+    } = useProfile();
+
+    if (loading) {
+        return null;
+    }
+
+    const missions = profile?.mission
+        ? profile.mission
+            .split("\n")
+            .filter(item => item.trim() !== "")
+            .map(item => item.replace(/^\d+\.\s*/, ""))
+        : [];
 
     return (
 
@@ -25,12 +35,12 @@ export default function VisionMission() {
                 <SectionTitle
                     subtitle="Arah Pembangunan"
                     title="Visi & Misi Desa"
-                    description="Komitmen Pemerintah Desa Panca Tunggal dalam mewujudkan pembangunan yang berkelanjutan."
+                    description="Komitmen Pemerintah Desa dalam mewujudkan pembangunan yang berkelanjutan."
                 />
 
                 <div className="grid lg:grid-cols-2 gap-10">
 
-                    {/* VISI */}
+                    {/* ================= VISI ================= */}
 
                     <div className="bg-white border border-gray-200 rounded-3xl p-10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 
@@ -51,17 +61,13 @@ export default function VisionMission() {
 
                         <p className="text-gray-600 leading-9 text-justify">
 
-                            Terwujudnya Desa Panca Tunggal yang maju,
-                            mandiri, sejahtera, berbudaya,
-                            serta berbasis teknologi informasi
-                            menuju pelayanan publik yang
-                            transparan, berkualitas, dan berdaya saing.
+                            {profile?.vision}
 
                         </p>
 
                     </div>
 
-                    {/* MISI */}
+                    {/* ================= MISI ================= */}
 
                     <div className="bg-white border border-gray-200 rounded-3xl p-10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 

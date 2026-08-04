@@ -1,16 +1,47 @@
 import {
     Sprout,
-    MapPin,
     TrendingUp,
-    Users,
     ArrowRight,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 
-import featuredImage from "../../../assets/images/potential/featured-potential.jpg";
+import usePotential from "../../../hooks/usePotential";
 
 export default function FeaturedPotential() {
+
+    const { potential, loading, error } = usePotential();
+
+    const featured =
+        potential.find((item) => item.is_featured) || null;
+
+    if (loading) {
+        return (
+            <section className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <p className="text-gray-500">
+                        Memuat potensi unggulan...
+                    </p>
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <p className="text-red-500">
+                        Gagal memuat data potensi.
+                    </p>
+                </div>
+            </section>
+        );
+    }
+
+    if (!featured) {
+        return null;
+    }
 
     return (
 
@@ -51,8 +82,8 @@ export default function FeaturedPotential() {
                     <div className="relative">
 
                         <img
-                            src={featuredImage}
-                            alt="Pertanian Jagung"
+                            src={featured.cover_image || featured.thumbnail}
+                            alt={featured.title}
                             className="rounded-3xl shadow-2xl object-cover w-full h-[500px]"
                         />
 
@@ -60,7 +91,7 @@ export default function FeaturedPotential() {
 
                             <Sprout size={18} />
 
-                            Pertanian
+                            {featured.category}
 
                         </div>
 
@@ -78,137 +109,59 @@ export default function FeaturedPotential() {
 
                         <h2 className="mt-4 text-4xl font-bold text-gray-900 leading-tight">
 
-                            Pertanian Jagung
-                            Menjadi Potensi
-                            Unggulan Desa
+                            {featured.title}
 
                         </h2>
 
                         <p className="mt-8 text-gray-600 leading-8 text-lg">
 
-                            Jagung merupakan salah satu komoditas utama
-                            masyarakat Desa Panca Tunggal. Didukung oleh
-                            lahan pertanian yang luas dan petani yang
-                            berpengalaman, hasil produksi jagung terus
-                            meningkat setiap tahunnya sehingga menjadi
-                            salah satu penggerak ekonomi desa.
+                            {featured.excerpt}
 
                         </p>
 
-                        {/* Info */}
+                        {/* Statistics */}
 
                         <div className="grid sm:grid-cols-2 gap-6 mt-10">
 
-                            <div className="flex items-center gap-4">
+                            {featured.statistics?.map((item) => (
 
-                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
+                                <div
+                                    key={item.title}
+                                    className="flex items-center gap-4"
+                                >
 
-                                    <MapPin className="text-green-700" />
+                                    <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
 
-                                </div>
+                                        <TrendingUp className="text-green-700" />
 
-                                <div>
+                                    </div>
 
-                                    <p className="text-gray-500 text-sm">
+                                    <div>
 
-                                        Lokasi
+                                        <p className="text-gray-500 text-sm">
 
-                                    </p>
+                                            {item.title}
 
-                                    <h4 className="font-semibold">
+                                        </p>
 
-                                        Dusun I & II
+                                        <h4 className="font-semibold">
 
-                                    </h4>
+                                            {item.value}
 
-                                </div>
+                                        </h4>
 
-                            </div>
-
-                            <div className="flex items-center gap-4">
-
-                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
-
-                                    <TrendingUp className="text-green-700" />
+                                    </div>
 
                                 </div>
 
-                                <div>
-
-                                    <p className="text-gray-500 text-sm">
-
-                                        Produksi
-
-                                    </p>
-
-                                    <h4 className="font-semibold">
-
-                                        ± 1.250 Ton/Tahun
-
-                                    </h4>
-
-                                </div>
-
-                            </div>
-
-                            <div className="flex items-center gap-4">
-
-                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
-
-                                    <Users className="text-green-700" />
-
-                                </div>
-
-                                <div>
-
-                                    <p className="text-gray-500 text-sm">
-
-                                        Petani
-
-                                    </p>
-
-                                    <h4 className="font-semibold">
-
-                                        320 Orang
-
-                                    </h4>
-
-                                </div>
-
-                            </div>
-
-                            <div className="flex items-center gap-4">
-
-                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
-
-                                    <Sprout className="text-green-700" />
-
-                                </div>
-
-                                <div>
-
-                                    <p className="text-gray-500 text-sm">
-
-                                        Luas Lahan
-
-                                    </p>
-
-                                    <h4 className="font-semibold">
-
-                                        ± 320 Hektar
-
-                                    </h4>
-
-                                </div>
-
-                            </div>
+                            ))}
 
                         </div>
 
                         {/* Button */}
 
                         <NavLink
-                            to="/potensi/1"
+                            to={`/potensi/${featured.id}`}
                             className="inline-flex items-center gap-3 mt-12 px-8 py-4 rounded-full bg-green-700 text-white font-semibold hover:bg-green-800 transition"
                         >
 

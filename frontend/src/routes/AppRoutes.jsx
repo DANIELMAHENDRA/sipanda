@@ -74,7 +74,7 @@ export default function AppRoutes() {
                     />
 
                     <Route
-                        path="/potensi/:id"
+                        path="/potensi/:slug"
                         element={<DetailPotential />}
                     />
 

@@ -2,6 +2,8 @@ import {
     X,
     CalendarDays,
     Tag,
+    MapPin,
+    Camera,
 } from "lucide-react";
 
 export default function GalleryModal({
@@ -29,8 +31,6 @@ export default function GalleryModal({
             "
             onClick={onClose}
         >
-
-            {/* Modal */}
 
             <div
                 onClick={(e) => e.stopPropagation()}
@@ -61,8 +61,6 @@ export default function GalleryModal({
                             object-cover
                         "
                     />
-
-                    {/* Close */}
 
                     <button
                         onClick={onClose}
@@ -129,16 +127,15 @@ export default function GalleryModal({
 
                     </h2>
 
-                    {/* Meta */}
+                    {/* Metadata */}
 
                     <div
                         className="
                             flex
-                            items-center
-                            gap-8
+                            flex-wrap
+                            gap-6
                             mt-6
                             text-gray-500
-                            flex-wrap
                         "
                     >
 
@@ -148,7 +145,7 @@ export default function GalleryModal({
 
                             <span>
 
-                                {gallery.date}
+                                {gallery.taken_at}
 
                             </span>
 
@@ -166,31 +163,66 @@ export default function GalleryModal({
 
                         </div>
 
+                        {
+
+                            gallery.location && (
+
+                                <div className="flex items-center gap-2">
+
+                                    <MapPin size={18} />
+
+                                    <span>
+
+                                        {gallery.location}
+
+                                    </span>
+
+                                </div>
+
+                            )
+
+                        }
+
+                        {
+
+                            gallery.photographer && (
+
+                                <div className="flex items-center gap-2">
+
+                                    <Camera size={18} />
+
+                                    <span>
+
+                                        {gallery.photographer}
+
+                                    </span>
+
+                                </div>
+
+                            )
+
+                        }
+
                     </div>
 
                     {/* Description */}
 
-                    <div className="mt-8 space-y-6 text-gray-700 leading-8">
+                    <div
+                        className="
+                            mt-8
+                            text-gray-700
+                            leading-8
+                            whitespace-pre-line
+                        "
+                    >
 
-                        <p>
+                        {
 
-                            Dokumentasi ini merupakan salah satu kegiatan
-                            resmi Pemerintah Desa Panca Tunggal dalam
-                            mendukung pembangunan desa, meningkatkan
-                            pelayanan kepada masyarakat,
-                            serta mempererat hubungan antara pemerintah
-                            desa dengan seluruh warga.
+                            gallery.description
+                                ? gallery.description
+                                : "Tidak ada deskripsi."
 
-                        </p>
-
-                        <p>
-
-                            Seluruh kegiatan yang ditampilkan pada galeri
-                            merupakan dokumentasi aktual sebagai bentuk
-                            transparansi informasi publik serta arsip
-                            digital kegiatan desa.
-
-                        </p>
+                        }
 
                     </div>
 

@@ -1,11 +1,5 @@
 import SectionTitle from "../../../components/common/SectionTitle";
-
-import official1 from "../../../assets/images/government/officials/official-1.jpg";
-import official2 from "../../../assets/images/government/officials/official-2.jpg";
-import official3 from "../../../assets/images/government/officials/official-3.jpg";
-import official4 from "../../../assets/images/government/officials/official-4.jpg";
-import official5 from "../../../assets/images/government/officials/official-5.jpg";
-import official6 from "../../../assets/images/government/officials/official-6.jpg";
+import useGovernment from "../../../hooks/useGovernment";
 
 import {
     BadgeCheck,
@@ -14,45 +8,17 @@ import {
 
 export default function OfficialsSection() {
 
-    const officials = [
+    const { government, loading } = useGovernment();
 
-        {
-            name: "Nama Kepala Desa",
-            position: "Kepala Desa",
-            image: official1,
-        },
-
-        {
-            name: "Nama Sekretaris Desa",
-            position: "Sekretaris Desa",
-            image: official2,
-        },
-
-        {
-            name: "Nama Kasi Pemerintahan",
-            position: "Kasi Pemerintahan",
-            image: official3,
-        },
-
-        {
-            name: "Nama Kaur Umum",
-            position: "Kaur Umum",
-            image: official4,
-        },
-
-        {
-            name: "Nama Kaur Keuangan",
-            position: "Kaur Keuangan",
-            image: official5,
-        },
-
-        {
-            name: "Nama Kepala Dusun",
-            position: "Kepala Dusun",
-            image: official6,
-        },
-
-    ];
+    if (loading) {
+        return (
+            <section className="py-24">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <p>Loading...</p>
+                </div>
+            </section>
+        );
+    }
 
     return (
 
@@ -68,12 +34,12 @@ export default function OfficialsSection() {
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
 
-                    {officials.map((official, index) => (
+                    {government
+                    .filter((official) => !official.is_head)
+                    .map((official) => (
 
                         <div
-                            key={index}
-                            data-aos="fade-up"
-                            data-aos-delay={index * 100}
+                            key={official.id}
                             className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 border border-gray-100"
                         >
 
@@ -81,17 +47,32 @@ export default function OfficialsSection() {
 
                             <div className="relative">
 
+                            {official.photo ? (
+
                                 <img
-                                    src={official.image}
+                                    src={official.photo}
                                     alt={official.name}
                                     className="w-full h-[350px] object-cover"
                                 />
+
+                            ) : (
+
+                                <div className="w-full h-[350px] bg-gray-100 flex items-center justify-center">
+
+                                    <UserRound
+                                        size={120}
+                                        className="text-gray-400"
+                                    />
+
+                                </div>
+
+                            )}
 
                                 <div className="absolute top-5 left-5 bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
 
                                     <BadgeCheck size={16} />
 
-                                    Perangkat Desa
+                                    {official.position}
 
                                 </div>
 
@@ -134,10 +115,7 @@ export default function OfficialsSection() {
 
                                     <p className="text-gray-600 leading-7">
 
-                                        Bertugas memberikan pelayanan kepada
-                                        masyarakat sesuai dengan bidang
-                                        tugas dan fungsi yang diemban dalam
-                                        struktur Pemerintah Desa.
+                                        {official.description}
 
                                     </p>
 

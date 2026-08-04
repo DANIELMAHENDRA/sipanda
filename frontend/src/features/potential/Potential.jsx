@@ -5,16 +5,29 @@ import FeaturedPotential from "./components/FeaturedPotential";
 import StatisticsSection from "./components/StatisticsSection";
 import CTASection from "./components/CTASection";
 
+import usePotential from "../../hooks/usePotential";
+
 export default function Potential() {
+
+    const { potential, loading, error } = usePotential();
+
     return (
         <>
             <HeroPotential />
 
             <CategorySection />
 
-            <PotentialGrid />
+            <PotentialGrid
+                potential={potential}
+                loading={loading}
+                error={error}
+            />
 
-            <FeaturedPotential />
+            <FeaturedPotential
+                potential={potential}
+                loading={loading}
+                error={error}
+            />
 
             <StatisticsSection />
 

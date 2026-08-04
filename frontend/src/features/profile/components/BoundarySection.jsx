@@ -1,4 +1,5 @@
 import SectionTitle from "../../../components/common/SectionTitle";
+import useProfile from "../../../hooks/useProfile";
 
 import {
     ArrowUp,
@@ -9,26 +10,30 @@ import {
 
 export default function BoundarySection() {
 
+    const { profile, loading } = useProfile();
+
+    if (loading) return null;
+
     const boundaries = [
         {
             icon: ArrowUp,
             direction: "Sebelah Utara",
-            village: "Desa Karang Rejo",
+            village: profile?.north_boundary,
         },
         {
             icon: ArrowRight,
             direction: "Sebelah Timur",
-            village: "Desa Mekar Jaya",
+            village: profile?.east_boundary,
         },
         {
             icon: ArrowDown,
             direction: "Sebelah Selatan",
-            village: "Desa Sumber Agung",
+            village: profile?.south_boundary,
         },
         {
             icon: ArrowLeft,
             direction: "Sebelah Barat",
-            village: "Desa Sukamaju",
+            village: profile?.west_boundary,
         },
     ];
 
@@ -41,7 +46,7 @@ export default function BoundarySection() {
                 <SectionTitle
                     subtitle="Wilayah"
                     title="Batas Wilayah Desa"
-                    description="Letak administratif Desa Panca Tunggal berdasarkan wilayah yang berbatasan langsung."
+                    description="Letak administratif desa berdasarkan wilayah yang berbatasan langsung."
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -74,7 +79,7 @@ export default function BoundarySection() {
 
                                 <p className="text-gray-600 mt-3 text-lg">
 
-                                    {item.village}
+                                    {item.village || "-"}
 
                                 </p>
 
@@ -86,8 +91,6 @@ export default function BoundarySection() {
 
                 </div>
 
-                {/* Informasi Tambahan */}
-
                 <div className="mt-16 bg-green-700 rounded-3xl p-10 text-white">
 
                     <h3 className="text-3xl font-bold">
@@ -98,9 +101,19 @@ export default function BoundarySection() {
 
                     <p className="mt-5 leading-8 text-green-100">
 
-                        Desa Panca Tunggal memiliki lokasi yang strategis karena
-                        berbatasan langsung dengan beberapa desa di Kecamatan
-                        Merbau Mataram. Kondisi ini mendukung aktivitas ekonomi,
+                        {profile?.village_name} berada di Kecamatan{" "}
+                        <span className="font-semibold">
+                            {profile?.district}
+                        </span>
+                        , Kabupaten{" "}
+                        <span className="font-semibold">
+                            {profile?.regency}
+                        </span>
+                        , Provinsi{" "}
+                        <span className="font-semibold">
+                            {profile?.province}
+                        </span>
+                        . Posisi geografis ini mendukung aktivitas ekonomi,
                         pertanian, perdagangan, serta mempermudah akses
                         masyarakat menuju pusat pelayanan publik.
 

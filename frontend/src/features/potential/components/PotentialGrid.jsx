@@ -1,77 +1,49 @@
 import PotentialCard from "./PotentialCard";
-
-import agriculture from "../../../assets/images/potential/agriculture.jpg";
-import livestock from "../../../assets/images/potential/livestock.jpg";
-import umkm from "../../../assets/images/potential/umkm.jpg";
-import tourism from "../../../assets/images/potential/tourism.jpg";
-import plantation from "../../../assets/images/potential/plantation.jpg";
-import fishery from "../../../assets/images/potential/fishery.jpg";
+import usePotential from "../../../hooks/usePotential";
 
 export default function PotentialGrid() {
 
-    const potentials = [
+    const {
+        potential,
+        loading,
+        error,
+    } = usePotential();
 
-        {
-            id: 1,
-            image: agriculture,
-            title: "Pertanian Jagung",
-            category: "Pertanian",
-            location: "Dusun I",
-            description:
-                "Jagung merupakan komoditas unggulan Desa Panca Tunggal dengan hasil panen yang tinggi setiap tahunnya.",
-        },
+    if (loading) {
 
-        {
-            id: 2,
-            image: plantation,
-            title: "Perkebunan Singkong",
-            category: "Perkebunan",
-            location: "Dusun II",
-            description:
-                "Perkebunan singkong menjadi salah satu sumber pendapatan utama masyarakat desa.",
-        },
+        return (
+            <section className="py-24 bg-gray-50">
 
-        {
-            id: 3,
-            image: livestock,
-            title: "Peternakan Sapi",
-            category: "Peternakan",
-            location: "Dusun III",
-            description:
-                "Peternakan sapi dikelola secara mandiri oleh kelompok peternak untuk memenuhi kebutuhan pasar lokal.",
-        },
+                <div className="max-w-7xl mx-auto px-6 text-center">
 
-        {
-            id: 4,
-            image: fishery,
-            title: "Budidaya Ikan Air Tawar",
-            category: "Perikanan",
-            location: "Dusun IV",
-            description:
-                "Budidaya ikan lele dan nila berkembang pesat sebagai usaha ekonomi masyarakat desa.",
-        },
+                    <p className="text-gray-500">
+                        Memuat data potensi...
+                    </p>
 
-        {
-            id: 5,
-            image: umkm,
-            title: "UMKM Keripik Singkong",
-            category: "UMKM",
-            location: "Desa Panca Tunggal",
-            description:
-                "Produk olahan singkong menjadi salah satu UMKM unggulan yang dipasarkan hingga luar daerah.",
-        },
+                </div>
 
-        {
-            id: 6,
-            image: tourism,
-            title: "Wisata Alam Desa",
-            category: "Wisata",
-            location: "Desa Panca Tunggal",
-            description:
-                "Potensi wisata alam desa menawarkan suasana pedesaan yang asri dan cocok sebagai destinasi edukasi.",
-        },
+            </section>
+        );
 
-    ];
+    }
+
+    if (error) {
+
+        return (
+            <section className="py-24 bg-gray-50">
+
+                <div className="max-w-7xl mx-auto px-6 text-center">
+
+                    <p className="text-red-500">
+                        Gagal memuat data potensi desa.
+                    </p>
+
+                </div>
+
+            </section>
+        );
+
+    }
 
     return (
 
@@ -110,32 +82,41 @@ export default function PotentialGrid() {
 
                 {/* Grid */}
 
-                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+                {potential.length === 0 ? (
 
-                    {potentials.map((item, index) => (
+                    <div className="text-center text-gray-500">
 
-                        <div
-                            key={item.id}
-                            data-aos="fade-up"
-                            data-aos-delay={index * 100}
-                        >
+                        Belum ada data potensi desa.
+
+                    </div>
+
+                ) : (
+
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+
+                        {potential.map((item, index) => (
+
+                            <div
+                                key={item.id}
+                                data-aos="fade-up"
+                                data-aos-delay={index * 100}
+                            >
 
                             <PotentialCard
-
                                 id={item.id}
-                                image={item.image}
+                                image={item.thumbnail}
                                 title={item.title}
                                 category={item.category}
-                                location={item.location}
-                                description={item.description}
-
+                                description={item.excerpt}
                             />
 
-                        </div>
+                            </div>
 
-                    ))}
+                        ))}
 
-                </div>
+                    </div>
+
+                )}
 
             </div>
 

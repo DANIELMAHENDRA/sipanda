@@ -8,6 +8,7 @@ const potentialService = {
         });
     },
 
+    // Admin (berdasarkan ID)
     getById(id) {
         return api.get(`/potential/${id}`);
     },
