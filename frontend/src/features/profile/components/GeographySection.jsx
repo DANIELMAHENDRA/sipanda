@@ -10,49 +10,38 @@ import {
     Building2,
 } from "lucide-react";
 
-import useProfile from "../../../hooks/useProfile";
-
-export default function GeographySection() {
-
-    const {
-        profile,
-        loading,
-    } = useProfile();
-
-    if (loading) {
-        return null;
-    }
+export default function GeographySection({ profile }) {
 
     const informations = [
         {
             icon: Building2,
             title: "Kecamatan",
-            value: profile?.district,
+            value: profile?.district ?? "-",
         },
         {
             icon: Landmark,
             title: "Kabupaten",
-            value: profile?.regency,
+            value: profile?.regency ?? "-",
         },
         {
             icon: Globe,
             title: "Provinsi",
-            value: profile?.province,
+            value: profile?.province ?? "-",
         },
         {
             icon: Trees,
             title: "Luas Wilayah",
-            value: `${profile?.area} Ha`,
+            value: `${profile?.area ?? 0} Ha`,
         },
         {
             icon: Navigation,
             title: "Latitude",
-            value: profile?.latitude,
+            value: profile?.latitude ?? "-",
         },
         {
             icon: MapPinned,
             title: "Longitude",
-            value: profile?.longitude,
+            value: profile?.longitude ?? "-",
         },
     ];
 
@@ -70,8 +59,6 @@ export default function GeographySection() {
 
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-                    {/* Gambar */}
-
                     <div>
 
                         <img
@@ -81,8 +68,6 @@ export default function GeographySection() {
                         />
 
                     </div>
-
-                    {/* Informasi */}
 
                     <div className="grid sm:grid-cols-2 gap-6">
 
@@ -107,15 +92,11 @@ export default function GeographySection() {
                                     </div>
 
                                     <h3 className="text-lg font-semibold text-gray-800">
-
                                         {item.title}
-
                                     </h3>
 
                                     <p className="text-gray-500 mt-2">
-
                                         {item.value}
-
                                     </p>
 
                                 </div>

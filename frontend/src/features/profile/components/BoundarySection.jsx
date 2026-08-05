@@ -1,5 +1,4 @@
 import SectionTitle from "../../../components/common/SectionTitle";
-import useProfile from "../../../hooks/useProfile";
 
 import {
     ArrowUp,
@@ -8,11 +7,7 @@ import {
     ArrowRight,
 } from "lucide-react";
 
-export default function BoundarySection() {
-
-    const { profile, loading } = useProfile();
-
-    if (loading) return null;
+export default function BoundarySection({ profile }) {
 
     const boundaries = [
         {
@@ -72,15 +67,11 @@ export default function BoundarySection() {
                                 </div>
 
                                 <h3 className="text-xl font-semibold text-gray-800">
-
                                     {item.direction}
-
                                 </h3>
 
                                 <p className="text-gray-600 mt-3 text-lg">
-
                                     {item.village || "-"}
-
                                 </p>
 
                             </div>
@@ -94,9 +85,7 @@ export default function BoundarySection() {
                 <div className="mt-16 bg-green-700 rounded-3xl p-10 text-white">
 
                     <h3 className="text-3xl font-bold">
-
                         Lokasi Strategis
-
                     </h3>
 
                     <p className="mt-5 leading-8 text-green-100">
@@ -104,16 +93,13 @@ export default function BoundarySection() {
                         {profile?.village_name} berada di Kecamatan{" "}
                         <span className="font-semibold">
                             {profile?.district}
-                        </span>
-                        , Kabupaten{" "}
+                        </span>, Kabupaten{" "}
                         <span className="font-semibold">
                             {profile?.regency}
-                        </span>
-                        , Provinsi{" "}
+                        </span>, Provinsi{" "}
                         <span className="font-semibold">
                             {profile?.province}
-                        </span>
-                        . Posisi geografis ini mendukung aktivitas ekonomi,
+                        </span>. Posisi geografis ini mendukung aktivitas ekonomi,
                         pertanian, perdagangan, serta mempermudah akses
                         masyarakat menuju pusat pelayanan publik.
 

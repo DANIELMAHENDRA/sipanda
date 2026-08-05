@@ -1,10 +1,7 @@
 import SectionTitle from "../../../components/common/SectionTitle";
 import historyImage from "../../../assets/images/profile/history.jpg";
-import useProfile from "../../../hooks/useProfile";
 
-export default function HistorySection() {
-
-    const { profile, loading } = useProfile();
+export default function HistorySection({ profile }) {
 
     const timeline = [
         {
@@ -27,15 +24,8 @@ export default function HistorySection() {
         }
     ];
 
-    if (loading) {
-        return (
-            <section className="py-24 text-center">
-                Memuat sejarah desa...
-            </section>
-        );
-    }
-
     return (
+
         <section className="py-24 bg-white">
 
             <div className="max-w-7xl mx-auto px-6">
@@ -48,8 +38,6 @@ export default function HistorySection() {
 
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-                    {/* Gambar */}
-
                     <div>
 
                         <img
@@ -60,12 +48,12 @@ export default function HistorySection() {
 
                     </div>
 
-                    {/* Isi */}
-
                     <div>
 
                         <h3 className="text-3xl font-bold text-gray-800 mb-6">
+
                             Awal Berdirinya Desa
+
                         </h3>
 
                         <p className="text-gray-600 leading-8 whitespace-pre-line">
@@ -92,7 +80,9 @@ export default function HistorySection() {
                                         </div>
 
                                         {index !== timeline.length - 1 && (
+
                                             <div className="w-1 h-16 bg-green-300"></div>
+
                                         )}
 
                                     </div>
@@ -126,5 +116,7 @@ export default function HistorySection() {
             </div>
 
         </section>
+
     );
+
 }

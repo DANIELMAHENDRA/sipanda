@@ -4,19 +4,16 @@ import {
 } from "lucide-react";
 
 import Button from "../../../components/common/Button";
-import useNews from "../../../hooks/useNews";
 
-export default function NewsGrid() {
+export default function NewsGrid({
 
-    const {
-        news,
-        loading,
-        error,
-    } = useNews();
+    news,
 
-    console.log("NewsGrid Render");
-    console.log(news);
-    console.log(news.length);
+    loading,
+
+    error,
+
+}) {
 
     if (loading) {
 
@@ -27,7 +24,9 @@ export default function NewsGrid() {
                 <div className="max-w-7xl mx-auto px-6 text-center">
 
                     <p className="text-gray-500">
+
                         Memuat berita...
+
                     </p>
 
                 </div>
@@ -47,7 +46,31 @@ export default function NewsGrid() {
                 <div className="max-w-7xl mx-auto px-6 text-center">
 
                     <p className="text-red-500">
+
                         Gagal memuat data berita.
+
+                    </p>
+
+                </div>
+
+            </section>
+
+        );
+
+    }
+
+    if (!news.length) {
+
+        return (
+
+            <section className="py-10 bg-gray-50">
+
+                <div className="max-w-7xl mx-auto px-6 text-center">
+
+                    <p className="text-gray-500">
+
+                        Belum ada berita.
+
                     </p>
 
                 </div>
@@ -72,22 +95,22 @@ export default function NewsGrid() {
                             key={item.id}
                             data-aos="fade-up"
                             data-aos-delay={index * 100}
-                            className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                            className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
                         >
 
                             <div className="overflow-hidden">
 
-                               <img
-                                src={item.thumbnail || "/images/no-image.png"}
-                                alt={item.title}
-                                className="w-full h-60 object-cover hover:scale-110 transition duration-500"
-                            />
+                                <img
+                                    src={item.thumbnail || "/images/no-image.png"}
+                                    alt={item.title}
+                                    className="w-full h-60 object-cover hover:scale-110 transition duration-500"
+                                />
 
                             </div>
 
                             <div className="p-6">
 
-                                <div className="flex items-center justify-between mb-5">
+                                <div className="flex justify-between items-center mb-5">
 
                                     <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
 
@@ -105,7 +128,7 @@ export default function NewsGrid() {
 
                                 </div>
 
-                                <h3 className="text-2xl font-bold leading-snug hover:text-green-700 transition">
+                                <h3 className="text-2xl font-bold hover:text-green-700 transition">
 
                                     {item.title}
 
@@ -120,10 +143,9 @@ export default function NewsGrid() {
                                 <div className="mt-8">
 
                                     <Button
-                                        to={`/berita/${item.slug}`}
-                                        variant="outline"
-                                        className="gap-2"
-                                    >
+                                    to={`/berita/${item.id}`}
+                                    variant="outline"
+                                >
 
                                         Baca Selengkapnya
 

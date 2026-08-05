@@ -6,18 +6,7 @@ import {
     CheckCircle2,
 } from "lucide-react";
 
-import useProfile from "../../../hooks/useProfile";
-
-export default function VisionMission() {
-
-    const {
-        profile,
-        loading,
-    } = useProfile();
-
-    if (loading) {
-        return null;
-    }
+export default function VisionMission({ profile }) {
 
     const missions = profile?.mission
         ? profile.mission
@@ -40,7 +29,7 @@ export default function VisionMission() {
 
                 <div className="grid lg:grid-cols-2 gap-10">
 
-                    {/* ================= VISI ================= */}
+                    {/* VISI */}
 
                     <div className="bg-white border border-gray-200 rounded-3xl p-10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 
@@ -67,7 +56,7 @@ export default function VisionMission() {
 
                     </div>
 
-                    {/* ================= MISI ================= */}
+                    {/* MISI */}
 
                     <div className="bg-white border border-gray-200 rounded-3xl p-10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 

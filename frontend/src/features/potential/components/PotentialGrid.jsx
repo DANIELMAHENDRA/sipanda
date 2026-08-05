@@ -1,28 +1,29 @@
 import PotentialCard from "./PotentialCard";
-import usePotential from "../../../hooks/usePotential";
 
-export default function PotentialGrid() {
-
-    const {
-        potential,
-        loading,
-        error,
-    } = usePotential();
+export default function PotentialGrid({
+    potential,
+    loading,
+    error,
+}) {
 
     if (loading) {
 
         return (
+
             <section className="py-24 bg-gray-50">
 
                 <div className="max-w-7xl mx-auto px-6 text-center">
 
                     <p className="text-gray-500">
+
                         Memuat data potensi...
+
                     </p>
 
                 </div>
 
             </section>
+
         );
 
     }
@@ -30,17 +31,21 @@ export default function PotentialGrid() {
     if (error) {
 
         return (
+
             <section className="py-24 bg-gray-50">
 
                 <div className="max-w-7xl mx-auto px-6 text-center">
 
                     <p className="text-red-500">
+
                         Gagal memuat data potensi desa.
+
                     </p>
 
                 </div>
 
             </section>
+
         );
 
     }
@@ -102,13 +107,13 @@ export default function PotentialGrid() {
                                 data-aos-delay={index * 100}
                             >
 
-                            <PotentialCard
-                                id={item.id}
-                                image={item.thumbnail}
-                                title={item.title}
-                                category={item.category}
-                                description={item.excerpt}
-                            />
+                                <PotentialCard
+                                    id={item.id}
+                                    image={item.thumbnail}
+                                    title={item.title}
+                                    category={item.category}
+                                    description={item.excerpt}
+                                />
 
                             </div>
 

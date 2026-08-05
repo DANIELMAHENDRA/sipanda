@@ -10,12 +10,25 @@ import { NavLink } from "react-router-dom";
 
 export default function HeroDetailPotential({ potential }) {
 
+    const backgroundImage =
+        potential.cover_image ||
+        potential.thumbnail ||
+        "https://placehold.co/1600x900?text=Potensi+Desa";
+
+    const {
+        title,
+        category,
+        excerpt,
+        published_at,
+        user,
+    } = potential;
+
     return (
 
         <section
             className="relative min-h-[75vh] flex items-center bg-cover bg-center pt-24 pb-16"
             style={{
-                backgroundImage: `url(${potential.cover_image || potential.thumbnail})`,
+                backgroundImage: `url(${backgroundImage})`,
             }}
         >
 
@@ -58,7 +71,7 @@ export default function HeroDetailPotential({ potential }) {
 
                     <span className="text-white">
 
-                        {potential.title}
+                        {title}
 
                     </span>
 
@@ -74,7 +87,7 @@ export default function HeroDetailPotential({ potential }) {
 
                     <Sprout size={18} />
 
-                    {potential.category}
+                    {category}
 
                 </div>
 
@@ -86,7 +99,7 @@ export default function HeroDetailPotential({ potential }) {
                     className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-5xl"
                 >
 
-                    {potential.title}
+                    {title}
 
                 </h1>
 
@@ -98,7 +111,7 @@ export default function HeroDetailPotential({ potential }) {
                     className="mt-8 text-lg text-gray-200 leading-8 max-w-3xl"
                 >
 
-                    {potential.excerpt}
+                    {excerpt}
 
                 </p>
 
@@ -116,12 +129,15 @@ export default function HeroDetailPotential({ potential }) {
 
                         <span>
 
-                            {potential.published_at
-                                ? new Date(potential.published_at).toLocaleDateString("id-ID", {
-                                    day: "numeric",
-                                    month: "long",
-                                    year: "numeric",
-                                })
+                            {published_at
+                                ? new Date(published_at).toLocaleDateString(
+                                    "id-ID",
+                                    {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                    }
+                                )
                                 : "-"}
 
                         </span>
@@ -134,7 +150,7 @@ export default function HeroDetailPotential({ potential }) {
 
                         <span>
 
-                            {potential.user?.name || "Pemerintah Desa"}
+                            {user?.name || "Pemerintah Desa"}
 
                         </span>
 

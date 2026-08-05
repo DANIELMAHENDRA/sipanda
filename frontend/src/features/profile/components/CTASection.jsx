@@ -1,7 +1,10 @@
 import { Newspaper, PhoneCall } from "lucide-react";
 import Button from "../../../components/common/Button";
 
-export default function CTASection() {
+export default function CTASection({ profile }) {
+
+    const villageName = profile?.village_name || "Desa Panca Tunggal";
+
     return (
 
         <section className="relative overflow-hidden py-24 bg-gradient-to-r from-green-700 to-green-600">
@@ -18,7 +21,7 @@ export default function CTASection() {
 
                 <span className="inline-block px-5 py-2 rounded-full bg-white/20 text-white font-medium mb-6">
 
-                    Website Resmi Desa Panca Tunggal
+                    Website Resmi {villageName}
 
                 </span>
 
@@ -26,7 +29,7 @@ export default function CTASection() {
 
                     Mari Bersama Membangun
                     <br />
-                    Desa Panca Tunggal
+                    {villageName}
 
                 </h2>
 
@@ -36,11 +39,9 @@ export default function CTASection() {
                     yang memberikan pelayanan informasi secara cepat,
                     transparan, dan mudah diakses oleh seluruh masyarakat.
                     Temukan berita terbaru, informasi pemerintahan,
-                    serta berbagai potensi yang dimiliki Desa Panca Tunggal.
+                    serta berbagai potensi yang dimiliki {villageName}.
 
                 </p>
-
-                {/* Button */}
 
                 <div className="mt-12 flex flex-col sm:flex-row justify-center gap-5">
 
@@ -67,4 +68,5 @@ export default function CTASection() {
         </section>
 
     );
+
 }

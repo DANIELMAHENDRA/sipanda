@@ -2,7 +2,7 @@ import SectionTitle from "../../../components/common/SectionTitle";
 import Button from "../../../components/common/Button";
 import village from "../../../assets/images/village.jpg";
 
-export default function AboutSection() {
+export default function AboutSection({ profile }) {
 
     return (
 
@@ -23,8 +23,8 @@ export default function AboutSection() {
                     >
 
                         <img
-                            src={village}
-                            alt="Desa Panca Tunggal"
+                            src={profile?.hero_image || village}
+                            alt={profile?.village_name || "Desa"}
                             className="w-full h-auto rounded-2xl shadow-xl object-cover"
                         />
 
@@ -39,24 +39,13 @@ export default function AboutSection() {
 
                         <SectionTitle
                             subtitle="Tentang Desa"
-                            title="Desa Panca Tunggal"
-                            description="Mengenal lebih dekat Desa Panca Tunggal sebagai desa yang terus berkembang menuju pelayanan publik yang modern, transparan, dan berbasis digital."
+                            title={profile?.village_name || "Desa Panca Tunggal"}
+                            description={`Mengenal lebih dekat ${profile?.village_name || "Desa Panca Tunggal"} yang berada di Kecamatan ${profile?.district || "-"}, Kabupaten ${profile?.regency || "-"}, Provinsi ${profile?.province || "-"}.`}
                         />
 
                         <p className="text-gray-600 leading-8">
 
-                            Desa Panca Tunggal merupakan salah satu desa di Kecamatan
-                            Merbau Mataram, Kabupaten Lampung Selatan yang memiliki
-                            potensi besar pada sektor pertanian, perkebunan, UMKM,
-                            peternakan, serta pemberdayaan masyarakat.
-
-                        </p>
-
-                        <p className="text-gray-600 leading-8 mt-5">
-
-                            Website SIPANDA dibangun sebagai media informasi resmi desa
-                            yang bertujuan memberikan pelayanan informasi kepada masyarakat
-                            secara cepat, transparan, akurat, serta mudah diakses kapan saja.
+                            {profile?.about}
 
                         </p>
 
@@ -67,7 +56,9 @@ export default function AboutSection() {
                         >
 
                             <Button to="/profil">
+
                                 Lihat Profil Desa
+
                             </Button>
 
                         </div>

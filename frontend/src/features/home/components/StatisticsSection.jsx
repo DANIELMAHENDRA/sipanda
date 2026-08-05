@@ -1,28 +1,35 @@
 import SectionTitle from "../../../components/common/SectionTitle";
 
-export default function StatisticsSection() {
+export default function StatisticsSection({ profile }) {
 
     const stats = [
+
         {
-            value: "4.250",
+            value: profile?.population ?? "-",
             label: "Penduduk",
             icon: "👨‍👩‍👧‍👦",
         },
+
         {
-            value: "1.120",
+            value: profile?.family_count ?? "-",
             label: "Kepala Keluarga",
             icon: "🏠",
         },
+
         {
-            value: "12",
+            value: profile?.hamlet_count ?? "-",
             label: "Dusun",
             icon: "📍",
         },
+
         {
-            value: "850 Ha",
+            value: profile?.area
+                ? `${profile.area} Ha`
+                : "-",
             label: "Luas Wilayah",
             icon: "🌾",
         },
+
     ];
 
     return (
@@ -37,7 +44,7 @@ export default function StatisticsSection() {
                 <SectionTitle
                     subtitle="Data Desa"
                     title="Statistik Desa"
-                    description="Gambaran singkat mengenai kondisi Desa Panca Tunggal."
+                    description="Gambaran singkat mengenai kondisi Desa Panca Tunggal berdasarkan data terbaru."
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -52,15 +59,21 @@ export default function StatisticsSection() {
                         >
 
                             <div className="text-5xl mb-4">
+
                                 {item.icon}
+
                             </div>
 
                             <h3 className="text-3xl font-bold">
+
                                 {item.value}
+
                             </h3>
 
                             <p className="mt-2 text-green-100">
+
                                 {item.label}
+
                             </p>
 
                         </div>

@@ -2,45 +2,68 @@ import {
     Sprout,
     TrendingUp,
     ArrowRight,
+    ImageOff,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 
-import usePotential from "../../../hooks/usePotential";
-
-export default function FeaturedPotential() {
-
-    const { potential, loading, error } = usePotential();
+export default function FeaturedPotential({
+    potential,
+    loading,
+    error,
+}) {
 
     const featured =
-        potential.find((item) => item.is_featured) || null;
+        potential.find(item => item.is_featured);
 
     if (loading) {
+
         return (
+
             <section className="py-24 bg-white">
+
                 <div className="max-w-7xl mx-auto px-6 text-center">
+
                     <p className="text-gray-500">
+
                         Memuat potensi unggulan...
+
                     </p>
+
                 </div>
+
             </section>
+
         );
+
     }
 
     if (error) {
+
         return (
+
             <section className="py-24 bg-white">
+
                 <div className="max-w-7xl mx-auto px-6 text-center">
+
                     <p className="text-red-500">
+
                         Gagal memuat data potensi.
+
                     </p>
+
                 </div>
+
             </section>
+
         );
+
     }
 
     if (!featured) {
+
         return null;
+
     }
 
     return (
@@ -70,8 +93,6 @@ export default function FeaturedPotential() {
 
                 </div>
 
-                {/* Content */}
-
                 <div
                     data-aos="fade-up"
                     className="grid lg:grid-cols-2 gap-16 items-center"
@@ -81,11 +102,26 @@ export default function FeaturedPotential() {
 
                     <div className="relative">
 
-                        <img
-                            src={featured.cover_image || featured.thumbnail}
-                            alt={featured.title}
-                            className="rounded-3xl shadow-2xl object-cover w-full h-[500px]"
-                        />
+                        {featured.cover_image || featured.thumbnail ? (
+
+                            <img
+                                src={featured.cover_image || featured.thumbnail}
+                                alt={featured.title}
+                                className="rounded-3xl shadow-2xl object-cover w-full h-[500px]"
+                            />
+
+                        ) : (
+
+                            <div className="rounded-3xl shadow-2xl w-full h-[500px] bg-gray-100 flex items-center justify-center">
+
+                                <ImageOff
+                                    size={120}
+                                    className="text-gray-400"
+                                />
+
+                            </div>
+
+                        )}
 
                         <div className="absolute top-6 left-6 bg-green-700 text-white px-5 py-2 rounded-full flex items-center gap-2 shadow-lg">
 
@@ -119,46 +155,44 @@ export default function FeaturedPotential() {
 
                         </p>
 
-                        {/* Statistics */}
-
                         <div className="grid sm:grid-cols-2 gap-6 mt-10">
 
-                            {featured.statistics?.map((item) => (
+                            {featured.statistics
+                                ?.filter(item => item.title && item.value)
+                                .map((item) => (
 
-                                <div
-                                    key={item.title}
-                                    className="flex items-center gap-4"
-                                >
+                                    <div
+                                        key={item.title}
+                                        className="flex items-center gap-4"
+                                    >
 
-                                    <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
+                                        <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
 
-                                        <TrendingUp className="text-green-700" />
+                                            <TrendingUp className="text-green-700" />
+
+                                        </div>
+
+                                        <div>
+
+                                            <p className="text-gray-500 text-sm">
+
+                                                {item.title}
+
+                                            </p>
+
+                                            <h4 className="font-semibold">
+
+                                                {item.value}
+
+                                            </h4>
+
+                                        </div>
 
                                     </div>
 
-                                    <div>
-
-                                        <p className="text-gray-500 text-sm">
-
-                                            {item.title}
-
-                                        </p>
-
-                                        <h4 className="font-semibold">
-
-                                            {item.value}
-
-                                        </h4>
-
-                                    </div>
-
-                                </div>
-
-                            ))}
+                                ))}
 
                         </div>
-
-                        {/* Button */}
 
                         <NavLink
                             to={`/potensi/${featured.id}`}

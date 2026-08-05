@@ -3,26 +3,11 @@ import {
     Tag,
 } from "lucide-react";
 
-import coverImage from "../../../../assets/images/news/news1.jpg";
+export default function NewsContent({ news }) {
 
-import gallery1 from "../../../../assets/images/gallery/gallery1.jpg";
-import gallery2 from "../../../../assets/images/gallery/gallery2.jpg";
-import gallery3 from "../../../../assets/images/gallery/gallery3.jpg";
-
-export default function NewsContent() {
-
-    const tags = [
-        "Pemerintahan",
-        "Musyawarah Desa",
-        "RKP Desa",
-        "Pembangunan",
-    ];
-
-    const galleries = [
-        gallery1,
-        gallery2,
-        gallery3,
-    ];
+    const tags = news?.category
+        ? [news.category]
+        : [];
 
     return (
 
@@ -32,39 +17,30 @@ export default function NewsContent() {
 
                 {/* Cover */}
 
-                <img
-                    data-aos="zoom-in"
-                    src={coverImage}
-                    alt="Berita Desa"
-                    className="w-full rounded-3xl shadow-xl object-cover"
-                />
+                {news?.thumbnail && (
+
+                    <img
+                        data-aos="zoom-in"
+                        src={news.thumbnail}
+                        alt={news.title}
+                        className="w-full rounded-3xl shadow-xl object-cover"
+                    />
+
+                )}
 
                 {/* Artikel */}
 
                 <div
                     data-aos="fade-up"
-                    className="mt-12 space-y-8 text-gray-700 text-lg leading-9"
+                    className="mt-12"
                 >
 
-                    <p>
-
-                        Pemerintah Desa Panca Tunggal melaksanakan Musyawarah
-                        Desa sebagai langkah awal dalam menyusun Rencana Kerja
-                        Pemerintah Desa (RKP Desa) Tahun 2026. Musyawarah ini
-                        melibatkan seluruh unsur masyarakat mulai dari
-                        perangkat desa, BPD, tokoh masyarakat, tokoh agama,
-                        pemuda hingga perwakilan kelompok perempuan.
-
-                    </p>
-
-                    <p>
-
-                        Kegiatan ini bertujuan untuk menghimpun berbagai
-                        usulan pembangunan yang berasal langsung dari
-                        masyarakat sehingga program yang dijalankan benar-benar
-                        sesuai dengan kebutuhan warga Desa Panca Tunggal.
-
-                    </p>
+                    <div
+                        className="prose prose-lg max-w-none prose-green"
+                        dangerouslySetInnerHTML={{
+                            __html: news.content,
+                        }}
+                    />
 
                 </div>
 
@@ -82,76 +58,15 @@ export default function NewsContent() {
 
                     <p className="text-2xl italic leading-10 text-gray-800">
 
-                        "Pembangunan desa tidak hanya berasal dari pemerintah,
-                        tetapi dari seluruh masyarakat yang bersama-sama
-                        memiliki visi untuk memajukan Desa Panca Tunggal."
+                        "Informasi yang transparan merupakan langkah awal menuju pelayanan publik yang lebih baik."
 
                     </p>
 
                     <p className="mt-6 font-semibold text-green-700">
 
-                        — Kepala Desa Panca Tunggal
+                        — Pemerintah Desa
 
                     </p>
-
-                </div>
-
-                {/* Artikel */}
-
-                <div
-                    data-aos="fade-up"
-                    className="space-y-8 text-gray-700 text-lg leading-9"
-                >
-
-                    <p>
-
-                        Dalam musyawarah tersebut, berbagai usulan prioritas
-                        pembangunan berhasil dirumuskan, mulai dari
-                        pembangunan infrastruktur jalan desa, peningkatan
-                        pelayanan kesehatan, pengembangan UMKM, peningkatan
-                        kualitas pendidikan, hingga digitalisasi pelayanan
-                        pemerintahan desa melalui Website SIPANDA.
-
-                    </p>
-
-                    <p>
-
-                        Pemerintah Desa berharap seluruh hasil musyawarah
-                        tersebut dapat menjadi dasar penyusunan program kerja
-                        yang transparan, efektif, dan mampu meningkatkan
-                        kesejahteraan masyarakat secara berkelanjutan.
-
-                    </p>
-
-                </div>
-
-                {/* Gallery */}
-
-                <div
-                    data-aos="fade-up"
-                    className="mt-20"
-                >
-
-                    <h2 className="text-3xl font-bold mb-8">
-
-                        Dokumentasi Kegiatan
-
-                    </h2>
-
-                    <div className="grid md:grid-cols-3 gap-6">
-
-                        {galleries.map((image, index) => (
-
-                            <img
-                                key={index}
-                                src={image}
-                                alt=""
-                                className="rounded-2xl h-64 w-full object-cover shadow-lg hover:scale-105 transition duration-300"
-                            />
-
-                        ))}
-
-                    </div>
 
                 </div>
 

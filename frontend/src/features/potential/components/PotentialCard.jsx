@@ -1,5 +1,6 @@
 import {
     ArrowRight,
+    ImageOff,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
@@ -22,11 +23,26 @@ export default function PotentialCard({
 
             <div className="relative overflow-hidden">
 
-                <img
-                    src={image}
-                    alt={title}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
-                />
+                {image ? (
+
+                    <img
+                        src={image}
+                        alt={title}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
+                    />
+
+                ) : (
+
+                    <div className="w-full h-64 bg-gray-100 flex items-center justify-center">
+
+                        <ImageOff
+                            size={70}
+                            className="text-gray-400"
+                        />
+
+                    </div>
+
+                )}
 
                 {/* Category */}
 
@@ -44,8 +60,6 @@ export default function PotentialCard({
 
             <div className="p-7">
 
-                {/* Title */}
-
                 <h3
                     className="text-2xl font-bold text-gray-900 group-hover:text-green-700 transition"
                 >
@@ -54,9 +68,6 @@ export default function PotentialCard({
 
                 </h3>
 
-
-                {/* Description */}
-
                 <p
                     className="mt-5 text-gray-600 leading-7"
                 >
@@ -64,8 +75,6 @@ export default function PotentialCard({
                     {description}
 
                 </p>
-
-                {/* Button */}
 
                 <NavLink
                     to={`/potensi/${id}`}

@@ -1,7 +1,15 @@
 import { Search } from "lucide-react";
 
-export default function SearchSection() {
+export default function SearchSection({
+
+    keyword,
+
+    setKeyword,
+
+}) {
+
     return (
+
         <section className="bg-white py-12">
 
             <div
@@ -24,18 +32,22 @@ export default function SearchSection() {
 
                             <input
                                 type="text"
+                                value={keyword}
+                                onChange={(e) => setKeyword(e.target.value)}
                                 placeholder="Cari berita desa..."
                                 className="w-full h-14 rounded-xl border border-gray-300 pl-14 pr-5 focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition"
                             />
 
                         </div>
 
-                        {/* Search Button */}
+                        {/* Button */}
 
                         <button
                             className="h-14 px-8 rounded-xl bg-green-700 hover:bg-green-800 text-white font-semibold transition duration-300"
                         >
+
                             Cari Berita
+
                         </button>
 
                     </div>
@@ -45,5 +57,7 @@ export default function SearchSection() {
             </div>
 
         </section>
+
     );
+
 }

@@ -1,6 +1,18 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-export default function PaginationSection() {
+export default function PaginationSection({
+
+    pagination,
+
+    onPageChange,
+
+}) {
+
+    if (!pagination || pagination.last_page <= 1) {
+
+        return null;
+
+    }
 
     return (
 
@@ -16,49 +28,86 @@ export default function PaginationSection() {
                     {/* Previous */}
 
                     <button
-                        className="w-12 h-12 rounded-xl border border-gray-300 bg-white hover:bg-green-700 hover:text-white transition duration-300 flex items-center justify-center"
+                        disabled={!pagination.prev_page_url}
+                        onClick={() => onPageChange(pagination.current_page - 1)}
+                        className="
+                            w-12 h-12
+                            rounded-xl
+                            border
+                            border-gray-300
+                            bg-white
+                            hover:bg-green-700
+                            hover:text-white
+                            transition
+                            duration-300
+                            flex
+                            items-center
+                            justify-center
+                            disabled:opacity-40
+                            disabled:cursor-not-allowed
+                        "
                     >
 
                         <ChevronLeft size={20} />
 
                     </button>
 
-                    {/* Page Number */}
+                    {
 
-                    <button className="w-12 h-12 rounded-xl bg-green-700 text-white font-semibold shadow-lg">
+                        [...Array(pagination.last_page)].map((_, index) => {
 
-                        1
+                            const page = index + 1;
 
-                    </button>
+                            return (
 
-                    <button className="w-12 h-12 rounded-xl border border-gray-300 bg-white hover:bg-green-700 hover:text-white transition duration-300">
+                                <button
+                                    key={page}
+                                    onClick={() => onPageChange(page)}
+                                    className={`
+                                        w-12
+                                        h-12
+                                        rounded-xl
+                                        transition
+                                        duration-300
+                                        ${
+                                            page === pagination.current_page
+                                                ? "bg-green-700 text-white shadow-lg"
+                                                : "bg-white border border-gray-300 hover:bg-green-700 hover:text-white"
+                                        }
+                                    `}
+                                >
 
-                        2
+                                    {page}
 
-                    </button>
+                                </button>
 
-                    <button className="w-12 h-12 rounded-xl border border-gray-300 bg-white hover:bg-green-700 hover:text-white transition duration-300">
+                            );
 
-                        3
+                        })
 
-                    </button>
-
-                    <span className="px-2 text-gray-500">
-
-                        ...
-
-                    </span>
-
-                    <button className="w-12 h-12 rounded-xl border border-gray-300 bg-white hover:bg-green-700 hover:text-white transition duration-300">
-
-                        10
-
-                    </button>
+                    }
 
                     {/* Next */}
 
                     <button
-                        className="w-12 h-12 rounded-xl border border-gray-300 bg-white hover:bg-green-700 hover:text-white transition duration-300 flex items-center justify-center"
+                        disabled={!pagination.next_page_url}
+                        onClick={() => onPageChange(pagination.current_page + 1)}
+                        className="
+                            w-12 h-12
+                            rounded-xl
+                            border
+                            border-gray-300
+                            bg-white
+                            hover:bg-green-700
+                            hover:text-white
+                            transition
+                            duration-300
+                            flex
+                            items-center
+                            justify-center
+                            disabled:opacity-40
+                            disabled:cursor-not-allowed
+                        "
                     >
 
                         <ChevronRight size={20} />

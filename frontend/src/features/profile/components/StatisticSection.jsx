@@ -9,18 +9,7 @@ import {
     Home,
 } from "lucide-react";
 
-import useProfile from "../../../hooks/useProfile";
-
-export default function StatisticSection() {
-
-    const {
-        profile,
-        loading,
-    } = useProfile();
-
-    if (loading) {
-        return null;
-    }
+export default function StatisticSection({ profile }) {
 
     const statistics = [
         {
@@ -139,18 +128,35 @@ export default function StatisticSection() {
 
                     <p className="leading-8 text-green-100">
 
-                        Desa <span className="font-semibold text-white">{profile?.village_name}</span>
-                        memiliki jumlah penduduk sebanyak
-                        <span className="font-semibold text-white"> {profile?.population} jiwa</span>,
-                        yang terdiri dari
-                        <span className="font-semibold text-white"> {profile?.family_count} Kepala Keluarga</span>.
-                        Wilayah desa memiliki luas sekitar
-                        <span className="font-semibold text-white"> {profile?.area} Ha</span>,
-                        dengan
-                        <span className="font-semibold text-white"> {profile?.hamlet_count} dusun</span>,
-                        <span className="font-semibold text-white"> {profile?.rw_count} RW</span>,
-                        dan
-                        <span className="font-semibold text-white"> {profile?.rt_count} RT</span>.
+                        Desa{" "}
+                        <span className="font-semibold text-white">
+                            {profile?.village_name}
+                        </span>{" "}
+                        memiliki jumlah penduduk sebanyak{" "}
+                        <span className="font-semibold text-white">
+                            {profile?.population} jiwa
+                        </span>
+                        , yang terdiri dari{" "}
+                        <span className="font-semibold text-white">
+                            {profile?.family_count} Kepala Keluarga
+                        </span>
+                        . Wilayah desa memiliki luas sekitar{" "}
+                        <span className="font-semibold text-white">
+                            {profile?.area} Ha
+                        </span>
+                        , dengan{" "}
+                        <span className="font-semibold text-white">
+                            {profile?.hamlet_count} dusun
+                        </span>
+                        ,{" "}
+                        <span className="font-semibold text-white">
+                            {profile?.rw_count} RW
+                        </span>
+                        , dan{" "}
+                        <span className="font-semibold text-white">
+                            {profile?.rt_count} RT
+                        </span>
+                        .
 
                     </p>
 

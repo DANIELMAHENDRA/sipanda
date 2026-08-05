@@ -1,6 +1,7 @@
 import Button from "../../../components/common/Button";
 
-export default function HeroSection() {
+export default function HeroSection({ profile }) {
+
     return (
 
         <section
@@ -15,7 +16,7 @@ export default function HeroSection() {
                     data-aos="fade-up"
                     data-aos-delay="100"
                 >
-                    Website Resmi Desa Panca Tunggal
+                    Website Resmi {profile?.village_name}
                 </p>
 
                 <h1
@@ -23,12 +24,13 @@ export default function HeroSection() {
                     data-aos="fade-up"
                     data-aos-delay="200"
                 >
-                    Membangun Desa
+                    Selamat Datang di
                     <br />
-                    yang Modern,
-                    <br />
-                    Transparan &
-                    <span className="text-green-700"> Digital</span>
+
+                    <span className="text-green-700">
+                        {profile?.village_name}
+                    </span>
+
                 </h1>
 
                 <p
@@ -36,10 +38,9 @@ export default function HeroSection() {
                     data-aos="fade-up"
                     data-aos-delay="300"
                 >
-                    SIPANDA merupakan Sistem Informasi Profil Desa
-                    yang menyediakan informasi desa, pelayanan publik,
-                    berita, galeri, potensi desa, serta transparansi
-                    pemerintahan desa.
+
+                    {profile?.about}
+
                 </p>
 
                 <div
@@ -66,4 +67,5 @@ export default function HeroSection() {
         </section>
 
     );
+
 }

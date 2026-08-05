@@ -16,11 +16,14 @@ export default function useProfile() {
 
             const response = await profileService.get();
 
-            setProfile(response.data.data ?? {});
+            setProfile(response.data?.data ?? {});
 
         } catch (err) {
 
-            console.error(err);
+            console.error(
+                "Gagal mengambil profil desa:",
+                err
+            );
 
             setError(err);
 

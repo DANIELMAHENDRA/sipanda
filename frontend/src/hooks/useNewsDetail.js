@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import galleryService from "../services/galleryService";
+import newsService from "../services/newsService";
 
-export default function useGallery(params = {}) {
+export default function useNewsDetail(id){
 
-    const [gallery, setGallery] = useState([]);
+    const [news, setNews] = useState(null);
+
     const [loading, setLoading] = useState(true);
+
     const [error, setError] = useState(null);
 
-    const fetchGallery = async () => {
+    const fetchNews = async () => {
 
         try {
 
@@ -15,9 +17,9 @@ export default function useGallery(params = {}) {
 
             setError(null);
 
-            const response = await galleryService.getAll(params);
+            const response = await newsService.getById(id);
 
-            setGallery(response.data.data ?? []);
+            setNews(response.data.data);
 
         } catch (err) {
 
@@ -35,19 +37,21 @@ export default function useGallery(params = {}) {
 
     useEffect(() => {
 
-        fetchGallery();
+        if (id) {
+            fetchNews();
+        }
 
-    }, [JSON.stringify(params)]);
+    }, [id]);
 
     return {
 
-        gallery,
+        news,
 
         loading,
 
         error,
 
-        refresh: fetchGallery,
+        refresh: fetchNews,
 
     };
 

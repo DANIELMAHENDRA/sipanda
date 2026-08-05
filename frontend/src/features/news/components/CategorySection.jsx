@@ -1,19 +1,12 @@
-import { useState } from "react";
+export default function CategorySection({
 
-export default function CategorySection() {
+    categories,
 
-    const categories = [
-        "Semua",
-        "Pemerintahan",
-        "Pembangunan",
-        "UMKM",
-        "Pertanian",
-        "Pendidikan",
-        "Kesehatan",
-        "Kegiatan Desa",
-    ];
+    selectedCategory,
 
-    const [activeCategory, setActiveCategory] = useState("Semua");
+    setSelectedCategory,
+
+}) {
 
     return (
 
@@ -26,24 +19,40 @@ export default function CategorySection() {
 
                 <div className="flex flex-wrap justify-center gap-4">
 
+                    <button
+                        onClick={() => setSelectedCategory(null)}
+                        className={`
+                            px-6 py-3 rounded-full
+                            font-semibold
+                            transition-all duration-300
+                            ${
+                                selectedCategory === null
+                                    ? "bg-green-700 text-white shadow-lg"
+                                    : "bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-green-700"
+                            }
+                        `}
+                    >
+                        Semua
+                    </button>
+
                     {categories.map((category) => (
 
                         <button
-                            key={category}
-                            onClick={() => setActiveCategory(category)}
+                            key={category.id}
+                            onClick={() => setSelectedCategory(category.id)}
                             className={`
                                 px-6 py-3 rounded-full
                                 font-semibold
                                 transition-all duration-300
                                 ${
-                                    activeCategory === category
+                                    selectedCategory === category.id
                                         ? "bg-green-700 text-white shadow-lg"
                                         : "bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-green-700"
                                 }
                             `}
                         >
 
-                            {category}
+                            {category.name}
 
                         </button>
 

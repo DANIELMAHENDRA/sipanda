@@ -1,35 +1,47 @@
 import { ArrowRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-import agriculture from "../../../../assets/images/potential/agriculture.jpg";
-import umkm from "../../../../assets/images/potential/umkm.jpg";
-import tourism from "../../../../assets/images/potential/tourism.jpg";
-export default function RelatedPotential() {
+import usePotential from "../../../../hooks/usePotential";
 
-    const potentials = [
+export default function RelatedPotential({ currentId }) {
 
-        {
-            id: 1,
-            title: "Pertanian Modern Desa Panca Tunggal",
-            category: "Pertanian",
-            image: agriculture,
-        },
+    const {
+        potential,
+        loading,
+        error,
+    } = usePotential();
 
-        {
-            id: 2,
-            title: "UMKM Lokal yang Terus Berkembang",
-            category: "UMKM",
-            image: umkm,
-        },
+    if (loading) {
+        return (
+            <section className="py-24 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <p className="text-gray-500">
+                        Memuat potensi lainnya...
+                    </p>
+                </div>
+            </section>
+        );
+    }
 
-        {
-            id: 3,
-            title: "Potensi Wisata Alam Desa",
-            category: "Pariwisata",
-            image: tourism,
-        },
+    if (error) {
+        return (
+            <section className="py-24 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <p className="text-red-500">
+                        Gagal memuat data potensi.
+                    </p>
+                </div>
+            </section>
+        );
+    }
 
-    ];
+    const relatedPotential = potential
+        .filter((item) => item.id !== currentId)
+        .slice(0, 3);
+
+    if (relatedPotential.length === 0) {
+        return null;
+    }
 
     return (
 
@@ -64,7 +76,7 @@ export default function RelatedPotential() {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                    {potentials.map((item, index) => (
+                    {relatedPotential.map((item, index) => (
 
                         <div
                             key={item.id}
@@ -78,7 +90,10 @@ export default function RelatedPotential() {
                             <div className="overflow-hidden">
 
                                 <img
-                                    src={item.image}
+                                    src={
+                                        item.thumbnail ??
+                                        "https://placehold.co/600x400?text=No+Image"
+                                    }
                                     alt={item.title}
                                     className="h-64 w-full object-cover group-hover:scale-110 transition duration-500"
                                 />
@@ -100,6 +115,12 @@ export default function RelatedPotential() {
                                     {item.title}
 
                                 </h3>
+
+                                <p className="mt-4 text-gray-600 leading-7">
+
+                                    {item.excerpt}
+
+                                </p>
 
                                 <NavLink
                                     to={`/potensi/${item.id}`}

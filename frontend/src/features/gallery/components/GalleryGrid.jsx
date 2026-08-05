@@ -1,15 +1,18 @@
 import { useState } from "react";
-import useGallery from "../../../hooks/useGallery";
 
 import GalleryCard from "./GalleryCard";
 import GalleryModal from "./GalleryModal";
 
-export default function GalleryGrid() {
+export default function GalleryGrid({
 
-    const {
-        gallery: galleries,
-        loading,
-    } = useGallery();
+    galleries,
+
+    loading,
+
+    error,
+
+}) {
+
 
     const [selectedGallery, setSelectedGallery] = useState(null);
 
@@ -30,6 +33,34 @@ export default function GalleryGrid() {
                     <p>
 
                         Memuat data galeri...
+
+                    </p>
+
+                </div>
+
+            </section>
+
+        );
+
+    }
+
+    if (error) {
+
+        return (
+
+            <section className="py-24 bg-gray-50">
+
+                <div className="max-w-7xl mx-auto px-6 text-center">
+
+                    <h2 className="text-4xl font-bold mb-6">
+
+                        Dokumentasi Kegiatan Desa
+
+                    </h2>
+
+                    <p className="text-red-500">
+
+                        Gagal memuat data galeri.
 
                     </p>
 
