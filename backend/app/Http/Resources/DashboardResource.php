@@ -9,11 +9,49 @@ class DashboardResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+
+            /*
+            |--------------------------------------------------------------------------
+            | Statistik Dashboard
+            |--------------------------------------------------------------------------
+            */
+
+            'statistics' => $this['statistics'],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Berita Terbaru
+            |--------------------------------------------------------------------------
+            */
+
+            'latest_news' => NewsResource::collection(
+                $this['latest_news']
+            ),
+
+            /*
+            |--------------------------------------------------------------------------
+            | User Terbaru
+            |--------------------------------------------------------------------------
+            */
+
+            'latest_users' => UserResource::collection(
+                $this['latest_users']
+            ),
+
+            /*
+            |--------------------------------------------------------------------------
+            | Aktivitas Terbaru
+            |--------------------------------------------------------------------------
+            */
+
+            'recent_activity' => ActivityLogResource::collection(
+                $this['recent_activity']
+            ),
+
+        ];
     }
 }

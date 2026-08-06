@@ -5,14 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Helpers\ApiResponse;
 
 class RoleMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(
         Request $request,
@@ -22,22 +19,19 @@ class RoleMiddleware
 
         /*
         |--------------------------------------------------------------------------
-        | Ambil user yang sedang login
+        | User Belum Login
         |--------------------------------------------------------------------------
         */
 
         $user = $request->user();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Belum Login
-        |--------------------------------------------------------------------------
-        */
-
         if (!$user) {
-            return ApiResponse::unauthorized(
-                'Anda belum login.'
-            );
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda belum login.',
+            ], 401);
+
         }
 
         /*
@@ -47,31 +41,51 @@ class RoleMiddleware
         */
 
         if (!$user->is_active) {
-            return ApiResponse::unauthorized(
-                'Akun Anda telah dinonaktifkan.'
-            );
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Akun Anda telah dinonaktifkan.',
+            ], 403);
+
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Role Tidak Diizinkan
+        | Middleware Tidak Diberi Role
+        |--------------------------------------------------------------------------
+        */
+
+        if (empty($roles)) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Role belum ditentukan.',
+            ], 500);
+
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Role Tidak Memiliki Hak Akses
         |--------------------------------------------------------------------------
         */
 
         if (!in_array($user->role, $roles, true)) {
 
-            return ApiResponse::error(
-                message: 'Anda tidak memiliki hak akses untuk mengakses resource ini.',
-                status: 403
-            );
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki hak akses.',
+            ], 403);
+
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Lolos
+        | Lolos Validasi
         |--------------------------------------------------------------------------
         */
 
         return $next($request);
+
     }
 }

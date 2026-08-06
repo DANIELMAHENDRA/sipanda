@@ -13,52 +13,80 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Menghapus seluruh data user terlebih dahulu
-        User::truncate();
+        /*
+        |--------------------------------------------------------------------------
+        | Super Administrator
+        |--------------------------------------------------------------------------
+        |
+        | Username : superadmin
+        | Password : password
+        |
+        */
 
-        // ============================
-        // Super Administrator
-        // ============================
-        User::create([
-            'name'              => 'Super Administrator',
-            'username'          => 'superadmin',
-            'email'             => 'superadmin@sipanda.id',
-            'email_verified_at' => now(),
-            'password'          => Hash::make('password'),
-            'photo'             => 'users/default-avatar.png',
-            'role'              => 'super_admin',
-            'is_active'         => true,
-            'last_login_at'     => now(),
-        ]);
+        User::updateOrCreate(
 
-        // ============================
-        // Administrator
-        // ============================
-        User::create([
-            'name'              => 'Administrator',
-            'username'          => 'admin',
-            'email'             => 'admin@sipanda.id',
-            'email_verified_at' => now(),
-            'password'          => Hash::make('password'),
-            'photo'             => 'users/default-avatar.png',
-            'role'              => 'admin',
-            'is_active'         => true,
-            'last_login_at'     => now(),
-        ]);
+            [
+                'username' => 'superadmin',
+            ],
 
-        // ============================
-        // Editor
-        // ============================
-        User::create([
-            'name'              => 'Editor SIPANDA',
-            'username'          => 'editor',
-            'email'             => 'editor@sipanda.id',
-            'email_verified_at' => now(),
-            'password'          => Hash::make('password'),
-            'photo'             => 'users/default-avatar.png',
-            'role'              => 'editor',
-            'is_active'         => true,
-            'last_login_at'     => now(),
-        ]);
+            [
+
+                'name'              => 'Super Administrator',
+
+                'email'             => 'superadmin@sipanda.id',
+
+                'email_verified_at' => now(),
+
+                'password'          => Hash::make('password'),
+
+                'photo'             => 'users/default-avatar.png',
+
+                'role'              => 'super_admin',
+
+                'is_active'         => true,
+
+                'last_login_at'     => null,
+
+            ]
+
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Administrator Desa
+        |--------------------------------------------------------------------------
+        |
+        | Username : admin
+        | Password : password
+        |
+        */
+
+        User::updateOrCreate(
+
+            [
+                'username' => 'admin',
+            ],
+
+            [
+
+                'name'              => 'Administrator Desa',
+
+                'email'             => 'admin@sipanda.id',
+
+                'email_verified_at' => now(),
+
+                'password'          => Hash::make('password'),
+
+                'photo'             => 'users/default-avatar.png',
+
+                'role'              => 'admin',
+
+                'is_active'         => true,
+
+                'last_login_at'     => null,
+
+            ]
+
+        );
     }
 }

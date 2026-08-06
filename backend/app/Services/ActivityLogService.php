@@ -3,49 +3,127 @@
 namespace App\Services;
 
 use App\Models\ActivityLog;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ActivityLogService
 {
     /**
+     * Constructor.
+     */
+    public function __construct(
+        protected Request $request,
+    ) {
+    }
+
+    /**
      * Menyimpan activity log.
-     *
-     * @param string $activity
-     * @param string $module
-     * @param string|null $description
-     * @param string $status
-     * @return ActivityLog
      */
     public function log(
         string $activity,
         string $module,
         ?string $description = null,
-        string $status = 'success'
+        string $status = 'success',
+        ?int $userId = null,
     ): ActivityLog {
-
-        $request = request();
 
         return ActivityLog::create([
 
-            'user_id' => Auth::id(),
+            'user_id'     => $userId ?? Auth::id(),
 
-            'activity' => $activity,
+            'activity'    => $activity,
 
-            'module' => $module,
+            'module'      => $module,
 
             'description' => $description,
 
-            'ip_address' => $request->ip(),
+            'ip_address'  => $this->request->ip(),
 
-            'user_agent' => $request->userAgent(),
+            'user_agent'  => $this->request->userAgent(),
 
-            'url' => $request->fullUrl(),
+            'url'         => $this->request->fullUrl(),
 
-            'method' => $request->method(),
+            'method'      => $this->request->method(),
 
-            'status' => $status,
+            'status'      => strtolower($status),
 
         ]);
+
     }
+
+    /**
+     * Mengambil seluruh activity log.
+     */
+    public function getAll(
+        array $filters = []
+    ): LengthAwarePaginator {
+
+        return ActivityLog::query()
+
+            ->with('user')
+
+            ->when(
+
+                $filters['search'] ?? null,
+
+                function ($query, $search) {
+
+                    $query->where(function ($q) use ($search) {
+
+                        $q->where('activity', 'like', "%{$search}%")
+                            ->orWhere('module', 'like', "%{$search}%")
+                            ->orWhere('description', 'like', "%{$search}%");
+
+                    });
+
+                }
+
+            )
+
+            ->when(
+
+                $filters['module'] ?? null,
+
+                fn($query, $module) =>
+
+                $query->where('module', $module)
+
+            )
+
+            ->when(
+
+                $filters['status'] ?? null,
+
+                fn($query, $status) =>
+
+                $query->where('status', $status)
+
+            )
+
+            ->latest()
+
+            ->paginate(
+
+                $filters['per_page'] ?? 10
+
+            );
+
+    }
+
+    /**
+     * Mengambil detail activity log.
+     */
+    public function getById(
+        int $id
+    ): ActivityLog {
+
+        return ActivityLog::query()
+
+            ->with('user')
+
+            ->findOrFail($id);
+
+    }
+
 }

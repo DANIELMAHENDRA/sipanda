@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\Potential\PotentialController;
 use App\Http\Controllers\Api\Government\GovernmentController;
 use App\Http\Controllers\Api\Service\ServiceController;
 use App\Http\Controllers\Api\Contact\ContactController;
+use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\Dashboard\DashboardController;
+use App\Http\Controllers\Api\ActivityLog\ActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,11 +118,83 @@ Route::middleware('auth:sanctum')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
+    | User Management (Super Admin)
+    |--------------------------------------------------------------------------
+    */
+
+    Route::middleware('role:super_admin')->group(function () {
+
+        Route::get('/users', [UserController::class, 'index']);
+
+        Route::get('/users/{user}', [UserController::class, 'show']);
+
+        Route::post('/users', [UserController::class, 'store']);
+
+        Route::put('/users/{user}', [UserController::class, 'update']);
+
+        Route::delete('/users/{user}', [UserController::class, 'destroy']);
+
+        Route::patch('/users/{user}/toggle-status', [
+            UserController::class,
+            'toggleStatus'
+        ]);
+
+        Route::patch('/users/{user}/reset-password', [
+            UserController::class,
+            'resetPassword'
+        ]);
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard
+    |--------------------------------------------------------------------------
+    */
+
+    Route::middleware('role:super_admin,admin')->group(function () {
+
+        Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Activity Log
+    |--------------------------------------------------------------------------
+    */
+
+    Route::middleware('role:super_admin')->group(function () {
+
+        Route::get('/activity-logs', [
+
+            ActivityLogController::class,
+
+            'index'
+
+        ]);
+
+        Route::get('/activity-logs/{activityLog}', [
+
+            ActivityLogController::class,
+
+            'show'
+
+        ]);
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
     | Settings
     |--------------------------------------------------------------------------
     */
 
-    Route::put('/settings', [SettingController::class, 'update']);
+    Route::middleware('role:super_admin')->group(function () {
+
+        Route::put('/settings', [SettingController::class, 'update']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -127,7 +202,11 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::put('/hero-sections/{page}', [HeroSectionController::class, 'update']);
+    Route::middleware('role:super_admin,admin')->group(function () {
+
+        Route::put('/hero-sections/{page}', [HeroSectionController::class, 'update']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +214,11 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::put('/profile', [ProfileController::class, 'update']);
+    Route::middleware('role:super_admin,admin')->group(function () {
+
+        Route::put('/profile', [ProfileController::class, 'update']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -143,11 +226,15 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::post('/news', [NewsController::class, 'store']);
+    Route::middleware('role:super_admin,admin')->group(function () {
 
-    Route::put('/news/{news}', [NewsController::class, 'update']);
+        Route::post('/news', [NewsController::class, 'store']);
 
-    Route::delete('/news/{news}', [NewsController::class, 'destroy']);
+        Route::put('/news/{news}', [NewsController::class, 'update']);
+
+        Route::delete('/news/{news}', [NewsController::class, 'destroy']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -155,11 +242,15 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::post('/gallery', [GalleryController::class, 'store']);
+    Route::middleware('role:super_admin,admin')->group(function () {
 
-    Route::put('/gallery/{gallery}', [GalleryController::class, 'update']);
+        Route::post('/gallery', [GalleryController::class, 'store']);
 
-    Route::delete('/gallery/{gallery}', [GalleryController::class, 'destroy']);
+        Route::put('/gallery/{gallery}', [GalleryController::class, 'update']);
+
+        Route::delete('/gallery/{gallery}', [GalleryController::class, 'destroy']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -167,11 +258,15 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::post('/potential', [PotentialController::class, 'store']);
+    Route::middleware('role:super_admin,admin')->group(function () {
 
-    Route::put('/potential/{potential}', [PotentialController::class, 'update']);
+        Route::post('/potential', [PotentialController::class, 'store']);
 
-    Route::delete('/potential/{potential}', [PotentialController::class, 'destroy']);
+        Route::put('/potential/{potential}', [PotentialController::class, 'update']);
+
+        Route::delete('/potential/{potential}', [PotentialController::class, 'destroy']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -179,11 +274,15 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::post('/government', [GovernmentController::class, 'store']);
+    Route::middleware('role:super_admin,admin')->group(function () {
 
-    Route::put('/government/{government}', [GovernmentController::class, 'update']);
+        Route::post('/government', [GovernmentController::class, 'store']);
 
-    Route::delete('/government/{government}', [GovernmentController::class, 'destroy']);
+        Route::put('/government/{government}', [GovernmentController::class, 'update']);
+
+        Route::delete('/government/{government}', [GovernmentController::class, 'destroy']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -191,11 +290,15 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::post('/service', [ServiceController::class, 'store']);
+    Route::middleware('role:super_admin,admin')->group(function () {
 
-    Route::put('/service/{service}', [ServiceController::class, 'update']);
+        Route::post('/service', [ServiceController::class, 'store']);
 
-    Route::delete('/service/{service}', [ServiceController::class, 'destroy']);
+        Route::put('/service/{service}', [ServiceController::class, 'update']);
+
+        Route::delete('/service/{service}', [ServiceController::class, 'destroy']);
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -203,6 +306,10 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::put('/contact', [ContactController::class, 'update']);
+    Route::middleware('role:super_admin,admin')->group(function () {
+
+        Route::put('/contact', [ContactController::class, 'update']);
+
+    });
 
 });
