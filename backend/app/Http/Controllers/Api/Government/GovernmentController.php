@@ -54,13 +54,13 @@ class GovernmentController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('photo')) {
-
             $data['photo'] = $request
                 ->file('photo')
                 ->store('government', 'public');
         }
 
-        $data['slug'] = Str::slug($data['name']);
+        // isi user login
+        $data['user_id'] = auth()->id();
 
         $government = Government::create($data);
 
@@ -83,9 +83,10 @@ class GovernmentController extends Controller
 
         if ($request->hasFile('photo')) {
 
-            if ($government->photo &&
-                \Storage::disk('public')->exists($government->photo)) {
-
+            if (
+                $government->photo &&
+                \Storage::disk('public')->exists($government->photo)
+            ) {
                 \Storage::disk('public')->delete($government->photo);
             }
 
@@ -93,8 +94,6 @@ class GovernmentController extends Controller
                 ->file('photo')
                 ->store('government', 'public');
         }
-
-        $data['slug'] = Str::slug($data['name']);
 
         $government->update($data);
 
