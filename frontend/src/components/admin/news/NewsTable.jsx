@@ -150,9 +150,7 @@ export default function NewsTable({
                                     </td>
 
                                     <td className="px-5 py-4">
-
-                                        {item.user?.name}
-
+                                        {item.author}
                                     </td>
 
                                     <td className="px-5 py-4">

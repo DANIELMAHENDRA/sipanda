@@ -9,6 +9,7 @@ import {
     Briefcase,
     Map,
     Activity,
+    Phone,
     LogOut,
 } from "lucide-react";
 
@@ -73,6 +74,13 @@ export default function Sidebar() {
         },
 
         {
+            title: "Kontak",
+            icon: Phone,
+            path: "/admin/contact",
+            roles: ["super_admin", "admin"],
+        },
+
+        {
             title: "Activity Log",
             icon: Activity,
             path: "/admin/activity-log",
@@ -87,18 +95,18 @@ export default function Sidebar() {
 
             <div className="p-6 border-b">
 
-                <Link
-                    to="/admin/dashboard"
-                    className="text-2xl font-bold text-green-700"
-                >
-                    SIPANDA
-                </Link>
+            <Link
+                to="/admin/dashboard"
+                className="text-2xl font-bold text-green-700"
+            >
+                SIPANDA
+            </Link>
 
-                <p className="text-sm text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 mt-1 leading-relaxed">
 
-                    Dashboard Administrator
+                Sistem Informasi Pelayanan dan Administrasi Desa
 
-                </p>
+            </p>
 
             </div>
 
@@ -117,7 +125,7 @@ export default function Sidebar() {
                                 icon={menu.icon}
                                 title={menu.title}
                                 path={menu.path}
-                                active={location.pathname === menu.path}
+                                active={location.pathname.startsWith(menu.path)}
                             />
 
                         ))

@@ -1,142 +1,143 @@
 import {
-    UserRound,
-    Quote,
+    User,
     BadgeCheck,
+    Phone,
+    Mail,
 } from "lucide-react";
 
-import SectionTitle from "../../../components/common/SectionTitle";
-import useGovernment from "../../../hooks/useGovernment";
+export default function VillageHeadSection({
+    government,
+}) {
 
-export default function VillageHeadSection() {
+    const villageHead = government.find(
+        (item) => item.is_head
+    );
 
-    const { government, loading } = useGovernment();
-
-    if (loading) {
-        return (
-            <section className="py-24 bg-white">
-                <div className="max-w-7xl mx-auto px-6 text-center">
-                    <p>Loading...</p>
-                </div>
-            </section>
-        );
-    }
-
-    const villageHead = government.find((item) => item.is_head);
-
-    if (!villageHead) {
-        return null;
-    }
+    if (!villageHead) return null;
 
     return (
-
         <section className="py-24 bg-white">
 
             <div className="max-w-7xl mx-auto px-6">
 
-                <SectionTitle
-                    subtitle="Kepala Desa"
-                    title="Sambutan Kepala Desa"
-                    description="Komitmen Pemerintah Desa dalam memberikan pelayanan terbaik kepada seluruh masyarakat."
-                />
+                {/* Heading */}
+
+                <div className="text-center max-w-3xl mx-auto mb-16">
+
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-700 font-semibold">
+
+                        <BadgeCheck size={18} />
+
+                        Kepala Desa
+
+                    </span>
+
+                    <h2 className="mt-5 text-4xl font-bold text-gray-900">
+
+                        Pimpinan Pemerintah Desa
+
+                    </h2>
+
+                    <p className="mt-5 text-lg text-gray-600 leading-8">
+
+                        Kepala Desa merupakan pemimpin penyelenggaraan
+                        pemerintahan desa yang bertanggung jawab
+                        dalam pembangunan, pelayanan masyarakat,
+                        serta pemberdayaan seluruh warga desa.
+
+                    </p>
+
+                </div>
 
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-                    {/* Foto */}
+                    {/* FOTO */}
 
-                    <div
-                        data-aos="fade-right"
-                        className="relative"
-                    >
+                    <div className="relative">
 
-                        <div className="absolute -top-5 -left-5 w-full h-full rounded-3xl border-4 border-green-700"></div>
+                        <div className="absolute -top-6 -left-6 w-full h-full rounded-[32px] bg-green-100"></div>
 
-                        {villageHead.photo ? (
-
-                            <img
-                                src={villageHead.photo}
-                                alt={villageHead.name}
-                                className="relative rounded-3xl shadow-2xl object-cover w-full h-[600px]"
-                            />
-
-                        ) : (
-
-                            <div className="relative rounded-3xl shadow-2xl w-full h-[600px] bg-gray-100 flex items-center justify-center">
-
-                                <UserRound
-                                    size={140}
-                                    className="text-gray-400"
-                                />
-
-                            </div>
-
-                        )}
+                        <img
+                            src={villageHead.photo}
+                            alt={villageHead.name}
+                            className="relative rounded-[32px] shadow-2xl w-full h-[620px] object-cover"
+                        />
 
                     </div>
 
-                    {/* Isi */}
+                    {/* CONTENT */}
 
-                    <div data-aos="fade-left">
+                    <div>
 
-                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
+                        <span className="inline-block px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold mb-5">
 
-                            <BadgeCheck size={18} />
+                            Kepala Desa Aktif
 
-                            {villageHead.position}
+                        </span>
 
-                        </div>
-
-                        <h2 className="mt-6 text-4xl font-bold text-gray-900">
+                        <h3 className="text-5xl font-bold text-gray-900">
 
                             {villageHead.name}
 
-                        </h2>
+                        </h3>
 
-                        <p className="mt-2 text-green-700 font-semibold">
+                        <p className="mt-3 text-xl text-green-700 font-semibold">
 
                             {villageHead.position}
 
                         </p>
 
-                        <div className="mt-8 relative">
+                        <div className="w-24 h-1 bg-green-600 rounded-full my-8"></div>
 
-                            <Quote
-                                size={60}
-                                className="absolute -top-4 -left-2 text-green-100"
-                            />
+                        <div className="prose prose-lg max-w-none text-gray-600 leading-9">
 
-                            <p className="relative text-gray-600 leading-9 text-lg">
-
-                                {villageHead.description}
-
-                            </p>
+                            {villageHead.description}
 
                         </div>
 
-                        <div className="mt-10">
+                        {/* Info Card */}
 
-                            <div className="bg-gray-50 rounded-2xl p-5">
+                        <div className="mt-10 grid sm:grid-cols-2 gap-5">
 
-                                <div className="flex items-center gap-3">
+                            <div className="rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition">
 
-                                    <UserRound className="text-green-700" />
+                                <User
+                                    className="text-green-700 mb-4"
+                                    size={30}
+                                />
 
-                                    <div>
+                                <h4 className="font-bold text-gray-800">
 
-                                        <p className="text-sm text-gray-500">
+                                    Jabatan
 
-                                            Nama
+                                </h4>
 
-                                        </p>
+                                <p className="text-gray-600 mt-2">
 
-                                        <h4 className="font-semibold">
+                                    {villageHead.position}
 
-                                            {villageHead.name}
+                                </p>
 
-                                        </h4>
+                            </div>
 
-                                    </div>
+                            <div className="rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition">
 
-                                </div>
+                                <BadgeCheck
+                                    className="text-green-700 mb-4"
+                                    size={30}
+                                />
+
+                                <h4 className="font-bold text-gray-800">
+
+                                    Status
+
+                                </h4>
+
+                                <p className="text-gray-600 mt-2">
+
+                                    Aktif Melayani
+
+                                </p>
 
                             </div>
 
@@ -149,7 +150,6 @@ export default function VillageHeadSection() {
             </div>
 
         </section>
-
     );
 
 }

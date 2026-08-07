@@ -202,25 +202,29 @@ export default function NewsFormModal({
 
     return (
 
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
 
-            <div className="bg-white rounded-xl shadow-xl w-full max-w-4xl">
+            <div
+                className="
+                    bg-white
+                    rounded-xl
+                    shadow-xl
+                    w-full
+                    max-w-4xl
+                    max-h-[90vh]
+                    flex
+                    flex-col
+                    overflow-hidden
+                "
+            >
 
                 {/* Header */}
 
-                <div className="border-b p-6">
+                <div className="border-b p-6 flex-shrink-0">
 
                     <h2 className="text-2xl font-bold">
 
-                        {
-
-                            news
-
-                                ? "Edit Berita"
-
-                                : "Tambah Berita"
-
-                        }
+                        {news ? "Edit Berita" : "Tambah Berita"}
 
                     </h2>
 
@@ -229,11 +233,13 @@ export default function NewsFormModal({
                 {/* Body */}
 
                 <form
-
                     onSubmit={handleSubmit}
-
-                    className="p-6 space-y-5"
-
+                    className="
+                        flex-1
+                        overflow-y-auto
+                        p-6
+                        space-y-5
+                    "
                 >
 
                     {/* Judul */}
@@ -410,7 +416,7 @@ export default function NewsFormModal({
 
                     {/* Footer */}
 
-                    <div className="flex justify-end gap-3 pt-4">
+                    <div className="border-t mt-6 pt-5 flex justify-end gap-3 bg-white">
 
                         <button
 

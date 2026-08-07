@@ -1,6 +1,7 @@
 import SectionTitle from "../../../components/common/SectionTitle";
 
 import {
+    Compass,
     ArrowUp,
     ArrowDown,
     ArrowLeft,
@@ -11,105 +12,150 @@ export default function BoundarySection({ profile }) {
 
     const boundaries = [
         {
+            title: "Utara",
+            value: profile?.north_boundary || "-",
             icon: ArrowUp,
-            direction: "Sebelah Utara",
-            village: profile?.north_boundary,
+            color: "bg-emerald-50 text-emerald-700",
         },
         {
+            title: "Timur",
+            value: profile?.east_boundary || "-",
             icon: ArrowRight,
-            direction: "Sebelah Timur",
-            village: profile?.east_boundary,
+            color: "bg-blue-50 text-blue-700",
         },
         {
+            title: "Selatan",
+            value: profile?.south_boundary || "-",
             icon: ArrowDown,
-            direction: "Sebelah Selatan",
-            village: profile?.south_boundary,
+            color: "bg-orange-50 text-orange-700",
         },
         {
+            title: "Barat",
+            value: profile?.west_boundary || "-",
             icon: ArrowLeft,
-            direction: "Sebelah Barat",
-            village: profile?.west_boundary,
+            color: "bg-purple-50 text-purple-700",
         },
     ];
 
     return (
 
-        <section className="py-24 bg-white">
+        <section className="py-28 bg-gray-50">
 
             <div className="max-w-7xl mx-auto px-6">
 
                 <SectionTitle
-                    subtitle="Wilayah"
+                    subtitle="Administrasi Wilayah"
                     title="Batas Wilayah Desa"
-                    description="Letak administratif desa berdasarkan wilayah yang berbatasan langsung."
+                    description="Letak batas administratif Desa dengan wilayah di sekitarnya."
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="mt-16 max-w-5xl mx-auto">
 
-                    {boundaries.map((item, index) => {
+                    <div className="grid grid-cols-3 gap-6 items-center">
 
-                        const Icon = item.icon;
+                        {/* ==================== */}
+                        {/* UTARA */}
+                        {/* ==================== */}
 
-                        return (
+                        <div></div>
 
-                            <div
-                                key={index}
-                                className="bg-gray-50 border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                            >
+                        <BoundaryCard
+                            data={boundaries[0]}
+                        />
 
-                                <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center mb-6">
+                        <div></div>
 
-                                    <Icon
-                                        size={30}
-                                        className="text-green-700"
-                                    />
+                        {/* ==================== */}
+                        {/* BARAT */}
+                        {/* ==================== */}
 
-                                </div>
+                        <BoundaryCard
+                            data={boundaries[3]}
+                        />
 
-                                <h3 className="text-xl font-semibold text-gray-800">
-                                    {item.direction}
-                                </h3>
+                        {/* CENTER */}
 
-                                <p className="text-gray-600 mt-3 text-lg">
-                                    {item.village || "-"}
-                                </p>
+                        <div className="flex flex-col items-center justify-center">
+
+                            <div className="w-36 h-36 rounded-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-xl">
+
+                                <Compass
+                                    size={64}
+                                    className="text-white"
+                                />
 
                             </div>
 
-                        );
+                            <h3 className="mt-6 text-2xl font-bold text-gray-900">
 
-                    })}
+                                {profile?.village_name}
 
-                </div>
+                            </h3>
 
-                <div className="mt-16 bg-green-700 rounded-3xl p-10 text-white">
+                            <p className="text-gray-500 mt-2 text-center">
 
-                    <h3 className="text-3xl font-bold">
-                        Lokasi Strategis
-                    </h3>
+                                Kecamatan {profile?.district}
+                            </p>
 
-                    <p className="mt-5 leading-8 text-green-100">
+                        </div>
 
-                        {profile?.village_name} berada di Kecamatan{" "}
-                        <span className="font-semibold">
-                            {profile?.district}
-                        </span>, Kabupaten{" "}
-                        <span className="font-semibold">
-                            {profile?.regency}
-                        </span>, Provinsi{" "}
-                        <span className="font-semibold">
-                            {profile?.province}
-                        </span>. Posisi geografis ini mendukung aktivitas ekonomi,
-                        pertanian, perdagangan, serta mempermudah akses
-                        masyarakat menuju pusat pelayanan publik.
+                        {/* TIMUR */}
 
-                    </p>
+                        <BoundaryCard
+                            data={boundaries[1]}
+                        />
+
+                        <div></div>
+
+                        {/* SELATAN */}
+
+                        <BoundaryCard
+                            data={boundaries[2]}
+                        />
+
+                        <div></div>
+
+                    </div>
 
                 </div>
 
             </div>
 
         </section>
+
+    );
+
+}
+
+function BoundaryCard({ data }) {
+
+    const Icon = data.icon;
+
+    return (
+
+        <div className="group rounded-3xl bg-white border border-gray-200 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+
+            <div
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${data.color}`}
+            >
+
+                <Icon size={26} />
+
+            </div>
+
+            <p className="text-sm text-gray-500">
+
+                Batas {data.title}
+
+            </p>
+
+            <h3 className="mt-2 text-xl font-bold text-gray-900 leading-8">
+
+                {data.value}
+
+            </h3>
+
+        </div>
 
     );
 

@@ -1,123 +1,105 @@
 import SectionTitle from "../../../components/common/SectionTitle";
-import useGovernment from "../../../hooks/useGovernment";
+import { UserRound, BadgeCheck } from "lucide-react";
 
-import {
-    BadgeCheck,
-    UserRound,
-} from "lucide-react";
-
-export default function OfficialsSection() {
-
-    const { government, loading } = useGovernment();
-
-    if (loading) {
-        return (
-            <section className="py-24">
-                <div className="max-w-7xl mx-auto px-6 text-center">
-                    <p>Loading...</p>
-                </div>
-            </section>
-        );
-    }
+export default function OfficialsSection({ government }) {
+    const officials = government?.filter(item => !item.is_head) || [];
 
     return (
-
         <section className="py-24 bg-white">
-
             <div className="max-w-7xl mx-auto px-6">
 
                 <SectionTitle
                     subtitle="Perangkat Desa"
                     title="Aparatur Pemerintah Desa"
-                    description="Seluruh aparatur Pemerintah Desa Panca Tunggal yang berperan dalam memberikan pelayanan terbaik kepada masyarakat."
+                    description="Perangkat desa yang membantu Kepala Desa dalam menjalankan pemerintahan dan pelayanan kepada masyarakat."
                 />
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
-                    {government
-                    .filter((official) => !official.is_head)
-                    .map((official) => (
+                    {officials.map((item) => (
 
                         <div
-                            key={official.id}
-                            className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 border border-gray-100"
+                            key={item.id}
+                            data-aos="fade-up"
+                            className="group bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition duration-300"
                         >
 
-                            {/* Foto */}
+                            {/* FOTO */}
 
-                            <div className="relative">
+                            <div className="relative h-80 overflow-hidden">
 
-                            {official.photo ? (
+                                {item.photo ? (
 
-                                <img
-                                    src={official.photo}
-                                    alt={official.name}
-                                    className="w-full h-[350px] object-cover"
-                                />
-
-                            ) : (
-
-                                <div className="w-full h-[350px] bg-gray-100 flex items-center justify-center">
-
-                                    <UserRound
-                                        size={120}
-                                        className="text-gray-400"
+                                    <img
+                                        src={item.photo}
+                                        alt={item.name}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                                     />
 
-                                </div>
+                                ) : (
 
-                            )}
+                                    <div className="w-full h-full bg-green-100 flex items-center justify-center">
 
-                                <div className="absolute top-5 left-5 bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <UserRound
+                                            size={70}
+                                            className="text-green-700"
+                                        />
 
-                                    <BadgeCheck size={16} />
+                                    </div>
 
-                                    {official.position}
+                                )}
+
+                                {/* Gradient */}
+
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+                                {/* Badge */}
+
+                                <div className="absolute top-4 left-4">
+
+                                    <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+
+                                        Aparatur Desa
+
+                                    </span>
 
                                 </div>
 
                             </div>
 
-                            {/* Isi */}
+                            {/* CONTENT */}
 
-                            <div className="p-8">
+                            <div className="p-6">
 
-                                <div className="flex items-center gap-3 mb-5">
+                                <h3 className="text-xl font-bold text-gray-900">
 
-                                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                                    {item.name}
 
-                                        <UserRound
-                                            className="text-green-700"
-                                            size={22}
-                                        />
+                                </h3>
 
-                                    </div>
+                                <p className="mt-2 text-green-700 font-semibold">
 
-                                    <div>
+                                    {item.position}
 
-                                        <h3 className="font-bold text-xl">
+                                </p>
 
-                                            {official.name}
+                                {item.description && (
 
-                                        </h3>
+                                    <p className="mt-4 text-gray-600 leading-7 text-sm line-clamp-4">
 
-                                        <p className="text-green-700 font-medium">
-
-                                            {official.position}
-
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                                <div className="border-t pt-5">
-
-                                    <p className="text-gray-600 leading-7">
-
-                                        {official.description}
+                                        {item.description}
 
                                     </p>
+
+                                )}
+
+                                <div className="mt-6 flex items-center gap-2 text-sm text-green-700">
+
+                                    <BadgeCheck size={18} />
+
+                                    <span>
+                                        Pemerintah Desa
+                                    </span>
 
                                 </div>
 
@@ -130,9 +112,6 @@ export default function OfficialsSection() {
                 </div>
 
             </div>
-
         </section>
-
     );
-
 }

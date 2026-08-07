@@ -8,6 +8,7 @@ import {
     HeartHandshake,
     Building2,
     ArrowRight,
+    Sparkles,
 } from "lucide-react";
 
 export default function GovernmentServiceSection() {
@@ -60,17 +61,17 @@ export default function GovernmentServiceSection() {
 
     return (
 
-        <section className="py-24 bg-gray-50">
+        <section className="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50">
 
             <div className="max-w-7xl mx-auto px-6">
 
                 <SectionTitle
                     subtitle="Pelayanan Desa"
                     title="Layanan Pemerintah Desa"
-                    description="Pemerintah Desa Panca Tunggal menyediakan berbagai pelayanan publik yang mudah diakses, cepat, transparan, dan profesional."
+                    description="Pemerintah Desa menyediakan berbagai layanan publik yang mudah diakses, profesional, transparan, dan berorientasi pada kepuasan masyarakat."
                 />
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-16">
 
                     {services.map((service, index) => {
 
@@ -82,48 +83,143 @@ export default function GovernmentServiceSection() {
                                 key={index}
                                 data-aos="fade-up"
                                 data-aos-delay={index * 100}
-                                className="group bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:border-green-600 hover:-translate-y-3 hover:shadow-2xl transition-all duration-300"
+                                className="group relative overflow-hidden bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
                             >
 
-                                <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center group-hover:bg-green-700 transition">
+                                {/* Decoration */}
 
-                                    <Icon
-                                        size={30}
-                                        className="text-green-700 group-hover:text-white transition"
-                                    />
+                                <div className="absolute top-0 right-0 w-28 h-28 rounded-full bg-green-50 translate-x-10 -translate-y-10 group-hover:bg-green-100 transition"></div>
+
+                                <div className="relative p-8">
+
+                                    {/* Nomor */}
+
+                                    <div className="flex justify-between items-start">
+
+                                        <span className="text-5xl font-black text-gray-100">
+
+                                            0{index + 1}
+
+                                        </span>
+
+                                        <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center group-hover:bg-green-700 transition">
+
+                                            <Icon
+                                                size={30}
+                                                className="text-green-700 group-hover:text-white transition"
+                                            />
+
+                                        </div>
+
+                                    </div>
+
+                                    {/* Badge */}
+
+                                    <div className="inline-flex items-center gap-2 mt-6 px-3 py-1 rounded-full bg-green-50 text-green-700 text-sm font-semibold">
+
+                                        <Sparkles size={14} />
+
+                                        Layanan Publik
+
+                                    </div>
+
+                                    <h3 className="mt-5 text-2xl font-bold text-gray-900">
+
+                                        {service.title}
+
+                                    </h3>
+
+                                    <p className="mt-5 text-gray-600 leading-8">
+
+                                        {service.description}
+
+                                    </p>
+
+                                    <button
+                                        className="mt-8 inline-flex items-center gap-2 font-semibold text-green-700 group-hover:text-green-800 transition"
+                                    >
+
+                                        Selengkapnya
+
+                                        <ArrowRight
+                                            size={18}
+                                            className="group-hover:translate-x-2 transition"
+                                        />
+
+                                    </button>
 
                                 </div>
-
-                                <h3 className="mt-8 text-2xl font-bold text-gray-900">
-
-                                    {service.title}
-
-                                </h3>
-
-                                <p className="mt-5 text-gray-600 leading-8">
-
-                                    {service.description}
-
-                                </p>
-
-                                <button
-                                    className="mt-8 inline-flex items-center gap-2 font-semibold text-green-700 group-hover:text-green-800 transition"
-                                >
-
-                                    Selengkapnya
-
-                                    <ArrowRight
-                                        size={18}
-                                        className="group-hover:translate-x-2 transition"
-                                    />
-
-                                </button>
 
                             </div>
 
                         );
 
                     })}
+
+                </div>
+
+                {/* Bottom Information */}
+
+                <div
+                    data-aos="fade-up"
+                    className="mt-20 rounded-3xl bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white p-10 lg:p-14 shadow-2xl"
+                >
+
+                    <div className="grid lg:grid-cols-2 gap-10 items-center">
+
+                        <div>
+
+                            <h3 className="text-3xl font-bold">
+
+                                Pelayanan yang Cepat, Mudah, dan Transparan
+
+                            </h3>
+
+                            <p className="mt-6 text-green-100 leading-8">
+
+                                Pemerintah Desa berkomitmen memberikan pelayanan terbaik kepada masyarakat melalui proses administrasi yang profesional, efektif, serta berorientasi pada kepuasan masyarakat.
+
+                            </p>
+
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-5">
+
+                            <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
+
+                                <h4 className="text-3xl font-bold">
+
+                                    6+
+
+                                </h4>
+
+                                <p className="mt-2 text-green-100">
+
+                                    Jenis Pelayanan
+
+                                </p>
+
+                            </div>
+
+                            <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
+
+                                <h4 className="text-3xl font-bold">
+
+                                    100%
+
+                                </h4>
+
+                                <p className="mt-2 text-green-100">
+
+                                    Transparan
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 

@@ -5,6 +5,7 @@ import {
     CalendarDays,
     PhoneCall,
     CircleCheckBig,
+    Sparkles,
 } from "lucide-react";
 
 export default function ServiceHoursSection() {
@@ -33,19 +34,19 @@ export default function ServiceHoursSection() {
 
     return (
 
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-gradient-to-b from-white via-gray-50 to-white">
 
             <div className="max-w-7xl mx-auto px-6">
 
                 <SectionTitle
                     subtitle="Jam Pelayanan"
                     title="Waktu Pelayanan Kantor Desa"
-                    description="Pemerintah Desa Panca Tunggal berkomitmen memberikan pelayanan yang cepat, ramah, dan profesional sesuai dengan jadwal pelayanan yang telah ditetapkan."
+                    description="Kami berkomitmen memberikan pelayanan yang profesional, cepat, transparan, serta berorientasi pada kepuasan masyarakat."
                 />
 
-                <div className="grid lg:grid-cols-2 gap-14 mt-16">
+                <div className="grid lg:grid-cols-2 gap-12 mt-16">
 
-                    {/* Jadwal */}
+                    {/* ==================== Jadwal ==================== */}
 
                     <div
                         data-aos="fade-right"
@@ -56,31 +57,31 @@ export default function ServiceHoursSection() {
 
                             <div
                                 key={index}
-                                className="bg-gray-50 rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300"
+                                className="group bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 p-6"
                             >
 
-                                <div className="flex items-center justify-between flex-wrap gap-4">
+                                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
 
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-5">
 
-                                        <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center">
+                                        <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center group-hover:bg-green-600 transition">
 
                                             <CalendarDays
-                                                className="text-green-700"
-                                                size={28}
+                                                size={30}
+                                                className="text-green-700 group-hover:text-white transition"
                                             />
 
                                         </div>
 
                                         <div>
 
-                                            <h3 className="font-bold text-xl text-gray-900">
+                                            <h3 className="text-xl font-bold text-gray-900">
 
                                                 {item.day}
 
                                             </h3>
 
-                                            <p className="text-gray-600 mt-1">
+                                            <p className="text-gray-500 mt-2">
 
                                                 {item.time}
 
@@ -91,9 +92,11 @@ export default function ServiceHoursSection() {
                                     </div>
 
                                     <span
-                                        className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                                        className={`px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${
                                             item.status === "Libur"
                                                 ? "bg-red-100 text-red-600"
+                                                : item.status === "Pelayanan Terbatas"
+                                                ? "bg-yellow-100 text-yellow-700"
                                                 : "bg-green-100 text-green-700"
                                         }`}
                                     >
@@ -108,87 +111,119 @@ export default function ServiceHoursSection() {
 
                     </div>
 
-                    {/* Informasi */}
+                    {/* ==================== Informasi ==================== */}
 
                     <div
                         data-aos="fade-left"
-                        className="bg-gradient-to-br from-green-700 to-green-600 rounded-3xl p-10 text-white shadow-xl"
+                        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-700 via-green-600 to-green-800 p-10 text-white shadow-2xl"
                     >
 
-                        <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center mb-8">
+                        {/* Decoration */}
 
-                            <Clock3 size={40} />
+                        <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-white/10"></div>
 
-                        </div>
+                        <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-white/5"></div>
 
-                        <h3 className="text-3xl font-bold">
+                        <div className="relative">
 
-                            Pelayanan Prima
+                            <div className="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-8">
 
-                        </h3>
-
-                        <p className="mt-6 leading-8 text-green-100">
-
-                            Pemerintah Desa Panca Tunggal senantiasa memberikan
-                            pelayanan administrasi kepada masyarakat secara
-                            profesional, cepat, transparan, serta sesuai
-                            dengan standar pelayanan publik.
-
-                        </p>
-
-                        <div className="mt-10 space-y-5">
-
-                            <div className="flex items-center gap-4">
-
-                                <CircleCheckBig />
-
-                                <span>Pelayanan Administrasi Desa</span>
+                                <Clock3 size={42} />
 
                             </div>
 
-                            <div className="flex items-center gap-4">
+                            <h3 className="text-3xl font-bold leading-tight">
 
-                                <CircleCheckBig />
+                                Pelayanan Cepat &
+                                <br />
+                                Profesional
 
-                                <span>Pembuatan Surat Keterangan</span>
+                            </h3>
+
+                            <p className="mt-6 text-green-100 leading-8">
+
+                                Pemerintah Desa selalu berupaya memberikan
+                                pelayanan terbaik melalui sistem administrasi
+                                yang cepat, transparan, serta berorientasi pada
+                                kebutuhan masyarakat.
+
+                            </p>
+
+                            <div className="mt-10 space-y-5">
+
+                                <div className="flex items-center gap-4">
+
+                                    <CircleCheckBig className="text-green-200" />
+
+                                    <span>Administrasi Desa</span>
+
+                                </div>
+
+                                <div className="flex items-center gap-4">
+
+                                    <CircleCheckBig className="text-green-200" />
+
+                                    <span>Pembuatan Surat Keterangan</span>
+
+                                </div>
+
+                                <div className="flex items-center gap-4">
+
+                                    <CircleCheckBig className="text-green-200" />
+
+                                    <span>Pelayanan Kependudukan</span>
+
+                                </div>
+
+                                <div className="flex items-center gap-4">
+
+                                    <CircleCheckBig className="text-green-200" />
+
+                                    <span>Informasi Pemerintahan Desa</span>
+
+                                </div>
 
                             </div>
 
-                            <div className="flex items-center gap-4">
+                            <div className="mt-10 rounded-2xl bg-white/10 backdrop-blur-md p-6 border border-white/20">
 
-                                <CircleCheckBig />
+                                <div className="flex items-center gap-4">
 
-                                <span>Informasi Pemerintahan Desa</span>
+                                    <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+
+                                        <PhoneCall size={26} />
+
+                                    </div>
+
+                                    <div>
+
+                                        <p className="text-green-100 text-sm">
+
+                                            Kontak Pelayanan
+
+                                        </p>
+
+                                        <h4 className="font-bold text-xl">
+
+                                            +62 812-3456-7890
+
+                                        </h4>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
-                            <div className="flex items-center gap-4">
+                            <div className="mt-8 flex items-center gap-3 text-green-100">
 
-                                <CircleCheckBig />
+                                <Sparkles size={18} />
 
-                                <span>Pelayanan Kependudukan</span>
+                                <span className="text-sm">
 
-                            </div>
+                                    Pelayanan dilakukan sesuai Standar Operasional Prosedur (SOP).
 
-                        </div>
-
-                        <div className="mt-10 flex items-center gap-4 bg-white/10 rounded-2xl p-5">
-
-                            <PhoneCall />
-
-                            <div>
-
-                                <p className="text-sm text-green-100">
-
-                                    Hubungi Kami
-
-                                </p>
-
-                                <h4 className="font-semibold">
-
-                                    +62 812-3456-7890
-
-                                </h4>
+                                </span>
 
                             </div>
 

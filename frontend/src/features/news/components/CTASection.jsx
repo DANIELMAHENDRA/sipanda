@@ -1,58 +1,58 @@
-import { Newspaper, PhoneCall } from "lucide-react";
+import {
+    Newspaper,
+    PhoneCall,
+    ArrowRight,
+} from "lucide-react";
+
 import Button from "../../../components/common/Button";
 
 export default function CTASection() {
 
     return (
 
-        <section className="relative overflow-hidden py-24 bg-gradient-to-r from-green-700 to-green-600">
+        <section className="relative overflow-hidden py-24 bg-gradient-to-r from-green-700 via-green-600 to-green-700">
 
-            {/* Background Decoration */}
+            {/* Decoration */}
 
-            <div className="absolute -top-24 -left-24 w-72 h-72 bg-white/10 rounded-full"></div>
+            <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/10 blur-sm"></div>
 
-            <div className="absolute -bottom-28 -right-20 w-96 h-96 bg-white/10 rounded-full"></div>
+            <div className="absolute -bottom-24 -right-20 w-96 h-96 rounded-full bg-white/10 blur-sm"></div>
 
-            <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute top-1/2 left-1/2 w-72 h-72 rounded-full bg-white/5 -translate-x-1/2 -translate-y-1/2"></div>
 
             <div
-                className="relative max-w-5xl mx-auto px-6 text-center"
                 data-aos="zoom-in"
+                className="relative max-w-6xl mx-auto px-6 text-center"
             >
 
-                {/* Badge */}
+                <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/20 backdrop-blur text-white font-semibold">
 
-                <span className="inline-block px-5 py-2 rounded-full bg-white/20 text-white font-medium mb-6">
+                    <Newspaper size={16} />
 
-                    Portal Informasi Desa Panca Tunggal
+                    Portal Informasi SIPANDA
 
                 </span>
 
-                {/* Title */}
+                <h2 className="mt-8 text-4xl lg:text-5xl font-bold text-white leading-tight">
 
-                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-
-                    Jangan Lewatkan
+                    Tetap Terhubung Dengan
                     <br />
 
                     Informasi Terbaru Desa
 
                 </h2>
 
-                {/* Description */}
+                <p className="mt-8 max-w-3xl mx-auto text-lg leading-8 text-green-100">
 
-                <p className="mt-8 text-lg text-green-100 leading-8 max-w-3xl mx-auto">
-
-                    Ikuti berbagai informasi mengenai kegiatan pemerintahan,
-                    pembangunan desa, UMKM, pelayanan publik, dan berbagai
-                    aktivitas masyarakat Desa Panca Tunggal melalui Website
-                    SIPANDA.
+                    Dapatkan berbagai informasi mengenai pembangunan desa,
+                    pelayanan masyarakat, kegiatan pemerintahan,
+                    UMKM, pendidikan, hingga berbagai kegiatan
+                    masyarakat Desa Panca Tunggal secara cepat
+                    melalui SIPANDA.
 
                 </p>
 
-                {/* Button */}
-
-                <div className="mt-12 flex flex-col sm:flex-row justify-center gap-5">
+                <div className="mt-14 flex flex-col sm:flex-row justify-center gap-5">
 
                     <Button
                         to="/berita"
@@ -60,9 +60,11 @@ export default function CTASection() {
                         className="gap-3"
                     >
 
-                        <Newspaper size={22} />
+                        <Newspaper size={20} />
 
-                        Lihat Semua Berita
+                        Semua Berita
+
+                        <ArrowRight size={18} />
 
                     </Button>
 
@@ -72,9 +74,9 @@ export default function CTASection() {
                         className="gap-3 border-white text-white hover:bg-white hover:text-green-700"
                     >
 
-                        <PhoneCall size={22} />
+                        <PhoneCall size={20} />
 
-                        Hubungi Kami
+                        Hubungi Pemerintah Desa
 
                     </Button>
 

@@ -2,44 +2,34 @@ import api from "./api";
 
 const newsService = {
 
-    // =========================
-    // Public
-    // =========================
-
     getAll(params = {}) {
-
-        return api.get("/news", {
-            params,
-        });
-
+        return api.get("/news", { params });
     },
 
     getById(id) {
-
         return api.get(`/news/${id}`);
-
     },
 
-    // =========================
-    // Admin CRUD
-    // =========================
-
     create(data) {
-
-        return api.post("/news", data);
-
+        return api.post("/news", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
     },
 
     update(id, data) {
+        data.append("_method", "PUT");
 
-        return api.put(`/news/${id}`, data);
-
+        return api.post(`/news/${id}`, data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
     },
 
     delete(id) {
-
         return api.delete(`/news/${id}`);
-
     },
 
 };

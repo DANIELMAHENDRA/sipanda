@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 
-import serviceService from "../services/serviceService";
+import activityLogService from "../services/activityLogService";
 
-export default function useService(params = {}) {
+export default function useActivityLog(filters = {}) {
 
-    const [services, setServices] = useState([]);
+    const [logs, setLogs] = useState([]);
 
     const [loading, setLoading] = useState(true);
 
     const [error, setError] = useState(null);
 
-    const fetchServices = async () => {
+    const fetchLogs = async () => {
 
         try {
 
@@ -18,9 +18,9 @@ export default function useService(params = {}) {
 
             setError(null);
 
-            const response = await serviceService.getAll(params);
+            const response = await activityLogService.getAll(filters);
 
-            setServices(response.data.data ?? []);
+            setLogs(response.data.data ?? []);
 
         } catch (err) {
 
@@ -38,19 +38,19 @@ export default function useService(params = {}) {
 
     useEffect(() => {
 
-        fetchServices();
+        fetchLogs();
 
-    }, [JSON.stringify(params)]);
+    }, [JSON.stringify(filters)]);
 
     return {
 
-        services,
+        logs,
 
         loading,
 
         error,
 
-        refresh: fetchServices,
+        reload: fetchLogs,
 
     };
 

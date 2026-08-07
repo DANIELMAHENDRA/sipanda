@@ -25,7 +25,7 @@ export default function CTASection({ profile }) {
 
                 </span>
 
-                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
 
                     Mari Bersama Membangun
                     <br />

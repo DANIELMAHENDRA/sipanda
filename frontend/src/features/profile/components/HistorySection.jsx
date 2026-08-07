@@ -1,5 +1,6 @@
 import SectionTitle from "../../../components/common/SectionTitle";
 import historyImage from "../../../assets/images/profile/history.jpg";
+import { Landmark } from "lucide-react";
 
 export default function HistorySection({ profile }) {
 
@@ -26,7 +27,7 @@ export default function HistorySection({ profile }) {
 
     return (
 
-        <section className="py-24 bg-white">
+        <section className="py-28 bg-gradient-to-b from-white to-green-50">
 
             <div className="max-w-7xl mx-auto px-6">
 
@@ -36,66 +37,112 @@ export default function HistorySection({ profile }) {
                     description="Perjalanan panjang Desa Panca Tunggal dari awal berdiri hingga menjadi desa yang terus berkembang."
                 />
 
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <div className="grid lg:grid-cols-2 gap-20 items-start mt-16">
 
-                    <div>
+                    {/* ===========================
+                        IMAGE
+                    =========================== */}
+
+                    <div
+                        data-aos="fade-right"
+                        className="relative"
+                    >
+
+                        <div className="absolute -z-10 -top-10 -left-10 w-72 h-72 bg-green-500/20 rounded-full blur-3xl"></div>
 
                         <img
                             src={profile?.hero_image || historyImage}
                             alt="Sejarah Desa"
-                            className="w-full h-[500px] object-cover rounded-2xl shadow-xl"
+                            className="rounded-3xl shadow-2xl object-cover h-[620px] w-full"
                         />
+
+                        <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-xl rounded-2xl px-6 py-5 shadow-lg flex gap-4 items-center">
+
+                            <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
+
+                                <Landmark className="text-green-700" />
+
+                            </div>
+
+                            <div>
+
+                                <p className="text-sm text-gray-500">
+
+                                    Sejarah Desa
+
+                                </p>
+
+                                <h4 className="font-bold text-lg">
+
+                                    {profile?.village_name}
+
+                                </h4>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
+                    {/* ===========================
+                        CONTENT
+                    =========================== */}
+
                     <div>
 
-                        <h3 className="text-3xl font-bold text-gray-800 mb-6">
+                        <div
+                            data-aos="fade-up"
+                            className="bg-white rounded-3xl shadow-xl p-8 mb-10"
+                        >
 
-                            Awal Berdirinya Desa
+                            <h3 className="text-3xl font-bold text-gray-900 mb-6">
 
-                        </h3>
+                                Awal Berdirinya Desa
 
-                        <p className="text-gray-600 leading-8 whitespace-pre-line">
+                            </h3>
 
-                            {profile?.history}
+                            <p className="text-gray-600 leading-9 whitespace-pre-line">
 
-                        </p>
+                                {profile?.history}
 
-                        <div className="mt-10 space-y-8">
+                            </p>
+
+                        </div>
+
+                        {/* ===========================
+                            TIMELINE
+                        =========================== */}
+
+                        <div className="relative pl-8">
+
+                            <div className="absolute left-6 top-0 bottom-0 w-1 bg-green-200 rounded-full"></div>
 
                             {timeline.map((item, index) => (
 
                                 <div
                                     key={index}
-                                    className="flex gap-5"
+                                    data-aos="fade-up"
+                                    data-aos-delay={index * 100}
+                                    className="relative mb-10"
                                 >
 
-                                    <div className="flex flex-col items-center">
+                                    <div className="absolute -left-[18px] top-4 w-9 h-9 rounded-full bg-green-700 border-4 border-white shadow-lg"></div>
 
-                                        <div className="w-14 h-14 rounded-full bg-green-700 text-white flex items-center justify-center font-bold">
+                                    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 ml-8">
+
+                                        <span className="inline-block bg-green-100 text-green-700 font-semibold text-sm px-4 py-2 rounded-full mb-4">
 
                                             {item.year}
 
-                                        </div>
+                                        </span>
 
-                                        {index !== timeline.length - 1 && (
-
-                                            <div className="w-1 h-16 bg-green-300"></div>
-
-                                        )}
-
-                                    </div>
-
-                                    <div>
-
-                                        <h4 className="font-bold text-xl">
+                                        <h4 className="text-xl font-bold text-gray-900">
 
                                             {item.title}
 
                                         </h4>
 
-                                        <p className="text-gray-600 mt-2 leading-7">
+                                        <p className="text-gray-600 leading-8 mt-3">
 
                                             {item.description}
 

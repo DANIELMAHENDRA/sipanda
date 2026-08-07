@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-import useGovernment from "../../hooks/useGovernment";
+import useService from "../../hooks/useService";
 
-import GovernmentTable from "../../components/admin/government/GovernmentTable";
-import GovernmentFormModal from "../../components/admin/government/GovernmentFormModal";
-import DeleteGovernmentModal from "../../components/admin/government/DeleteGovernmentModal";
+import ServiceTable from "../../components/admin/service/ServiceTable";
+import ServiceFormModal from "../../components/admin/service/ServiceFormModal";
+import DeleteServiceModal from "../../components/admin/service/DeleteServiceModal";
 
-export default function GovernmentManagement() {
+export default function ServiceManagement() {
 
     const {
 
-        government,
+        services,
 
         loading,
 
         refresh,
 
-    } = useGovernment();
+    } = useService();
 
-    const [selectedGovernment, setSelectedGovernment] = useState(null);
+    const [selectedService, setSelectedService] = useState(null);
 
     const [openForm, setOpenForm] = useState(false);
 
@@ -27,13 +27,13 @@ export default function GovernmentManagement() {
 
     /*
     |--------------------------------------------------------------------------
-    | Tambah Data
+    | Tambah
     |--------------------------------------------------------------------------
     */
 
     const handleCreate = () => {
 
-        setSelectedGovernment(null);
+        setSelectedService(null);
 
         setOpenForm(true);
 
@@ -45,9 +45,9 @@ export default function GovernmentManagement() {
     |--------------------------------------------------------------------------
     */
 
-    const handleEdit = (item) => {
+    const handleEdit = (service) => {
 
-        setSelectedGovernment(item);
+        setSelectedService(service);
 
         setOpenForm(true);
 
@@ -59,9 +59,9 @@ export default function GovernmentManagement() {
     |--------------------------------------------------------------------------
     */
 
-    const handleDelete = (item) => {
+    const handleDelete = (service) => {
 
-        setSelectedGovernment(item);
+        setSelectedService(service);
 
         setOpenDelete(true);
 
@@ -71,9 +71,7 @@ export default function GovernmentManagement() {
 
         <div className="space-y-6">
 
-            {/* ==========================================================
-                Header
-            ========================================================== */}
+            {/* Header */}
 
             <div className="flex items-center justify-between">
 
@@ -81,13 +79,13 @@ export default function GovernmentManagement() {
 
                     <h1 className="text-3xl font-bold">
 
-                        Pemerintahan Desa
+                        Service Management
 
                     </h1>
 
                     <p className="text-gray-500 mt-1">
 
-                        Kelola struktur pemerintahan desa.
+                        Kelola layanan Desa.
 
                     </p>
 
@@ -103,19 +101,17 @@ export default function GovernmentManagement() {
 
                     <Plus size={18} />
 
-                    Tambah Aparatur
+                    Tambah Layanan
 
                 </button>
 
             </div>
 
-            {/* ==========================================================
-                Table
-            ========================================================== */}
+            {/* Table */}
 
-            <GovernmentTable
+            <ServiceTable
 
-                government={government}
+                services={services}
 
                 loading={loading}
 
@@ -125,33 +121,29 @@ export default function GovernmentManagement() {
 
             />
 
-            {/* ==========================================================
-                Form Modal
-            ========================================================== */}
+            {/* Modal Form */}
 
-            <GovernmentFormModal
+            <ServiceFormModal
 
                 open={openForm}
 
                 onClose={() => setOpenForm(false)}
 
-                government={selectedGovernment}
+                service={selectedService}
 
                 reload={refresh}
 
             />
 
-            {/* ==========================================================
-                Delete Modal
-            ========================================================== */}
+            {/* Delete */}
 
-            <DeleteGovernmentModal
+            <DeleteServiceModal
 
                 open={openDelete}
 
                 onClose={() => setOpenDelete(false)}
 
-                government={selectedGovernment}
+                service={selectedService}
 
                 reload={refresh}
 

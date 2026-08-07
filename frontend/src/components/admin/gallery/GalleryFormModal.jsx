@@ -133,7 +133,7 @@ export default function GalleryFormModal({
 
     };
 
-    const handleSubmit = async (e) => {
+        const handleSubmit = async (e) => {
 
         e.preventDefault();
 
@@ -143,46 +143,46 @@ export default function GalleryFormModal({
 
             const formData = new FormData();
 
-            Object.keys(form).forEach((key) => {
+            formData.append("title", form.title);
+            formData.append("category", form.category);
+            formData.append("description", form.description);
+            formData.append("location", form.location);
+            formData.append("photographer", form.photographer);
+            formData.append("taken_at", form.taken_at);
+            formData.append("order_number", form.order_number);
+            formData.append("status", form.status);
 
-                if (
+            // Laravel boolean
+            formData.append(
+                "is_featured",
+                form.is_featured ? "1" : "0"
+            );
 
-                    form[key] !== null &&
+            // upload file
+            if (form.image instanceof File) {
+                formData.append("image", form.image);
+            }
 
-                    form[key] !== ""
+            // Debug
+            console.log("===== FORM DATA =====");
 
-                ) {
-
-                    formData.append(
-
-                        key,
-
-                        form[key]
-
-                    );
-
-                }
-
-            });
+            for (const pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
 
             if (gallery) {
 
                 formData.append("_method", "PUT");
 
                 await galleryService.update(
-
                     gallery.id,
-
                     formData
-
                 );
 
             } else {
 
                 await galleryService.create(
-
                     formData
-
                 );
 
             }

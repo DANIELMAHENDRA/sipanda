@@ -1,10 +1,9 @@
 import {
-    Building2,
-    User,
     MapPinned,
+    Building2,
+    Users,
+    Landmark,
 } from "lucide-react";
-
-import SectionTitle from "../../../components/common/SectionTitle";
 
 export default function AboutVillage({ profile }) {
 
@@ -14,165 +13,156 @@ export default function AboutVillage({ profile }) {
 
             <div className="max-w-7xl mx-auto px-6">
 
-                <SectionTitle
-                    subtitle="Tentang Desa"
-                    title={profile?.village_name || "Profil Desa"}
-                />
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-                <div className="grid lg:grid-cols-2 gap-16 items-start mt-16">
-
-                    {/* Logo Desa */}
+                    {/* ==========================
+                        Gambar Desa
+                    =========================== */}
 
                     <div
                         data-aos="fade-right"
-                        className="flex justify-center"
+                        className="relative"
                     >
 
-                        {profile?.logo ? (
 
-                            <img
-                                src={profile.logo}
-                                alt={profile.village_name}
-                                className="
-                                    w-80
-                                    h-80
-                                    object-contain
-                                    rounded-3xl
-                                    shadow-xl
-                                    bg-white
-                                    p-8
-                                    border
-                                "
-                            />
-
-                        ) : (
-
-                            <div
-                                className="
-                                    w-80
-                                    h-80
-                                    rounded-3xl
-                                    bg-green-50
-                                    flex
-                                    items-center
-                                    justify-center
-                                    border
-                                "
-                            >
-
-                                <Building2
-                                    size={100}
-                                    className="text-green-700"
-                                />
-
-                            </div>
-
-                        )}
+                        <img
+                            src={
+                                profile?.about_image ||
+                                profile?.hero_image ||
+                                "/images/default-about.jpg"
+                            }
+                            alt={profile?.village_name}
+                            className="rounded-3xl shadow-2xl object-cover h-[550px] w-full"
+                        />
 
                     </div>
 
-                    {/* Konten */}
+                    {/* ==========================
+                        Content
+                    =========================== */}
 
-                    <div
-                        data-aos="fade-left"
-                    >
+                    <div>
+
+                        <span
+                            data-aos="fade-up"
+                            className="text-green-700 font-semibold tracking-widest uppercase"
+                        >
+                            Tentang Desa
+                        </span>
+
+                        <h2
+                            data-aos="fade-up"
+                            data-aos-delay="100"
+                            className="mt-3 text-4xl font-bold text-gray-900 leading-tight"
+                        >
+                            Mengenal Lebih Dekat
+                            <br />
+
+                            {profile?.village_name}
+                        </h2>
+
+                        <p
+                            data-aos="fade-up"
+                            data-aos-delay="200"
+                            className="mt-8 text-gray-600 leading-8 text-lg"
+                        >
+                            {profile?.about ??
+                                "Belum terdapat informasi mengenai desa."}
+                        </p>
+
+                        {/* Informasi */}
 
                         <div
-                            className="
-                                prose
-                                prose-lg
-                                max-w-none
-                                text-gray-700
-                                leading-9
-                            "
-                            dangerouslySetInnerHTML={{
-                                __html:
-                                    profile?.about ||
-                                    "<p>Belum ada informasi mengenai desa.</p>",
-                            }}
-                        />
+                            data-aos="fade-up"
+                            data-aos-delay="300"
+                            className="grid sm:grid-cols-2 gap-5 mt-10"
+                        >
 
-                        <div className="grid md:grid-cols-2 gap-6 mt-12">
+                            <div className="rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-4">
 
-                            {/* Kepala Desa */}
+                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
 
-                            <div
-                                className="
-                                    bg-green-50
-                                    rounded-2xl
-                                    p-6
-                                "
-                            >
-
-                                <div className="flex items-center gap-3 mb-4">
-
-                                    <User
-                                        className="text-green-700"
-                                    />
-
-                                    <h3
-                                        className="
-                                            font-semibold
-                                            text-green-700
-                                        "
-                                    >
-
-                                        Kepala Desa
-
-                                    </h3>
+                                    <MapPinned className="text-green-700" />
 
                                 </div>
 
-                                <p className="text-gray-700">
+                                <div>
 
-                                    {profile?.village_head || "-"}
+                                    <p className="text-sm text-gray-500">
+                                        Kecamatan
+                                    </p>
 
-                                </p>
+                                    <h4 className="font-semibold text-gray-900">
+                                        {profile?.district || "-"}
+                                    </h4>
+
+                                </div>
 
                             </div>
 
-                            {/* Wilayah */}
+                            <div className="rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-4">
 
-                            <div
-                                className="
-                                    bg-green-50
-                                    rounded-2xl
-                                    p-6
-                                "
-                            >
+                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
 
-                                <div className="flex items-center gap-3 mb-4">
-
-                                    <MapPinned
-                                        className="text-green-700"
-                                    />
-
-                                    <h3
-                                        className="
-                                            font-semibold
-                                            text-green-700
-                                        "
-                                    >
-
-                                        Wilayah Administratif
-
-                                    </h3>
+                                    <Landmark className="text-green-700" />
 
                                 </div>
 
-                                <p className="text-gray-700 leading-8">
+                                <div>
 
-                                    Kecamatan {profile?.district || "-"}
+                                    <p className="text-sm text-gray-500">
+                                        Kabupaten
+                                    </p>
 
-                                    <br />
+                                    <h4 className="font-semibold text-gray-900">
+                                        {profile?.regency || "-"}
+                                    </h4>
 
-                                    Kabupaten {profile?.regency || "-"}
+                                </div>
 
-                                    <br />
+                            </div>
 
-                                    Provinsi {profile?.province || "-"}
+                            <div className="rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-4">
 
-                                </p>
+                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
+
+                                    <Building2 className="text-green-700" />
+
+                                </div>
+
+                                <div>
+
+                                    <p className="text-sm text-gray-500">
+                                        Provinsi
+                                    </p>
+
+                                    <h4 className="font-semibold text-gray-900">
+                                        {profile?.province || "-"}
+                                    </h4>
+
+                                </div>
+
+                            </div>
+
+                            <div className="rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-4">
+
+                                <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
+
+                                    <Users className="text-green-700" />
+
+                                </div>
+
+                                <div>
+
+                                    <p className="text-sm text-gray-500">
+                                        Penduduk
+                                    </p>
+
+                                    <h4 className="font-semibold text-gray-900">
+                                        {profile?.population || "-"}
+                                    </h4>
+
+                                </div>
 
                             </div>
 

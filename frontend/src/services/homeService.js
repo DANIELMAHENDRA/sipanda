@@ -1,4 +1,4 @@
-import api from "../../../services/api";
+import api from "./api";
 
 const homeService = {
 
@@ -16,6 +16,14 @@ const homeService = {
 
     getContact() {
         return api.get("/contact");
+    },
+
+        getGovernment() {
+        return api.get("/government");
+    },
+
+    getPotential() {
+        return api.get("/potential");
     },
 
 };

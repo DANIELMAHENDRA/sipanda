@@ -52,17 +52,19 @@ export default function StatisticSection({ profile }) {
 
     return (
 
-        <section className="py-24 bg-gray-50">
+        <section className="py-28 bg-white">
 
             <div className="max-w-7xl mx-auto px-6">
 
                 <SectionTitle
-                    subtitle="Statistik Desa"
-                    title="Data Statistik Desa"
-                    description="Data umum mengenai kondisi wilayah dan kependudukan Desa."
+                    subtitle="Data Desa"
+                    title="Statistik Desa"
+                    description="Gambaran umum kondisi wilayah dan kependudukan Desa."
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Cards */}
+
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-16">
 
                     {statistics.map((item, index) => {
 
@@ -72,43 +74,55 @@ export default function StatisticSection({ profile }) {
 
                             <div
                                 key={index}
-                                className="bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 p-8"
+                                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 border border-gray-200 hover:border-green-300 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
                             >
 
-                                <div className="flex justify-between items-start">
+                                {/* Top Decoration */}
 
-                                    <div>
+                                <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-green-600 via-green-500 to-emerald-400"></div>
 
-                                        <h3 className="text-4xl font-bold text-green-700">
+                                <div className="p-8">
 
-                                            {item.value}
+                                    <div className="flex justify-between items-start">
 
-                                        </h3>
+                                        <div>
 
-                                        <h4 className="text-xl font-semibold text-gray-800 mt-3">
+                                            <p className="text-gray-500 mb-3 text-sm uppercase tracking-widest">
 
-                                            {item.title}
+                                                {item.title}
 
-                                        </h4>
+                                            </p>
+
+                                            <h2 className="text-5xl font-extrabold text-gray-900">
+
+                                                {item.value}
+
+                                            </h2>
+
+                                        </div>
+
+                                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-600 to-green-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+
+                                            <Icon
+                                                size={30}
+                                                className="text-white"
+                                            />
+
+                                        </div>
 
                                     </div>
 
-                                    <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center">
+                                    <div className="mt-8 border-t border-gray-200 pt-5">
 
-                                        <Icon
-                                            size={32}
-                                            className="text-green-700"
-                                        />
+                                        <p className="text-gray-600 leading-7">
+
+                                            {item.description}
+
+                                        </p>
 
                                     </div>
 
                                 </div>
-
-                                <p className="text-gray-500 mt-6 leading-7">
-
-                                    {item.description}
-
-                                </p>
 
                             </div>
 
@@ -118,47 +132,72 @@ export default function StatisticSection({ profile }) {
 
                 </div>
 
-                <div className="mt-20 bg-green-700 rounded-3xl text-white p-10">
+                {/* Summary */}
 
-                    <h3 className="text-3xl font-bold mb-5">
+                <div className="mt-24">
 
-                        Ringkasan Statistik
+                    <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-r from-green-700 via-green-600 to-emerald-600 shadow-2xl">
 
-                    </h3>
+                        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-white/10 blur-3xl"></div>
 
-                    <p className="leading-8 text-green-100">
+                        <div className="absolute -bottom-24 -left-20 w-80 h-80 rounded-full bg-white/10 blur-3xl"></div>
 
-                        Desa{" "}
-                        <span className="font-semibold text-white">
-                            {profile?.village_name}
-                        </span>{" "}
-                        memiliki jumlah penduduk sebanyak{" "}
-                        <span className="font-semibold text-white">
-                            {profile?.population} jiwa
-                        </span>
-                        , yang terdiri dari{" "}
-                        <span className="font-semibold text-white">
-                            {profile?.family_count} Kepala Keluarga
-                        </span>
-                        . Wilayah desa memiliki luas sekitar{" "}
-                        <span className="font-semibold text-white">
-                            {profile?.area} Ha
-                        </span>
-                        , dengan{" "}
-                        <span className="font-semibold text-white">
-                            {profile?.hamlet_count} dusun
-                        </span>
-                        ,{" "}
-                        <span className="font-semibold text-white">
-                            {profile?.rw_count} RW
-                        </span>
-                        , dan{" "}
-                        <span className="font-semibold text-white">
-                            {profile?.rt_count} RT
-                        </span>
-                        .
+                        <div className="relative px-10 py-14 lg:px-16">
 
-                    </p>
+                            <div className="max-w-4xl">
+
+                                <span className="inline-flex px-4 py-2 rounded-full bg-white/15 text-green-100 text-sm font-medium mb-6">
+
+                                    Ringkasan Statistik
+
+                                </span>
+
+                                <h3 className="text-4xl font-bold text-white mb-8">
+
+                                    Gambaran Singkat Desa {profile?.village_name}
+
+                                </h3>
+
+                                <p className="text-green-100 leading-9 text-lg">
+
+                                    Desa{" "}
+                                    <strong className="text-white">
+                                        {profile?.village_name}
+                                    </strong>{" "}
+                                    memiliki jumlah penduduk sebanyak{" "}
+                                    <strong className="text-white">
+                                        {profile?.population} jiwa
+                                    </strong>
+                                    , terdiri dari{" "}
+                                    <strong className="text-white">
+                                        {profile?.family_count} Kepala Keluarga
+                                    </strong>
+                                    . Wilayah desa memiliki luas sekitar{" "}
+                                    <strong className="text-white">
+                                        {profile?.area} Ha
+                                    </strong>
+                                    , yang terbagi menjadi{" "}
+                                    <strong className="text-white">
+                                        {profile?.hamlet_count} Dusun
+                                    </strong>
+                                    ,{" "}
+                                    <strong className="text-white">
+                                        {profile?.rw_count} RW
+                                    </strong>
+                                    , serta{" "}
+                                    <strong className="text-white">
+                                        {profile?.rt_count} RT
+                                    </strong>
+                                    . Data ini menjadi dasar dalam penyusunan
+                                    program pembangunan dan pelayanan kepada
+                                    masyarakat secara berkelanjutan.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 

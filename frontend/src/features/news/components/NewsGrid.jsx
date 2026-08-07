@@ -1,6 +1,7 @@
 import {
     CalendarDays,
     ArrowRight,
+    Newspaper,
 } from "lucide-react";
 
 import Button from "../../../components/common/Button";
@@ -19,11 +20,11 @@ export default function NewsGrid({
 
         return (
 
-            <section className="py-10 bg-gray-50">
+            <section className="py-14 bg-gray-50">
 
                 <div className="max-w-7xl mx-auto px-6 text-center">
 
-                    <p className="text-gray-500">
+                    <p className="text-gray-500 text-lg">
 
                         Memuat berita...
 
@@ -41,11 +42,11 @@ export default function NewsGrid({
 
         return (
 
-            <section className="py-10 bg-gray-50">
+            <section className="py-14 bg-gray-50">
 
                 <div className="max-w-7xl mx-auto px-6 text-center">
 
-                    <p className="text-red-500">
+                    <p className="text-red-500 text-lg">
 
                         Gagal memuat data berita.
 
@@ -63,15 +64,35 @@ export default function NewsGrid({
 
         return (
 
-            <section className="py-10 bg-gray-50">
+            <section className="py-20 bg-gray-50">
 
-                <div className="max-w-7xl mx-auto px-6 text-center">
+                <div className="max-w-7xl mx-auto px-6">
 
-                    <p className="text-gray-500">
+                    <div className="bg-white rounded-3xl border border-gray-200 p-14 text-center">
 
-                        Belum ada berita.
+                        <div className="w-20 h-20 mx-auto rounded-full bg-green-100 flex items-center justify-center">
 
-                    </p>
+                            <Newspaper
+                                size={36}
+                                className="text-green-700"
+                            />
+
+                        </div>
+
+                        <h3 className="mt-8 text-3xl font-bold text-gray-900">
+
+                            Belum Ada Berita
+
+                        </h3>
+
+                        <p className="mt-4 text-gray-600 max-w-xl mx-auto leading-8">
+
+                            Saat ini belum terdapat berita yang dapat
+                            ditampilkan.
+
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -83,11 +104,11 @@ export default function NewsGrid({
 
     return (
 
-        <section className="py-10 bg-gray-50">
+        <section className="pb-24 bg-gray-50">
 
             <div className="max-w-7xl mx-auto px-6">
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
 
                     {news.map((item, index) => (
 
@@ -95,46 +116,90 @@ export default function NewsGrid({
                             key={item.id}
                             data-aos="fade-up"
                             data-aos-delay={index * 100}
-                            className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+                            className="
+                                group
+                                overflow-hidden
+                                rounded-3xl
+                                bg-white
+                                border
+                                border-gray-200
+                                shadow-sm
+                                hover:shadow-2xl
+                                hover:-translate-y-2
+                                transition-all
+                                duration-300
+                                flex
+                                flex-col
+                            "
                         >
 
-                            <div className="overflow-hidden">
+                            {/* Thumbnail */}
+
+                            <div className="relative overflow-hidden">
 
                                 <img
-                                    src={item.thumbnail || "/images/no-image.png"}
+                                    src={
+                                        item.thumbnail ||
+                                        "/images/no-image.png"
+                                    }
                                     alt={item.title}
-                                    className="w-full h-60 object-cover hover:scale-110 transition duration-500"
+                                    className="
+                                        w-full
+                                        h-64
+                                        object-cover
+                                        transition-transform
+                                        duration-700
+                                        group-hover:scale-110
+                                    "
                                 />
 
-                            </div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
 
-                            <div className="p-6">
+                                <div className="absolute top-5 left-5">
 
-                                <div className="flex justify-between items-center mb-5">
-
-                                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                    <span className="px-4 py-2 rounded-full bg-white/90 backdrop-blur text-green-700 text-sm font-semibold shadow">
 
                                         {item.category}
 
                                     </span>
 
-                                    <div className="flex items-center gap-2 text-gray-500 text-sm">
+                                </div>
 
-                                        <CalendarDays size={16} />
+                            </div>
 
-                                        {item.published_at}
+                            {/* Content */}
 
-                                    </div>
+                            <div className="flex flex-col flex-1 p-7">
+
+                                <div className="flex items-center gap-2 text-sm text-gray-500">
+
+                                    <CalendarDays size={17} />
+
+                                    {item.published_at}
 
                                 </div>
 
-                                <h3 className="text-2xl font-bold hover:text-green-700 transition">
+                                <h3 className="
+                                    mt-5
+                                    text-2xl
+                                    font-bold
+                                    text-gray-900
+                                    group-hover:text-green-700
+                                    transition
+                                    line-clamp-2
+                                ">
 
                                     {item.title}
 
                                 </h3>
 
-                                <p className="mt-4 text-gray-600 leading-7">
+                                <p className="
+                                    mt-5
+                                    text-gray-600
+                                    leading-8
+                                    line-clamp-3
+                                    flex-1
+                                ">
 
                                     {item.description}
 
@@ -143,13 +208,21 @@ export default function NewsGrid({
                                 <div className="mt-8">
 
                                     <Button
-                                    to={`/berita/${item.id}`}
-                                    variant="outline"
-                                >
+                                        to={`/berita/${item.id}`}
+                                        variant="outline"
+                                        className="group/button"
+                                    >
 
-                                        Baca Selengkapnya
+                                        <span>
 
-                                        <ArrowRight size={18} />
+                                            Baca Selengkapnya
+
+                                        </span>
+
+                                        <ArrowRight
+                                            size={18}
+                                            className="transition-transform group-hover/button:translate-x-1"
+                                        />
 
                                     </Button>
 

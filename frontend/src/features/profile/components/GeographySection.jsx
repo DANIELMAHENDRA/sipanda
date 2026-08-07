@@ -1,109 +1,206 @@
 import SectionTitle from "../../../components/common/SectionTitle";
-import geographyImage from "../../../assets/images/profile/geography.jpg";
 
 import {
-    MapPinned,
-    Landmark,
+    Map,
+    Mountain,
+    Compass,
+    Globe2,
     Trees,
-    Navigation,
-    Globe,
-    Building2,
+    Waves,
+    ImageOff,
 } from "lucide-react";
 
 export default function GeographySection({ profile }) {
 
-    const informations = [
+    const geography = [
         {
-            icon: Building2,
-            title: "Kecamatan",
-            value: profile?.district ?? "-",
-        },
-        {
-            icon: Landmark,
-            title: "Kabupaten",
-            value: profile?.regency ?? "-",
-        },
-        {
-            icon: Globe,
+            icon: Globe2,
             title: "Provinsi",
-            value: profile?.province ?? "-",
+            value: profile?.province || "-"
+        },
+        {
+            icon: Map,
+            title: "Kabupaten",
+            value: profile?.regency || "-"
+        },
+        {
+            icon: Compass,
+            title: "Kecamatan",
+            value: profile?.district || "-"
+        },
+        {
+            icon: Mountain,
+            title: "Ketinggian",
+            value: profile?.elevation
+                ? `${profile.elevation} mdpl`
+                : "-"
         },
         {
             icon: Trees,
             title: "Luas Wilayah",
-            value: `${profile?.area ?? 0} Ha`,
+            value: profile?.area
+                ? `${profile.area} Ha`
+                : "-"
         },
         {
-            icon: Navigation,
-            title: "Latitude",
-            value: profile?.latitude ?? "-",
-        },
-        {
-            icon: MapPinned,
-            title: "Longitude",
-            value: profile?.longitude ?? "-",
+            icon: Waves,
+            title: "Topografi",
+            value:
+                profile?.topography || "Dataran"
         },
     ];
 
     return (
 
-        <section className="py-24 bg-white">
+        <section className="py-28 bg-white">
 
             <div className="max-w-7xl mx-auto px-6">
 
                 <SectionTitle
-                    subtitle="Geografis"
-                    title="Kondisi Wilayah Desa"
-                    description="Informasi geografis Desa berdasarkan data administrasi desa."
+                    subtitle="Kondisi Wilayah"
+                    title="Geografi Desa"
+                    description="Informasi mengenai letak geografis dan karakteristik wilayah Desa."
                 />
 
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <div className="grid lg:grid-cols-2 gap-16 items-center mt-16">
+
+                    {/* =========================
+                        FOTO / PETA
+                    ========================== */}
 
                     <div>
 
-                        <img
-                            src={profile?.hero_image || geographyImage}
-                            alt={profile?.village_name}
-                            className="w-full h-[500px] object-cover rounded-3xl shadow-2xl"
-                        />
+                        <div className="overflow-hidden rounded-3xl shadow-xl bg-gray-100 h-[600px]">
 
-                    </div>
+                            {profile?.map_image || profile?.hero_image ? (
 
-                    <div className="grid sm:grid-cols-2 gap-6">
+                                <img
+                                    src={
+                                        profile?.map_image ||
+                                        profile?.hero_image
+                                    }
+                                    alt="Peta Desa"
+                                    className="w-full h-full object-cover hover:scale-105 transition duration-700"
+                                />
 
-                        {informations.map((item, index) => {
+                            ) : (
 
-                            const Icon = item.icon;
+                                <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
 
-                            return (
+                                    <ImageOff
+                                        size={70}
+                                        className="mb-4"
+                                    />
 
-                                <div
-                                    key={index}
-                                    className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                                >
+                                    <p className="text-lg">
 
-                                    <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center mb-5">
+                                        Belum ada gambar wilayah
 
-                                        <Icon
-                                            size={28}
-                                            className="text-green-700"
-                                        />
-
-                                    </div>
-
-                                    <h3 className="text-lg font-semibold text-gray-800">
-                                        {item.title}
-                                    </h3>
-
-                                    <p className="text-gray-500 mt-2">
-                                        {item.value}
                                     </p>
 
                                 </div>
 
-                            );
+                            )}
 
-                        })}
+                        </div>
+
+                    </div>
+
+                    {/* =========================
+                        INFORMASI
+                    ========================== */}
+
+                    <div>
+
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">
+
+                            Letak Geografis
+
+                        </h2>
+
+                        <p className="text-gray-600 leading-8 mb-10">
+
+                            Desa{" "}
+                            <strong>
+
+                                {profile?.village_name || "-"}
+
+                            </strong>{" "}
+                            berada di Kecamatan{" "}
+                            <strong>
+
+                                {profile?.district || "-"}
+
+                            </strong>
+                            , Kabupaten{" "}
+                            <strong>
+
+                                {profile?.regency || "-"}
+
+                            </strong>
+                            , Provinsi{" "}
+                            <strong>
+
+                                {profile?.province || "-"}
+
+                            </strong>
+                            .
+
+                            {profile?.geography && (
+
+                                <>
+                                    <br />
+                                    <br />
+
+                                    {profile.geography}
+
+                                </>
+
+                            )}
+
+                        </p>
+
+                        <div className="grid sm:grid-cols-2 gap-5">
+
+                            {geography.map((item, index) => {
+
+                                const Icon = item.icon;
+
+                                return (
+
+                                    <div
+                                        key={index}
+                                        className="group rounded-2xl border border-gray-200 bg-white p-6 hover:border-green-400 hover:shadow-xl transition-all duration-300"
+                                    >
+
+                                        <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center mb-5 group-hover:bg-green-600 transition">
+
+                                            <Icon
+                                                size={28}
+                                                className="text-green-700 group-hover:text-white transition"
+                                            />
+
+                                        </div>
+
+                                        <p className="text-sm text-gray-500">
+
+                                            {item.title}
+
+                                        </p>
+
+                                        <h3 className="text-xl font-bold text-gray-900 mt-2">
+
+                                            {item.value}
+
+                                        </h3>
+
+                                    </div>
+
+                                );
+
+                            })}
+
+                        </div>
 
                     </div>
 

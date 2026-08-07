@@ -85,8 +85,9 @@ export default function PotentialFormModal({
                 status:
                     potential.status || "draft",
 
-                published_at:
-                    potential.published_at || "",
+                published_at: potential.published_at
+                ? potential.published_at.replace(" ", "T").slice(0,16)
+                : "",
 
             });
 
@@ -157,10 +158,15 @@ export default function PotentialFormModal({
                     value !== ""
                 ) {
 
-                    formData.append(
-                        key,
-                        value
-                    );
+                if (typeof value === "boolean") {
+
+                    formData.append(key, value ? 1 : 0);
+
+                } else {
+
+                    formData.append(key, value);
+
+                }
 
                 }
 

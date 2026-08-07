@@ -9,7 +9,19 @@ export default function usePotentialDetail(id) {
 
     const fetchPotential = async () => {
 
-        if (!id) return;
+        useEffect(() => {
+
+            if (!id) {
+
+                setLoading(false);
+
+                return;
+
+            }
+
+            fetchPotential();
+
+        }, [id]);
 
         try {
 

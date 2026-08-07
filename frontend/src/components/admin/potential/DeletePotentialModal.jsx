@@ -2,147 +2,82 @@ import { useState } from "react";
 import potentialService from "../../../services/potentialService";
 
 export default function DeletePotentialModal({
-open,
-onClose,
-potential,
-reload,
+    open,
+    onClose,
+    potential,
+    reload,
 }) {
+    const [loading, setLoading] = useState(false);
 
-```
-const [loading, setLoading] = useState(false);
+    // Jangan render modal jika tidak dibuka
+    if (!open || !potential) return null;
 
-/*
-|--------------------------------------------------------------------------
-| Close
-|--------------------------------------------------------------------------
-*/
+    const handleDelete = async () => {
+        try {
+            setLoading(true);
 
-if (!open || !potential) return null;
+            await potentialService.delete(potential.id);
 
-/*
-|--------------------------------------------------------------------------
-| Delete
-|--------------------------------------------------------------------------
-*/
+            reload();
+            onClose();
+        } catch (error) {
+            console.error("Gagal menghapus potential:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-const handleDelete = async () => {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="w-full max-w-md rounded-xl bg-white shadow-xl">
+                {/* Header */}
+                <div className="border-b px-6 py-5">
+                    <h2 className="text-xl font-bold text-red-600">
+                        Hapus Potensi
+                    </h2>
 
-    setLoading(true);
+                    <p className="mt-1 text-sm text-gray-500">
+                        Konfirmasi penghapusan data potensi.
+                    </p>
+                </div>
 
-    try {
+                {/* Body */}
+                <div className="px-6 py-6">
+                    <p className="text-gray-700">
+                        Apakah Anda yakin ingin menghapus potensi
+                        <span className="font-semibold">
+                            {" "}
+                            {potential.title}
+                        </span>
+                        ?
+                    </p>
 
-        await potentialService.delete(
-            potential.id
-        );
+                    <p className="mt-2 text-sm text-red-500">
+                        Data yang sudah dihapus tidak dapat dikembalikan.
+                    </p>
+                </div>
 
-        reload();
+                {/* Footer */}
+                <div className="flex justify-end gap-3 border-t px-6 py-4">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        disabled={loading}
+                        className="rounded-lg border px-5 py-2 hover:bg-gray-100"
+                    >
+                        Batal
+                    </button>
 
-        onClose();
-
-    } catch (error) {
-
-        console.error(
-            "Gagal menghapus potential:",
-            error
-        );
-
-    } finally {
-
-        setLoading(false);
-
-    }
-
-};
-
-return (
-
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-
-        <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-
-            {/* Header */}
-
-            <h2 className="text-xl font-bold">
-
-                Hapus Potensi
-
-            </h2>
-
-            {/* Content */}
-
-            <p className="mt-3 text-gray-600">
-
-                Apakah Anda yakin ingin menghapus potensi
-
-                <span className="font-semibold">
-
-                    {" "}
-
-                    {potential.title}
-
-                </span>
-
-                ?
-
-            </p>
-
-            <p className="mt-2 text-sm text-red-500">
-
-                Data yang sudah dihapus tidak dapat dikembalikan.
-
-            </p>
-
-            {/* Footer */}
-
-            <div className="mt-6 flex justify-end gap-3">
-
-                <button
-
-                    type="button"
-
-                    onClick={onClose}
-
-                    disabled={loading}
-
-                    className="px-4 py-2 rounded-lg border hover:bg-gray-50"
-
-                >
-
-                    Batal
-
-                </button>
-
-                <button
-
-                    type="button"
-
-                    onClick={handleDelete}
-
-                    disabled={loading}
-
-                    className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
-
-                >
-
-                    {
-
-                        loading
-
-                            ? "Menghapus..."
-
-                            : "Hapus"
-
-                    }
-
-                </button>
-
+                    <button
+                        type="button"
+                        onClick={handleDelete}
+                        disabled={loading}
+                        className="rounded-lg bg-red-600 px-5 py-2 text-white hover:bg-red-700 disabled:opacity-50"
+                    >
+                        {loading ? "Menghapus..." : "Hapus"}
+                    </button>
+                </div>
             </div>
-
         </div>
-
-    </div>
-
-);
-```
-
+    );
 }

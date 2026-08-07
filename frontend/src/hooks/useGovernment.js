@@ -1,18 +1,32 @@
 import { useEffect, useState } from "react";
+
 import governmentService from "../services/governmentService";
 
-export default function useGovernment() {
+export default function useGovernment(params = {}) {
 
     const [government, setGovernment] = useState([]);
+
     const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState(null);
 
     const fetchGovernment = async () => {
 
         try {
 
-            const response = await governmentService.getAll();
+            setLoading(true);
 
-            setGovernment(response.data.data);
+            setError(null);
+
+            const response = await governmentService.getAll(params);
+
+            setGovernment(response.data.data ?? []);
+
+        } catch (err) {
+
+            console.error(err);
+
+            setError(err);
 
         } finally {
 
@@ -26,13 +40,15 @@ export default function useGovernment() {
 
         fetchGovernment();
 
-    }, []);
+    }, [JSON.stringify(params)]);
 
     return {
 
         government,
 
         loading,
+
+        error,
 
         refresh: fetchGovernment,
 
