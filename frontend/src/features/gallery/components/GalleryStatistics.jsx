@@ -1,83 +1,313 @@
 import {
     Images,
-    Camera,
-    Video,
-    ImagePlus,
+    Star,
+    Tags,
+    CalendarDays,
 } from "lucide-react";
+
+import useGalleryStatistics from "../../../hooks/useGalleryStatistics";
 
 export default function GalleryStatistics() {
 
-    const statistics = [
+    const {
+        statistics,
+        loading,
+        error,
+    } = useGalleryStatistics();
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Data Statistik
+    |--------------------------------------------------------------------------
+    */
+
+    const statisticsData = [
         {
             id: 1,
             icon: Images,
-            total: "250+",
+            total: statistics.photos,
             title: "Foto Dokumentasi",
-            description: "Dokumentasi kegiatan pemerintahan, pembangunan, dan pelayanan masyarakat.",
+            description:
+                "Seluruh dokumentasi foto kegiatan Desa Panca Tunggal yang tersimpan dalam sistem.",
         },
 
         {
             id: 2,
-            icon: Camera,
-            total: "80+",
-            title: "Kegiatan Desa",
-            description: "Berbagai kegiatan sosial, budaya, olahraga, dan gotong royong masyarakat.",
+            icon: Star,
+            total: statistics.featured,
+            title: "Foto Unggulan",
+            description:
+                "Dokumentasi pilihan yang ditetapkan sebagai foto unggulan Desa Panca Tunggal.",
         },
 
         {
             id: 3,
-            icon: Video,
-            total: "35+",
-            title: "Video Dokumentasi",
-            description: "Video kegiatan resmi Pemerintah Desa yang telah diarsipkan secara digital.",
+            icon: Tags,
+            total: statistics.categories,
+            title: "Kategori Galeri",
+            description:
+                "Jumlah kategori dokumentasi yang tersedia dalam galeri desa.",
         },
 
         {
             id: 4,
-            icon: ImagePlus,
-            total: "15+",
-            title: "Album Galeri",
-            description: "Kumpulan album dokumentasi berdasarkan kategori kegiatan desa.",
+            icon: CalendarDays,
+            total: statistics.this_year,
+            title: "Dokumentasi Tahun Ini",
+            description:
+                "Jumlah dokumentasi kegiatan yang tercatat pada tahun berjalan.",
         },
-
     ];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Loading
+    |--------------------------------------------------------------------------
+    */
+
+    if (loading) {
+
+        return (
+
+            <section className="py-16 sm:py-20 lg:py-24 bg-white">
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <div className="text-center">
+
+                        <span
+                            className="
+                                inline-flex
+                                items-center
+                                gap-2
+                                px-4
+                                py-2
+                                rounded-full
+                                bg-green-100
+                                text-green-700
+                                text-sm
+                                font-semibold
+                            "
+                        >
+
+                            <Images size={16} />
+
+                            Statistik Galeri
+
+                        </span>
+
+
+                        <h2
+                            className="
+                                mt-5
+                                text-3xl
+                                sm:text-4xl
+                                lg:text-5xl
+                                font-bold
+                                text-gray-900
+                            "
+                        >
+
+                            Statistik Dokumentasi Desa
+
+                        </h2>
+
+
+                        <p
+                            className="
+                                mt-4
+                                max-w-3xl
+                                mx-auto
+                                text-sm
+                                sm:text-base
+                                text-gray-600
+                                leading-7
+                                sm:leading-8
+                            "
+                        >
+
+                            Memuat statistik dokumentasi desa...
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        );
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Error
+    |--------------------------------------------------------------------------
+    */
+
+    if (error) {
+
+        return (
+
+            <section className="py-16 sm:py-20 lg:py-24 bg-white">
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <div className="text-center">
+
+                        <span
+                            className="
+                                inline-flex
+                                items-center
+                                gap-2
+                                px-4
+                                py-2
+                                rounded-full
+                                bg-red-100
+                                text-red-700
+                                text-sm
+                                font-semibold
+                            "
+                        >
+
+                            <Images size={16} />
+
+                            Statistik Galeri
+
+                        </span>
+
+
+                        <h2
+                            className="
+                                mt-5
+                                text-3xl
+                                sm:text-4xl
+                                lg:text-5xl
+                                font-bold
+                                text-gray-900
+                            "
+                        >
+
+                            Statistik Dokumentasi Desa
+
+                        </h2>
+
+
+                        <p className="mt-6 text-red-500">
+
+                            Gagal memuat statistik galeri.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        );
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tampilan Statistik
+    |--------------------------------------------------------------------------
+    */
 
     return (
 
-        <section className="py-24 bg-white">
+        <section className="py-16 sm:py-20 lg:py-24 bg-white">
 
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
 
                 {/* Heading */}
 
                 <div
                     data-aos="fade-up"
-                    className="text-center mb-16"
+                    className="text-center mb-12 sm:mb-16"
                 >
 
-                    <h2 className="text-4xl font-bold text-gray-900">
+                    <span
+                        className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            px-4
+                            py-2
+                            rounded-full
+                            bg-green-100
+                            text-green-700
+                            text-sm
+                            font-semibold
+                        "
+                    >
+
+                        <Images size={16} />
+
+                        Statistik Galeri
+
+                    </span>
+
+
+                    <h2
+                        className="
+                            mt-5
+                            text-3xl
+                            sm:text-4xl
+                            lg:text-5xl
+                            font-bold
+                            text-gray-900
+                        "
+                    >
 
                         Statistik Dokumentasi Desa
 
                     </h2>
 
-                    <p className="mt-4 max-w-3xl mx-auto text-gray-600 leading-8">
 
-                        Pemerintah Desa Panca Tunggal terus melakukan
-                        digitalisasi dokumentasi sebagai bentuk
-                        transparansi informasi serta arsip kegiatan desa
-                        yang mudah diakses oleh seluruh masyarakat.
+                    <p
+                        className="
+                            mt-4
+                            max-w-3xl
+                            mx-auto
+                            text-sm
+                            sm:text-base
+                            text-gray-600
+                            leading-7
+                            sm:leading-8
+                        "
+                    >
+
+                        Data statistik dokumentasi Desa Panca Tunggal
+                        yang diperbarui berdasarkan data galeri yang
+                        tersimpan dalam sistem.
 
                     </p>
 
                 </div>
 
+
                 {/* Statistics */}
 
-                <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+                <div
+                    className="
+                        grid
+                        grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-4
+                        gap-6
+                        lg:gap-8
+                    "
+                >
 
-                    {statistics.map((item, index) => {
+                    {statisticsData.map((item, index) => {
 
                         const Icon = item.icon;
 
@@ -88,13 +318,16 @@ export default function GalleryStatistics() {
                                 data-aos="fade-up"
                                 data-aos-delay={index * 100}
                                 className="
+                                    group
                                     bg-white
                                     rounded-3xl
-                                    shadow-lg
-                                    hover:shadow-2xl
                                     border
                                     border-gray-100
-                                    p-10
+                                    shadow-md
+                                    hover:shadow-2xl
+                                    p-7
+                                    sm:p-8
+                                    lg:p-9
                                     text-center
                                     transition-all
                                     duration-300
@@ -106,44 +339,82 @@ export default function GalleryStatistics() {
 
                                 <div
                                     className="
-                                        w-20
-                                        h-20
+                                        w-16
+                                        h-16
+                                        sm:w-20
+                                        sm:h-20
                                         mx-auto
-                                        rounded-full
+                                        rounded-2xl
                                         bg-green-100
                                         flex
                                         items-center
                                         justify-center
-                                        mb-6
+                                        mb-5
+                                        sm:mb-6
+                                        group-hover:bg-green-700
+                                        transition-all
+                                        duration-300
                                     "
                                 >
 
                                     <Icon
-                                        size={38}
-                                        className="text-green-700"
+                                        size={32}
+                                        className="
+                                            text-green-700
+                                            group-hover:text-white
+                                            transition-colors
+                                            duration-300
+                                        "
                                     />
 
                                 </div>
 
+
                                 {/* Number */}
 
-                                <h3 className="text-5xl font-bold text-green-700">
+                                <h3
+                                    className="
+                                        text-4xl
+                                        sm:text-5xl
+                                        font-bold
+                                        text-green-700
+                                    "
+                                >
 
                                     {item.total}
 
                                 </h3>
 
+
                                 {/* Title */}
 
-                                <h4 className="mt-5 text-2xl font-semibold text-gray-900">
+                                <h4
+                                    className="
+                                        mt-4
+                                        text-xl
+                                        sm:text-2xl
+                                        font-semibold
+                                        text-gray-900
+                                    "
+                                >
 
                                     {item.title}
 
                                 </h4>
 
+
                                 {/* Description */}
 
-                                <p className="mt-4 text-gray-600 leading-7">
+                                <p
+                                    className="
+                                        mt-3
+                                        sm:mt-4
+                                        text-sm
+                                        sm:text-base
+                                        text-gray-600
+                                        leading-7
+                                    "
+                                >
 
                                     {item.description}
 

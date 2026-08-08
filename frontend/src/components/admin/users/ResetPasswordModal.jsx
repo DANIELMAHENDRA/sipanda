@@ -1,79 +1,94 @@
-import { KeyRound } from "lucide-react";
+import { KeyRound, X } from "lucide-react";
 
 import userService from "../../../services/userService";
 
 export default function ResetPasswordModal({
-
     open,
-
     onClose,
-
     user,
-
     reload,
-
 }) {
-
     if (!open || !user) return null;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Reset Password
-    |--------------------------------------------------------------------------
-    */
-
     const handleReset = async () => {
-
         try {
-
             await userService.resetPassword(user.id);
 
             reload();
-
             onClose();
 
             alert("Password berhasil direset.");
-
         } catch (error) {
-
             console.error(error);
 
             alert("Gagal mereset password.");
-
         }
-
     };
 
     return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
 
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-
-            <div className="bg-white rounded-xl shadow-xl w-full max-w-md">
+            <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
 
                 {/* Header */}
+                <div className="border-b px-5 sm:px-6 py-5 flex items-center justify-between">
 
-                <div className="border-b px-6 py-5 flex items-center gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
 
-                    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                        <div className="w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-full bg-blue-100 flex items-center justify-center">
 
-                        <KeyRound
-                            size={24}
-                            className="text-blue-600"
-                        />
+                            <KeyRound
+                                size={22}
+                                className="text-blue-600"
+                            />
+
+                        </div>
+
+                        <div className="min-w-0">
+
+                            <h2 className="text-lg sm:text-xl font-bold text-gray-800">
+                                Reset Password
+                            </h2>
+
+                            <p className="text-xs sm:text-sm text-gray-500">
+                                Reset password ke password default.
+                            </p>
+
+                        </div>
 
                     </div>
 
-                    <div>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition shrink-0"
+                    >
+                        <X size={20} />
+                    </button>
 
-                        <h2 className="text-xl font-bold">
+                </div>
 
-                            Reset Password
+                {/* Body */}
+                <div className="px-5 sm:px-6 py-6">
 
-                        </h2>
+                    <p className="text-gray-700 leading-7">
 
-                        <p className="text-sm text-gray-500">
+                        Password untuk user{" "}
 
-                            Reset password user menjadi password default.
+                        <span className="font-semibold text-gray-900 break-words">
+                            {user.name}
+                        </span>{" "}
+
+                        akan direset.
+
+                    </p>
+
+                    <div className="mt-4 bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
+
+                        <p className="text-sm text-blue-700 leading-6">
+
+                            Setelah password direset, user harus segera
+                            mengganti password demi keamanan akun.
 
                         </p>
 
@@ -81,58 +96,23 @@ export default function ResetPasswordModal({
 
                 </div>
 
-                {/* Body */}
-
-                <div className="px-6 py-6">
-
-                    <p className="text-gray-700">
-
-                        Password untuk user
-
-                        <span className="font-semibold">
-
-                            {" "} {user.name}
-
-                        </span>
-
-                        akan direset.
-
-                    </p>
-
-                    <p className="mt-2 text-sm text-gray-500">
-
-                        Setelah direset, user harus segera mengganti passwordnya.
-
-                    </p>
-
-                </div>
-
                 {/* Footer */}
-
-                <div className="border-t px-6 py-4 flex justify-end gap-3">
+                <div className="border-t px-5 sm:px-6 py-4 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
 
                     <button
-
+                        type="button"
                         onClick={onClose}
-
-                        className="px-5 py-2 rounded-lg border hover:bg-gray-100"
-
+                        className="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
                     >
-
                         Batal
-
                     </button>
 
                     <button
-
+                        type="button"
                         onClick={handleReset}
-
-                        className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
-
+                        className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
                     >
-
                         Reset Password
-
                     </button>
 
                 </div>
@@ -140,7 +120,5 @@ export default function ResetPasswordModal({
             </div>
 
         </div>
-
     );
-
 }

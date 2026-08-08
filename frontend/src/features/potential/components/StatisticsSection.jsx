@@ -5,7 +5,9 @@ import {
     Beef,
     Map,
     Landmark,
+    ArrowUpRight,
 } from "lucide-react";
+
 
 const statistics = [
     {
@@ -15,17 +17,17 @@ const statistics = [
     },
     {
         icon: Users,
-        value: "500+",
+        value: "150+",
         title: "Petani Aktif",
     },
     {
         icon: Store,
-        value: "80+",
+        value: "5+",
         title: "UMKM Aktif",
     },
     {
         icon: Beef,
-        value: "250+",
+        value: "100+",
         title: "Peternak",
     },
     {
@@ -35,51 +37,194 @@ const statistics = [
     },
     {
         icon: Landmark,
-        value: "6",
+        value: "11",
         title: "Dusun",
     },
 ];
+
 
 export default function StatisticsSection() {
 
     return (
 
-        <section className="py-24 bg-gradient-to-br from-green-700 via-green-800 to-green-900">
+        <section
+            className="
+                relative
+                overflow-hidden
+                bg-gradient-to-br
+                from-emerald-950
+                via-emerald-900
+                to-green-800
+                py-20
+                sm:py-24
+                lg:py-28
+            "
+        >
 
-            <div className="max-w-7xl mx-auto px-6">
+            {/* =====================================================
+                BACKGROUND DECORATION
+            ====================================================== */}
 
-                {/* Heading */}
+            <div
+                className="
+                    pointer-events-none
+                    absolute
+                    -top-40
+                    -left-40
+                    h-[450px]
+                    w-[450px]
+                    rounded-full
+                    bg-white/5
+                    blur-3xl
+                "
+            />
+
+            <div
+                className="
+                    pointer-events-none
+                    absolute
+                    -bottom-40
+                    -right-40
+                    h-[450px]
+                    w-[450px]
+                    rounded-full
+                    bg-green-300/10
+                    blur-3xl
+                "
+            />
+
+            <div
+                className="
+                    pointer-events-none
+                    absolute
+                    top-1/2
+                    left-1/2
+                    h-[500px]
+                    w-[500px]
+                    -translate-x-1/2
+                    -translate-y-1/2
+                    rounded-full
+                    bg-emerald-400/5
+                    blur-3xl
+                "
+            />
+
+
+            {/* =====================================================
+                CONTENT
+            ====================================================== */}
+
+            <div
+                className="
+                    relative
+                    max-w-7xl
+                    mx-auto
+                    px-4
+                    sm:px-6
+                    lg:px-8
+                "
+            >
+
+                {/* =================================================
+                    HEADING
+                ================================================== */}
 
                 <div
                     data-aos="fade-up"
-                    className="text-center mb-16"
+                    className="
+                        max-w-3xl
+                        mx-auto
+                        text-center
+                        mb-14
+                        sm:mb-16
+                    "
                 >
 
-                    <span className="uppercase tracking-[4px] text-green-200 font-semibold">
+                    {/* Badge */}
+
+                    <div
+                        className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            rounded-full
+                            border
+                            border-white/15
+                            bg-white/10
+                            px-5
+                            py-2.5
+                            text-sm
+                            font-bold
+                            uppercase
+                            tracking-widest
+                            text-green-200
+                            backdrop-blur-md
+                        "
+                    >
+
+                        <Sprout size={17} />
 
                         Statistik Potensi
 
-                    </span>
+                    </div>
 
-                    <h2 className="mt-4 text-4xl lg:text-5xl font-bold text-white">
+
+                    {/* Title */}
+
+                    <h2
+                        className="
+                            mt-5
+                            text-3xl
+                            sm:text-4xl
+                            lg:text-5xl
+                            font-black
+                            leading-tight
+                            text-white
+                        "
+                    >
 
                         Potensi Desa Dalam Angka
 
                     </h2>
 
-                    <p className="mt-6 max-w-3xl mx-auto text-green-100 leading-8">
 
-                        Berbagai data potensi Desa Panca Tunggal yang
-                        menggambarkan kekuatan sektor pertanian,
-                        peternakan, UMKM, dan pembangunan ekonomi desa.
+                    {/* Description */}
+
+                    <p
+                        className="
+                            mt-5
+                            text-base
+                            sm:text-lg
+                            leading-8
+                            text-slate-200
+                        "
+                    >
+
+                        Gambaran data potensi Desa Panca Tunggal
+                        yang menunjukkan kekuatan sektor pertanian,
+                        peternakan, UMKM, serta sumber daya masyarakat
+                        yang terus berkembang.
 
                     </p>
 
                 </div>
 
-                {/* Cards */}
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* =================================================
+                    STATISTICS GRID
+                ================================================== */}
+
+                <div
+                    className="
+                        grid
+                        grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-3
+                        gap-5
+                        sm:gap-6
+                        lg:gap-7
+                    "
+                >
 
                     {statistics.map((item, index) => {
 
@@ -89,64 +234,188 @@ export default function StatisticsSection() {
 
                             <div
                                 key={item.title}
-                                data-aos="zoom-in"
+                                data-aos="fade-up"
                                 data-aos-delay={index * 100}
                                 className="
-                                    bg-white/10
-                                    backdrop-blur-lg
+                                    group
+                                    relative
+                                    overflow-hidden
                                     rounded-3xl
                                     border
-                                    border-white/20
-                                    p-8
-                                    hover:bg-white/15
+                                    border-white/10
+                                    bg-white/10
+                                    p-6
+                                    sm:p-7
+                                    backdrop-blur-xl
                                     transition-all
-                                    duration-300
+                                    duration-500
+                                    hover:-translate-y-2
+                                    hover:border-white/20
+                                    hover:bg-white/15
+                                    hover:shadow-2xl
                                 "
                             >
 
+                                {/* Card glow */}
+
                                 <div
                                     className="
-                                        w-16
-                                        h-16
-                                        rounded-2xl
-                                        bg-white/20
+                                        pointer-events-none
+                                        absolute
+                                        -right-10
+                                        -top-10
+                                        h-28
+                                        w-28
+                                        rounded-full
+                                        bg-green-300/10
+                                        blur-2xl
+                                        opacity-0
+                                        transition
+                                        duration-500
+                                        group-hover:opacity-100
+                                    "
+                                />
+
+
+                                {/* Top */}
+
+                                <div
+                                    className="
+                                        relative
                                         flex
-                                        items-center
-                                        justify-center
-                                        mb-6
+                                        items-start
+                                        justify-between
+                                        gap-4
                                     "
                                 >
 
-                                    <Icon
-                                        size={30}
-                                        className="text-green-200"
-                                    />
+                                    {/* Icon */}
+
+                                    <div
+                                        className="
+                                            flex
+                                            h-14
+                                            w-14
+                                            shrink-0
+                                            items-center
+                                            justify-center
+                                            rounded-2xl
+                                            border
+                                            border-white/10
+                                            bg-white/10
+                                            transition-all
+                                            duration-500
+                                            group-hover:bg-white/20
+                                            group-hover:scale-105
+                                        "
+                                    >
+
+                                        <Icon
+                                            size={27}
+                                            strokeWidth={1.8}
+                                            className="
+                                                text-green-300
+                                                transition
+                                                duration-300
+                                                group-hover:text-white
+                                            "
+                                        />
+
+                                    </div>
+
+
+                                    {/* Arrow */}
+
+                                    <div
+                                        className="
+                                            flex
+                                            h-9
+                                            w-9
+                                            items-center
+                                            justify-center
+                                            rounded-xl
+                                            border
+                                            border-white/10
+                                            bg-white/5
+                                            text-white/40
+                                            opacity-0
+                                            translate-y-2
+                                            transition-all
+                                            duration-300
+                                            group-hover:opacity-100
+                                            group-hover:translate-y-0
+                                        "
+                                    >
+
+                                        <ArrowUpRight size={17} />
+
+                                    </div>
 
                                 </div>
 
-                                <h3
+
+                                {/* Value */}
+
+                                <div className="relative mt-7">
+
+                                    <h3
+                                        className="
+                                            text-3xl
+                                            sm:text-4xl
+                                            lg:text-[2.65rem]
+                                            font-black
+                                            tracking-tight
+                                            text-white
+                                        "
+                                    >
+
+                                        {item.value}
+
+                                    </h3>
+
+
+                                    <p
+                                        className="
+                                            mt-2
+                                            text-sm
+                                            sm:text-base
+                                            font-medium
+                                            leading-6
+                                            text-green-100
+                                        "
+                                    >
+
+                                        {item.title}
+
+                                    </p>
+
+                                </div>
+
+
+                                {/* Bottom line */}
+
+                                <div
                                     className="
-                                        text-4xl
-                                        font-bold
-                                        text-white
+                                        relative
+                                        mt-6
+                                        h-px
+                                        w-full
+                                        bg-white/10
                                     "
                                 >
 
-                                    {item.value}
+                                    <div
+                                        className="
+                                            h-full
+                                            w-0
+                                            bg-green-300
+                                            transition-all
+                                            duration-500
+                                            group-hover:w-1/3
+                                        "
+                                    />
 
-                                </h3>
-
-                                <p
-                                    className="
-                                        mt-3
-                                        text-green-100
-                                        text-lg
-                                    "
-                                >
-
-                                    {item.title}
-
-                                </p>
+                                </div>
 
                             </div>
 
@@ -156,10 +425,48 @@ export default function StatisticsSection() {
 
                 </div>
 
+
+                {/* =================================================
+                    BOTTOM MESSAGE
+                ================================================== */}
+
+                <div
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                    className="
+                        mt-10
+                        sm:mt-12
+                        flex
+                        flex-col
+                        sm:flex-row
+                        items-center
+                        justify-center
+                        gap-3
+                        text-center
+                        text-sm
+                        sm:text-base
+                        text-green-100
+                    "
+                >
+
+                    <Sprout
+                        size={19}
+                        className="shrink-0 text-green-300"
+                    />
+
+                    <p>
+
+                        Data potensi menjadi dasar pengembangan
+                        ekonomi lokal dan pembangunan desa
+                        yang berkelanjutan.
+
+                    </p>
+
+                </div>
+
             </div>
 
         </section>
 
     );
-
 }

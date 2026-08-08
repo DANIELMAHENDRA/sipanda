@@ -335,12 +335,6 @@ export default function Footer() {
 
                     </p>
 
-                    <p className="text-green-300 text-sm">
-
-                        Developed by KKN Universitas Lampung
-
-                    </p>
-
                 </div>
 
             </div>

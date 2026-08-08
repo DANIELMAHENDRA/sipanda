@@ -1,26 +1,96 @@
-import { ArrowRight, Newspaper } from "lucide-react";
+import { ArrowRight, Newspaper, PhoneCall } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export default function CTASection() {
 
     return (
 
-        <section className="py-24 bg-gradient-to-r from-green-700 via-green-800 to-green-900">
+        <section className="relative overflow-hidden py-16 md:py-20 lg:py-24 bg-gradient-to-r from-green-700 via-green-800 to-green-900">
 
-            <div className="max-w-6xl mx-auto px-6">
+            {/* Background Decoration */}
+
+            <div className="
+                absolute
+                -top-32
+                -left-32
+                w-72
+                h-72
+                rounded-full
+                bg-white/5
+                blur-2xl
+            "></div>
+
+            <div className="
+                absolute
+                -bottom-40
+                -right-32
+                w-96
+                h-96
+                rounded-full
+                bg-green-400/10
+                blur-3xl
+            "></div>
+
+            <div className="
+                absolute
+                top-1/2
+                left-1/2
+                w-64
+                h-64
+                rounded-full
+                bg-white/5
+                -translate-x-1/2
+                -translate-y-1/2
+                blur-2xl
+            "></div>
+
+
+            <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
 
                 <div
                     data-aos="zoom-in"
-                    className="bg-white rounded-3xl shadow-2xl p-10 lg:p-16"
+                    className="
+                        bg-white
+                        rounded-3xl
+                        shadow-2xl
+                        p-6
+                        sm:p-8
+                        md:p-10
+                        lg:p-14
+                        xl:p-16
+                    "
                 >
 
-                    <div className="grid lg:grid-cols-2 gap-10 items-center">
+                    <div className="
+                        grid
+                        lg:grid-cols-2
+                        gap-10
+                        lg:gap-16
+                        items-center
+                    ">
 
-                        {/* Left */}
+                        {/* =========================
+                            LEFT CONTENT
+                        ========================== */}
 
                         <div>
 
-                            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-5 py-2 rounded-full font-medium">
+                            {/* Badge */}
+
+                            <div className="
+                                inline-flex
+                                items-center
+                                gap-2
+                                bg-green-100
+                                text-green-700
+                                px-4
+                                sm:px-5
+                                py-2
+                                rounded-full
+                                font-semibold
+                                text-sm
+                                sm:text-base
+                            ">
 
                                 <Newspaper size={18} />
 
@@ -28,19 +98,43 @@ export default function CTASection() {
 
                             </div>
 
-                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mt-6 leading-tight">
 
-                                Jangan Lewatkan
+                            {/* Title */}
+
+                            <h2 className="
+                                text-3xl
+                                sm:text-4xl
+                                lg:text-5xl
+                                font-bold
+                                text-gray-900
+                                mt-6
+                                leading-tight
+                            ">
+
+                                Jangan Lewatkan{" "}
+
                                 <span className="text-green-700">
-                                    {" "}Berita Terbaru
+                                    Berita Terbaru
                                 </span>
-                                <br />
 
-                                dari Desa Panca Tunggal
+                                <br className="hidden sm:block" />
+
+                                {" "}dari Desa Panca Tunggal
 
                             </h2>
 
-                            <p className="mt-6 text-lg text-gray-600 leading-8">
+
+                            {/* Description */}
+
+                            <p className="
+                                mt-6
+                                text-base
+                                sm:text-lg
+                                text-gray-600
+                                leading-7
+                                sm:leading-8
+                                max-w-2xl
+                            ">
 
                                 Website SIPANDA selalu menghadirkan informasi
                                 terbaru mengenai kegiatan pemerintahan,
@@ -51,27 +145,89 @@ export default function CTASection() {
 
                         </div>
 
-                        {/* Right */}
 
-                        <div className="flex flex-col gap-5 lg:items-end">
+                        {/* =========================
+                            RIGHT ACTION
+                        ========================== */}
+
+                        <div className="
+                            flex
+                            flex-col
+                            gap-4
+                            w-full
+                            lg:items-end
+                        ">
+
+                            {/* Berita */}
 
                             <NavLink
                                 to="/berita"
-                                className="inline-flex items-center justify-center gap-3 bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-xl font-semibold transition duration-300 shadow-lg hover:shadow-xl"
+                                className="
+                                    w-full
+                                    sm:w-auto
+                                    lg:min-w-[220px]
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    gap-3
+                                    bg-green-700
+                                    hover:bg-green-800
+                                    active:scale-[0.98]
+                                    text-white
+                                    px-7
+                                    py-4
+                                    rounded-xl
+                                    font-semibold
+                                    transition-all
+                                    duration-300
+                                    shadow-lg
+                                    hover:shadow-xl
+                                "
                             >
 
-                                Lihat Semua Berita
+                                <Newspaper size={20} />
+
+                                <span>
+                                    Lihat Semua Berita
+                                </span>
 
                                 <ArrowRight size={20} />
 
                             </NavLink>
 
+
+                            {/* Kontak */}
+
                             <NavLink
                                 to="/kontak"
-                                className="inline-flex items-center justify-center gap-3 border-2 border-green-700 text-green-700 hover:bg-green-700 hover:text-white px-8 py-4 rounded-xl font-semibold transition duration-300"
+                                className="
+                                    w-full
+                                    sm:w-auto
+                                    lg:min-w-[220px]
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    gap-3
+                                    border-2
+                                    border-green-700
+                                    text-green-700
+                                    hover:bg-green-700
+                                    hover:text-white
+                                    active:scale-[0.98]
+                                    px-7
+                                    py-4
+                                    rounded-xl
+                                    font-semibold
+                                    transition-all
+                                    duration-300
+                                "
                             >
 
-                                Hubungi Kami
+                                <PhoneCall size={20} />
+
+                                <span>
+                                    Hubungi Kami
+                                </span>
 
                             </NavLink>
 

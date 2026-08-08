@@ -3,11 +3,17 @@ import {
     ChevronRight,
 } from "lucide-react";
 
-export default function GalleryPagination() {
+export default function GalleryPagination({
+    currentPage = 1,
+    totalPages = 1,
+    onPageChange,
+}) {
 
-    // Dummy Data
-    const currentPage = 1;
-    const totalPages = 5;
+    // Jika hanya ada satu halaman,
+    // pagination tidak perlu ditampilkan.
+    if (totalPages <= 1) {
+        return null;
+    }
 
     const pages = [];
 
@@ -15,40 +21,81 @@ export default function GalleryPagination() {
         pages.push(i);
     }
 
+    const handlePageChange = (page) => {
+
+        if (
+            page < 1 ||
+            page > totalPages ||
+            page === currentPage
+        ) {
+            return;
+        }
+
+        if (onPageChange) {
+            onPageChange(page);
+        }
+    };
+
     return (
 
-        <section className="bg-gray-50 pb-24">
+        <section className="bg-gray-50 pb-16 sm:pb-20 lg:pb-24">
 
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                {/* Pagination */}
 
                 <div
                     data-aos="fade-up"
-                    className="flex justify-center items-center gap-3 flex-wrap"
+                    className="
+                        flex
+                        justify-center
+                        items-center
+                        gap-2
+                        sm:gap-3
+                        flex-wrap
+                    "
                 >
 
                     {/* Previous */}
 
                     <button
+                        type="button"
+                        onClick={() =>
+                            handlePageChange(currentPage - 1)
+                        }
+                        disabled={currentPage === 1}
+                        aria-label="Halaman sebelumnya"
                         className="
-                            w-12
-                            h-12
+                            w-10
+                            h-10
+                            sm:w-12
+                            sm:h-12
                             rounded-xl
                             border
                             border-gray-300
                             bg-white
+                            text-gray-700
                             hover:bg-green-700
                             hover:text-white
-                            transition
+                            hover:border-green-700
+                            active:scale-95
+                            transition-all
+                            duration-300
                             flex
                             items-center
                             justify-center
                             disabled:opacity-40
                             disabled:cursor-not-allowed
+                            disabled:hover:bg-white
+                            disabled:hover:text-gray-700
+                            disabled:hover:border-gray-300
                         "
-                        disabled={currentPage === 1}
                     >
 
-                        <ChevronLeft size={20} />
+                        <ChevronLeft
+                            size={18}
+                            className="sm:w-5 sm:h-5"
+                        />
 
                     </button>
 
@@ -58,17 +105,45 @@ export default function GalleryPagination() {
 
                         <button
                             key={page}
+                            type="button"
+                            onClick={() =>
+                                handlePageChange(page)
+                            }
+                            aria-label={`Halaman ${page}`}
+                            aria-current={
+                                page === currentPage
+                                    ? "page"
+                                    : undefined
+                            }
                             className={`
-                                w-12
-                                h-12
+                                w-10
+                                h-10
+                                sm:w-12
+                                sm:h-12
                                 rounded-xl
                                 font-semibold
-                                transition
+                                text-sm
+                                sm:text-base
+                                transition-all
+                                duration-300
                                 border
+
                                 ${
                                     page === currentPage
-                                        ? "bg-green-700 text-white border-green-700 shadow-lg"
-                                        : "bg-white border-gray-300 hover:bg-green-50 hover:border-green-600 hover:text-green-700"
+                                        ? `
+                                            bg-green-700
+                                            text-white
+                                            border-green-700
+                                            shadow-lg
+                                        `
+                                        : `
+                                            bg-white
+                                            text-gray-700
+                                            border-gray-300
+                                            hover:bg-green-50
+                                            hover:border-green-600
+                                            hover:text-green-700
+                                        `
                                 }
                             `}
                         >
@@ -82,26 +157,43 @@ export default function GalleryPagination() {
                     {/* Next */}
 
                     <button
+                        type="button"
+                        onClick={() =>
+                            handlePageChange(currentPage + 1)
+                        }
+                        disabled={currentPage === totalPages}
+                        aria-label="Halaman berikutnya"
                         className="
-                            w-12
-                            h-12
+                            w-10
+                            h-10
+                            sm:w-12
+                            sm:h-12
                             rounded-xl
                             border
                             border-gray-300
                             bg-white
+                            text-gray-700
                             hover:bg-green-700
                             hover:text-white
-                            transition
+                            hover:border-green-700
+                            active:scale-95
+                            transition-all
+                            duration-300
                             flex
                             items-center
                             justify-center
                             disabled:opacity-40
                             disabled:cursor-not-allowed
+                            disabled:hover:bg-white
+                            disabled:hover:text-gray-700
+                            disabled:hover:border-gray-300
                         "
-                        disabled={currentPage === totalPages}
                     >
 
-                        <ChevronRight size={20} />
+                        <ChevronRight
+                            size={18}
+                            className="sm:w-5 sm:h-5"
+                        />
 
                     </button>
 
@@ -112,14 +204,21 @@ export default function GalleryPagination() {
                 <div
                     data-aos="fade-up"
                     data-aos-delay="100"
-                    className="text-center mt-8 text-gray-500"
+                    className="
+                        text-center
+                        mt-6
+                        sm:mt-8
+                        text-sm
+                        sm:text-base
+                        text-gray-500
+                    "
                 >
 
                     Menampilkan halaman
 
                     <span className="font-semibold text-green-700">
 
-                        {" "}1{" "}
+                        {" "}{currentPage}{" "}
 
                     </span>
 
@@ -127,7 +226,7 @@ export default function GalleryPagination() {
 
                     <span className="font-semibold text-green-700">
 
-                        {" "}5{" "}
+                        {" "}{totalPages}{" "}
 
                     </span>
 
@@ -140,5 +239,4 @@ export default function GalleryPagination() {
         </section>
 
     );
-
 }

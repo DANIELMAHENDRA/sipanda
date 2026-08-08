@@ -23,8 +23,6 @@ export default function AboutVillage({ profile }) {
                         data-aos="fade-right"
                         className="relative"
                     >
-
-
                         <img
                             src={
                                 profile?.about_image ||

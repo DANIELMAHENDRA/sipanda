@@ -1,235 +1,258 @@
-import { Pencil, Trash2, Star } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function PotentialTable({
-
     potential,
-
     loading,
-
     onEdit,
-
     onDelete,
-
 }) {
-
-    /*
-    |--------------------------------------------------------------------------
-    | Loading
-    |--------------------------------------------------------------------------
-    */
-
     if (loading) {
-
         return (
-
-            <div className="bg-white rounded-xl shadow p-10 text-center">
-
-                Memuat data...
-
+            <div className="rounded-xl border border-gray-100 bg-white p-10 text-center shadow-sm">
+                <p className="text-sm text-gray-500">
+                    Memuat data potensi...
+                </p>
             </div>
-
         );
-
     }
 
     return (
+        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
 
-        <div className="bg-white rounded-xl shadow overflow-hidden">
+            {/* TABLE */}
+            <div className="w-full overflow-x-auto">
+                <table className="min-w-[850px] w-full">
 
-            <table className="min-w-full">
+                    {/* HEADER */}
+                    <thead className="border-b border-gray-100 bg-gray-50">
+                        <tr>
 
-                <thead className="bg-gray-100">
+                            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Thumbnail
+                            </th>
 
-                    <tr>
+                            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Judul
+                            </th>
 
-                        <th className="px-5 py-3 text-left">
+                            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Kategori
+                            </th>
 
-                            Thumbnail
+                            <th className="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Featured
+                            </th>
 
-                        </th>
+                            <th className="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Status
+                            </th>
 
-                        <th className="px-5 py-3 text-left">
+                            <th className="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Aksi
+                            </th>
 
-                            Judul
+                        </tr>
+                    </thead>
 
-                        </th>
+                    {/* BODY */}
+                    <tbody className="divide-y divide-gray-100">
 
-                        <th className="px-5 py-3 text-left">
-
-                            Kategori
-
-                        </th>
-
-                        <th className="px-5 py-3 text-center">
-
-                            Featured
-
-                        </th>
-
-                        <th className="px-5 py-3 text-center">
-
-                            Status
-
-                        </th>
-
-                        <th className="px-5 py-3 text-center">
-
-                            Aksi
-
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {
-
-                        potential.length === 0 ? (
-
+                        {potential.length === 0 ? (
                             <tr>
-
                                 <td
-
                                     colSpan={6}
-
-                                    className="text-center py-10 text-gray-500"
-
+                                    className="px-5 py-12 text-center"
                                 >
+                                    <div className="flex flex-col items-center">
 
-                                    Belum ada data potensi.
+                                        <p className="text-sm font-medium text-gray-600">
+                                            Belum ada data potensi
+                                        </p>
 
+                                        <p className="mt-1 text-xs text-gray-400">
+                                            Data potensi akan ditampilkan di sini.
+                                        </p>
+
+                                    </div>
                                 </td>
-
                             </tr>
-
                         ) : (
-
                             potential.map((item) => (
-
                                 <tr
-
                                     key={item.id}
-
-                                    className="border-t"
-
+                                    className="transition hover:bg-gray-50/70"
                                 >
 
+                                    {/* THUMBNAIL */}
                                     <td className="px-5 py-4">
-
-                                        {
-
-                                            item.thumbnail ? (
-
-                                                <img
-
-                                                    src={item.thumbnail}
-
-                                                    alt={item.title}
-
-                                                    className="w-20 h-14 rounded object-cover"
-
-                                                />
-
-                                            ) : (
-
-                                                <div className="w-20 h-14 rounded bg-gray-200 flex items-center justify-center text-xs">
-
-                                                    No Image
-
-                                                </div>
-
-                                            )
-
-                                        }
-
+                                        {item.thumbnail ? (
+                                            <img
+                                                src={item.thumbnail}
+                                                alt={item.title}
+                                                className="
+                                                    h-14
+                                                    w-20
+                                                    rounded-lg
+                                                    border
+                                                    border-gray-100
+                                                    object-cover
+                                                "
+                                            />
+                                        ) : (
+                                            <div className="
+                                                flex
+                                                h-14
+                                                w-20
+                                                items-center
+                                                justify-center
+                                                rounded-lg
+                                                bg-gray-100
+                                                text-xs
+                                                text-gray-400
+                                            ">
+                                                Tidak ada gambar
+                                            </div>
+                                        )}
                                     </td>
 
+                                    {/* TITLE */}
                                     <td className="px-5 py-4">
-
-                                        <div className="font-semibold">
-
+                                        <p className="
+                                            max-w-[260px]
+                                            truncate
+                                            text-sm
+                                            font-semibold
+                                            text-gray-800
+                                        ">
                                             {item.title}
-
-                                        </div>
-
+                                        </p>
                                     </td>
 
+                                    {/* CATEGORY */}
                                     <td className="px-5 py-4">
-
-                                        {item.category}
-
+                                        <span className="
+                                            inline-flex
+                                            rounded-md
+                                            bg-gray-100
+                                            px-2.5
+                                            py-1
+                                            text-xs
+                                            font-medium
+                                            text-gray-600
+                                        ">
+                                            {item.category}
+                                        </span>
                                     </td>
 
+                                    {/* FEATURED */}
                                     <td className="px-5 py-4 text-center">
 
-                                        {
-
-                                            item.is_featured ? (
-
-                                                <Star
-
-                                                    size={18}
-
-                                                    className="text-yellow-500 mx-auto fill-yellow-500"
-
-                                                />
-
-                                            ) : (
-
-                                                "-"
-
-                                            )
-
-                                        }
+                                        {item.is_featured ? (
+                                            <span className="
+                                                inline-flex
+                                                rounded-full
+                                                bg-yellow-50
+                                                px-3
+                                                py-1
+                                                text-xs
+                                                font-medium
+                                                text-yellow-700
+                                            ">
+                                                Unggulan
+                                            </span>
+                                        ) : (
+                                            <span className="
+                                                inline-flex
+                                                rounded-full
+                                                bg-gray-100
+                                                px-3
+                                                py-1
+                                                text-xs
+                                                font-medium
+                                                text-gray-500
+                                            ">
+                                                Tidak Unggulan
+                                            </span>
+                                        )}
 
                                     </td>
 
+                                    {/* STATUS */}
                                     <td className="px-5 py-4 text-center">
 
                                         <span
-
-                                            className={`px-3 py-1 rounded-full text-sm font-medium ${
-                                                item.status === "published"
-                                                    ? "bg-green-100 text-green-700"
-                                                    : "bg-yellow-100 text-yellow-700"
-                                            }`}
-
+                                            className={`
+                                                inline-flex
+                                                rounded-full
+                                                px-2.5
+                                                py-1
+                                                text-xs
+                                                font-medium
+                                                ${
+                                                    item.status === "published"
+                                                        ? "bg-green-50 text-green-700"
+                                                        : "bg-yellow-50 text-yellow-700"
+                                                }
+                                            `}
                                         >
-
-                                            {item.status}
-
+                                            {item.status === "published"
+                                                ? "Published"
+                                                : "Draft"}
                                         </span>
 
                                     </td>
 
+                                    {/* ACTION */}
                                     <td className="px-5 py-4">
 
                                         <div className="flex justify-center gap-2">
 
                                             <button
-
-                                                onClick={() => onEdit(item)}
-
-                                                className="p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
-
+                                                type="button"
+                                                onClick={() =>
+                                                    onEdit(item)
+                                                }
+                                                title="Edit"
+                                                className="
+                                                    flex
+                                                    h-8
+                                                    w-8
+                                                    items-center
+                                                    justify-center
+                                                    rounded-lg
+                                                    border
+                                                    border-blue-100
+                                                    bg-blue-50
+                                                    text-blue-600
+                                                    transition
+                                                    hover:bg-blue-100
+                                                "
                                             >
-
-                                                <Pencil size={18} />
-
+                                                <Pencil size={15} />
                                             </button>
 
                                             <button
-
-                                                onClick={() => onDelete(item)}
-
-                                                className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
-
+                                                type="button"
+                                                onClick={() =>
+                                                    onDelete(item)
+                                                }
+                                                title="Hapus"
+                                                className="
+                                                    flex
+                                                    h-8
+                                                    w-8
+                                                    items-center
+                                                    justify-center
+                                                    rounded-lg
+                                                    border
+                                                    border-red-100
+                                                    bg-red-50
+                                                    text-red-600
+                                                    transition
+                                                    hover:bg-red-100
+                                                "
                                             >
-
-                                                <Trash2 size={18} />
-
+                                                <Trash2 size={15} />
                                             </button>
 
                                         </div>
@@ -237,19 +260,31 @@ export default function PotentialTable({
                                     </td>
 
                                 </tr>
-
                             ))
+                        )}
 
-                        )
+                    </tbody>
 
-                    }
+                </table>
+            </div>
 
-                </tbody>
-
-            </table>
+            {/* MOBILE SCROLL HINT */}
+            {potential.length > 0 && (
+                <div className="
+                    border-t
+                    border-gray-100
+                    bg-gray-50
+                    px-4
+                    py-2
+                    text-center
+                    text-[11px]
+                    text-gray-400
+                    sm:hidden
+                ">
+                    Geser ke samping untuk melihat kolom lainnya
+                </div>
+            )}
 
         </div>
-
     );
-
 }

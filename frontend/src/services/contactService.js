@@ -1,7 +1,6 @@
 import api from "./api";
 
 const contactService = {
-
     /*
     |--------------------------------------------------------------------------
     | Public
@@ -9,9 +8,7 @@ const contactService = {
     */
 
     getContact() {
-
         return api.get("/contact");
-
     },
 
     /*
@@ -21,11 +18,8 @@ const contactService = {
     */
 
     update(data) {
-
         return api.put("/contact", data);
-
     },
-
 };
 
 export default contactService;

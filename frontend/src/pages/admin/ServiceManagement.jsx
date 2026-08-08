@@ -8,21 +8,14 @@ import ServiceFormModal from "../../components/admin/service/ServiceFormModal";
 import DeleteServiceModal from "../../components/admin/service/DeleteServiceModal";
 
 export default function ServiceManagement() {
-
     const {
-
         services,
-
         loading,
-
         refresh,
-
     } = useService();
 
     const [selectedService, setSelectedService] = useState(null);
-
     const [openForm, setOpenForm] = useState(false);
-
     const [openDelete, setOpenDelete] = useState(false);
 
     /*
@@ -32,11 +25,8 @@ export default function ServiceManagement() {
     */
 
     const handleCreate = () => {
-
         setSelectedService(null);
-
         setOpenForm(true);
-
     };
 
     /*
@@ -46,11 +36,8 @@ export default function ServiceManagement() {
     */
 
     const handleEdit = (service) => {
-
         setSelectedService(service);
-
         setOpenForm(true);
-
     };
 
     /*
@@ -60,97 +47,115 @@ export default function ServiceManagement() {
     */
 
     const handleDelete = (service) => {
-
         setSelectedService(service);
-
         setOpenDelete(true);
-
     };
 
     return (
-
         <div className="space-y-6">
 
-            {/* Header */}
+            {/* ==========================================================
+                HEADER
+            ========================================================== */}
 
-            <div className="flex items-center justify-between">
+            <div
+                className="
+                    flex
+                    flex-col
+                    gap-4
+                    sm:flex-row
+                    sm:items-center
+                    sm:justify-between
+                "
+            >
 
-                <div>
+                {/* TITLE */}
 
-                    <h1 className="text-3xl font-bold">
+                <div className="min-w-0">
 
-                        Service Management
-
+                    <h1
+                        className="
+                            text-2xl
+                            font-semibold
+                            text-gray-800
+                            sm:text-3xl
+                        "
+                    >
+                        Layanan Desa
                     </h1>
 
-                    <p className="text-gray-500 mt-1">
-
-                        Kelola layanan Desa.
-
+                    <p className="mt-1 text-sm text-gray-500">
+                        Kelola informasi layanan yang tersedia di desa.
                     </p>
 
                 </div>
 
+                {/* ADD BUTTON */}
+
                 <button
-
+                    type="button"
                     onClick={handleCreate}
-
-                    className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-white hover:bg-green-700"
-
+                    className="
+                        inline-flex
+                        h-10
+                        w-full
+                        items-center
+                        justify-center
+                        gap-2
+                        rounded-lg
+                        bg-green-600
+                        px-5
+                        text-sm
+                        font-medium
+                        text-white
+                        transition
+                        hover:bg-green-700
+                        focus:outline-none
+                        focus:ring-2
+                        focus:ring-green-200
+                        sm:w-auto
+                    "
                 >
-
-                    <Plus size={18} />
+                    <Plus size={17} />
 
                     Tambah Layanan
-
                 </button>
 
             </div>
 
-            {/* Table */}
+            {/* ==========================================================
+                TABLE
+            ========================================================== */}
 
             <ServiceTable
-
                 services={services}
-
                 loading={loading}
-
                 onEdit={handleEdit}
-
                 onDelete={handleDelete}
-
             />
 
-            {/* Modal Form */}
+            {/* ==========================================================
+                FORM MODAL
+            ========================================================== */}
 
             <ServiceFormModal
-
                 open={openForm}
-
                 onClose={() => setOpenForm(false)}
-
                 service={selectedService}
-
                 reload={refresh}
-
             />
 
-            {/* Delete */}
+            {/* ==========================================================
+                DELETE MODAL
+            ========================================================== */}
 
             <DeleteServiceModal
-
                 open={openDelete}
-
                 onClose={() => setOpenDelete(false)}
-
                 service={selectedService}
-
                 reload={refresh}
-
             />
 
         </div>
-
     );
-
 }

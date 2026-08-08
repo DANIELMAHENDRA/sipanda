@@ -2,26 +2,39 @@ import SectionTitle from "../../../../components/common/SectionTitle";
 import NewsCard from "../../../../components/common/NewsCard";
 
 export default function RelatedNews({
-
     news,
-
     loading,
-
 }) {
+
+    /* Loading */
 
     if (loading) {
 
         return (
 
-            <section className="py-24 bg-gray-50">
+            <section className="py-16 md:py-20 lg:py-24 bg-gray-50">
 
-                <div className="max-w-7xl mx-auto px-6 text-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
 
-                    <p className="text-gray-500">
+                    <div className="inline-flex flex-col items-center">
 
-                        Memuat berita terkait...
+                        <div className="
+                            w-12
+                            h-12
+                            rounded-full
+                            border-4
+                            border-green-100
+                            border-t-green-700
+                            animate-spin
+                        "></div>
 
-                    </p>
+                        <p className="mt-5 text-gray-500">
+
+                            Memuat berita terkait...
+
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -31,6 +44,8 @@ export default function RelatedNews({
 
     }
 
+    /* Tidak ada berita terkait */
+
     if (!news || news.length === 0) {
 
         return null;
@@ -39,17 +54,35 @@ export default function RelatedNews({
 
     return (
 
-        <section className="py-24 bg-gray-50">
+        <section className="py-16 md:py-20 lg:py-24 bg-gray-50">
 
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-                <SectionTitle
-                    subtitle="Berita Lainnya"
-                    title="Berita Terkait"
-                    description="Temukan informasi dan berita terbaru lainnya dari Pemerintah Desa Panca Tunggal."
-                />
+                {/* Section Header */}
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div
+                    data-aos="fade-up"
+                    className="mb-12 md:mb-14"
+                >
+
+                    <SectionTitle
+                        subtitle="Berita Lainnya"
+                        title="Berita Terkait"
+                        description="Temukan informasi dan berita terbaru lainnya dari Pemerintah Desa Panca Tunggal."
+                    />
+
+                </div>
+
+                {/* News Grid */}
+
+                <div className="
+                    grid
+                    grid-cols-1
+                    sm:grid-cols-2
+                    lg:grid-cols-3
+                    gap-6
+                    md:gap-8
+                ">
 
                     {news.map((item, index) => (
 
@@ -57,6 +90,12 @@ export default function RelatedNews({
                             key={item.id}
                             data-aos="fade-up"
                             data-aos-delay={index * 100}
+                            className="
+                                h-full
+                                transition-transform
+                                duration-300
+                                hover:-translate-y-1
+                            "
                         >
 
                             <NewsCard
@@ -79,5 +118,4 @@ export default function RelatedNews({
         </section>
 
     );
-
 }

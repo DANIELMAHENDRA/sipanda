@@ -1,11 +1,34 @@
 import { useEffect, useState } from "react";
+
 import galleryService from "../services/galleryService";
+
 
 export default function useGallery(params = {}) {
 
     const [gallery, setGallery] = useState([]);
+
+    const [pagination, setPagination] = useState({
+
+        currentPage: 1,
+
+        totalPages: 1,
+
+        perPage: 10,
+
+        total: 0,
+
+    });
+
     const [loading, setLoading] = useState(true);
+
     const [error, setError] = useState(null);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fetch Gallery
+    |--------------------------------------------------------------------------
+    */
 
     const fetchGallery = async () => {
 
@@ -15,15 +38,71 @@ export default function useGallery(params = {}) {
 
             setError(null);
 
-            const response = await galleryService.getAll(params);
 
-            setGallery(response.data.data ?? []);
+            const response =
+                await galleryService.getAll(params);
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Data Gallery
+            |--------------------------------------------------------------------------
+            */
+
+            setGallery(
+                response.data?.data ?? []
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Pagination
+            |--------------------------------------------------------------------------
+            */
+
+            const meta =
+                response.data?.meta ?? {};
+
+
+            setPagination({
+
+                currentPage:
+                    meta.current_page ?? 1,
+
+                totalPages:
+                    meta.last_page ?? 1,
+
+                perPage:
+                    meta.per_page ?? 10,
+
+                total:
+                    meta.total ?? 0,
+
+            });
+
 
         } catch (err) {
 
-            console.error(err);
+            console.error(
+                "Gagal mengambil data galeri:",
+                err
+            );
 
             setError(err);
+
+            setGallery([]);
+
+            setPagination({
+
+                currentPage: 1,
+
+                totalPages: 1,
+
+                perPage: 10,
+
+                total: 0,
+
+            });
 
         } finally {
 
@@ -33,15 +112,41 @@ export default function useGallery(params = {}) {
 
     };
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fetch ketika parameter berubah
+    |--------------------------------------------------------------------------
+    */
+
     useEffect(() => {
 
         fetchGallery();
 
-    }, [JSON.stringify(params)]);
+    }, [
+
+        params.keyword,
+
+        params.category,
+
+        params.per_page,
+
+        params.page,
+
+    ]);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Return
+    |--------------------------------------------------------------------------
+    */
 
     return {
 
         gallery,
+
+        pagination,
 
         loading,
 

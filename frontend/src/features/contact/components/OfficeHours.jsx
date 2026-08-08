@@ -7,91 +7,117 @@ import {
 export default function OfficeHours() {
 
     const schedules = [
-        {
-            day: "Senin",
-            time: "08.00 - 15.00 WIB",
-        },
-        {
-            day: "Selasa",
-            time: "08.00 - 15.00 WIB",
-        },
-        {
-            day: "Rabu",
-            time: "08.00 - 15.00 WIB",
-        },
-        {
-            day: "Kamis",
-            time: "08.00 - 15.00 WIB",
-        },
-        {
-            day: "Jumat",
-            time: "08.00 - 15.00 WIB",
-        },
-        {
-            day: "Sabtu",
-            time: "08.00 - 12.00 WIB",
-        },
-        {
-            day: "Minggu",
-            time: "Libur",
-        },
+        { day: "Senin", time: "08.00 - 15.00 WIB" },
+        { day: "Selasa", time: "08.00 - 15.00 WIB" },
+        { day: "Rabu", time: "08.00 - 15.00 WIB" },
+        { day: "Kamis", time: "08.00 - 15.00 WIB" },
+        { day: "Jumat", time: "08.00 - 15.00 WIB" },
+        { day: "Sabtu", time: "08.00 - 12.00 WIB" },
+        { day: "Minggu", time: "Libur" },
     ];
 
     return (
+        <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
 
-        <section className="py-24 bg-gray-50">
-
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Heading */}
-
                 <div
                     data-aos="fade-up"
-                    className="text-center mb-16"
+                    className="text-center mb-10 sm:mb-14 lg:mb-16"
                 >
 
-                    <span className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
-
+                    <span className="
+                        inline-flex
+                        items-center
+                        gap-2
+                        bg-green-100
+                        text-green-700
+                        px-4
+                        sm:px-5
+                        py-2
+                        rounded-full
+                        font-semibold
+                        text-sm
+                        sm:text-base
+                    ">
                         <CalendarDays size={18} />
-
                         Jam Operasional
-
                     </span>
 
-                    <h2 className="text-4xl font-bold text-gray-900 mt-6">
-
+                    <h2 className="
+                        text-3xl
+                        sm:text-4xl
+                        font-bold
+                        text-gray-900
+                        mt-5
+                        sm:mt-6
+                    ">
                         Jadwal Pelayanan Kantor Desa
-
                     </h2>
 
-                    <p className="mt-5 text-gray-600 leading-8 max-w-3xl mx-auto">
-
+                    <p className="
+                        mt-4
+                        sm:mt-5
+                        text-gray-600
+                        leading-7
+                        sm:leading-8
+                        max-w-3xl
+                        mx-auto
+                        text-sm
+                        sm:text-base
+                    ">
                         Pemerintah Desa Panca Tunggal berkomitmen memberikan
-                        pelayanan administrasi secara profesional,
-                        cepat, dan transparan sesuai dengan jadwal
-                        operasional berikut.
-
+                        pelayanan administrasi secara profesional, cepat, dan
+                        transparan sesuai dengan jadwal operasional berikut.
                     </p>
 
                 </div>
 
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="
+                    grid
+                    lg:grid-cols-2
+                    gap-8
+                    lg:gap-12
+                    items-start
+                ">
 
                     {/* Left */}
-
                     <div
                         data-aos="fade-right"
-                        className="bg-white rounded-3xl shadow-xl overflow-hidden"
+                        className="
+                            bg-white
+                            rounded-2xl
+                            sm:rounded-3xl
+                            shadow-xl
+                            overflow-hidden
+                            w-full
+                        "
                     >
 
-                        <div className="bg-green-700 text-white px-8 py-6 flex items-center gap-3">
+                        <div className="
+                            bg-green-700
+                            text-white
+                            px-5
+                            sm:px-8
+                            py-5
+                            sm:py-6
+                            flex
+                            items-center
+                            gap-3
+                        ">
 
-                            <Clock3 size={28} />
+                            <Clock3
+                                size={24}
+                                className="sm:w-7 sm:h-7 shrink-0"
+                            />
 
-                            <h3 className="text-2xl font-bold">
-
+                            <h3 className="
+                                text-xl
+                                sm:text-2xl
+                                font-bold
+                            ">
                                 Jadwal Pelayanan
-
                             </h3>
 
                         </div>
@@ -102,25 +128,43 @@ export default function OfficeHours() {
 
                                 <div
                                     key={index}
-                                    className="flex justify-between items-center px-8 py-5 hover:bg-green-50 transition"
+                                    className="
+                                        flex
+                                        justify-between
+                                        items-center
+                                        gap-4
+                                        px-5
+                                        sm:px-8
+                                        py-4
+                                        sm:py-5
+                                        hover:bg-green-50
+                                        transition
+                                    "
                                 >
 
-                                    <span className="font-semibold text-gray-800">
-
+                                    <span className="
+                                        font-semibold
+                                        text-gray-800
+                                        text-sm
+                                        sm:text-base
+                                    ">
                                         {item.day}
-
                                     </span>
 
                                     <span
-                                        className={`font-medium ${
-                                            item.time === "Libur"
-                                                ? "text-red-600"
-                                                : "text-green-700"
-                                        }`}
+                                        className={`
+                                            font-medium
+                                            text-sm
+                                            sm:text-base
+                                            text-right
+                                            ${
+                                                item.time === "Libur"
+                                                    ? "text-red-600"
+                                                    : "text-green-700"
+                                            }
+                                        `}
                                     >
-
                                         {item.time}
-
                                     </span>
 
                                 </div>
@@ -132,107 +176,128 @@ export default function OfficeHours() {
                     </div>
 
                     {/* Right */}
-
                     <div
                         data-aos="fade-left"
-                        className="space-y-8"
+                        className="space-y-6 sm:space-y-8"
                     >
 
                         <div>
 
-                            <h3 className="text-3xl font-bold text-gray-900">
-
+                            <h3 className="
+                                text-2xl
+                                sm:text-3xl
+                                font-bold
+                                text-gray-900
+                            ">
                                 Pelayanan yang Ramah dan Profesional
-
                             </h3>
 
-                            <p className="mt-6 text-gray-600 leading-8">
-
+                            <p className="
+                                mt-4
+                                sm:mt-6
+                                text-gray-600
+                                leading-7
+                                sm:leading-8
+                                text-sm
+                                sm:text-base
+                            ">
                                 Pemerintah Desa Panca Tunggal senantiasa
-                                berusaha memberikan pelayanan terbaik
-                                kepada masyarakat melalui sistem pelayanan
-                                yang cepat, transparan, dan akuntabel.
-
+                                berusaha memberikan pelayanan terbaik kepada
+                                masyarakat melalui sistem pelayanan yang cepat,
+                                transparan, dan akuntabel.
                             </p>
 
                         </div>
 
                         <div className="space-y-5">
 
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-start gap-3 sm:gap-4">
 
                                 <CheckCircle2
-                                    className="text-green-600 mt-1"
-                                    size={24}
+                                    className="text-green-600 mt-1 shrink-0"
+                                    size={22}
                                 />
 
                                 <div>
-
-                                    <h4 className="font-semibold text-lg">
-
+                                    <h4 className="
+                                        font-semibold
+                                        text-base
+                                        sm:text-lg
+                                    ">
                                         Pelayanan Administrasi
-
                                     </h4>
 
-                                    <p className="text-gray-600">
-
+                                    <p className="
+                                        text-gray-600
+                                        text-sm
+                                        sm:text-base
+                                        leading-6
+                                        mt-1
+                                    ">
                                         Surat Domisili, Surat Pengantar,
-                                        KK, KTP, dan layanan administrasi lainnya.
-
+                                        KK, KTP, dan layanan administrasi
+                                        lainnya.
                                     </p>
-
                                 </div>
 
                             </div>
 
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-start gap-3 sm:gap-4">
 
                                 <CheckCircle2
-                                    className="text-green-600 mt-1"
-                                    size={24}
+                                    className="text-green-600 mt-1 shrink-0"
+                                    size={22}
                                 />
 
                                 <div>
-
-                                    <h4 className="font-semibold text-lg">
-
+                                    <h4 className="
+                                        font-semibold
+                                        text-base
+                                        sm:text-lg
+                                    ">
                                         Konsultasi Masyarakat
-
                                     </h4>
 
-                                    <p className="text-gray-600">
-
+                                    <p className="
+                                        text-gray-600
+                                        text-sm
+                                        sm:text-base
+                                        leading-6
+                                        mt-1
+                                    ">
                                         Menampung aspirasi, pengaduan,
                                         dan konsultasi terkait pelayanan desa.
-
                                     </p>
-
                                 </div>
 
                             </div>
 
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-start gap-3 sm:gap-4">
 
                                 <CheckCircle2
-                                    className="text-green-600 mt-1"
-                                    size={24}
+                                    className="text-green-600 mt-1 shrink-0"
+                                    size={22}
                                 />
 
                                 <div>
-
-                                    <h4 className="font-semibold text-lg">
-
+                                    <h4 className="
+                                        font-semibold
+                                        text-base
+                                        sm:text-lg
+                                    ">
                                         Pelayanan Cepat
-
                                     </h4>
 
-                                    <p className="text-gray-600">
-
+                                    <p className="
+                                        text-gray-600
+                                        text-sm
+                                        sm:text-base
+                                        leading-6
+                                        mt-1
+                                    ">
                                         Seluruh pelayanan dilakukan sesuai
                                         standar operasional yang berlaku.
-
                                     </p>
-
                                 </div>
 
                             </div>
@@ -246,7 +311,5 @@ export default function OfficeHours() {
             </div>
 
         </section>
-
     );
-
 }

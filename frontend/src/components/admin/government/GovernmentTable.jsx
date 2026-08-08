@@ -1,17 +1,11 @@
 import { Pencil, Trash2 } from "lucide-react";
 
 export default function GovernmentTable({
-
     government,
-
     loading,
-
     onEdit,
-
     onDelete,
-
 }) {
-
     /*
     |--------------------------------------------------------------------------
     | Loading
@@ -19,17 +13,13 @@ export default function GovernmentTable({
     */
 
     if (loading) {
-
         return (
-
-            <div className="bg-white rounded-xl shadow p-8 text-center">
-
-                Memuat data...
-
+            <div className="rounded-xl border border-gray-100 bg-white p-10 text-center shadow-sm">
+                <p className="text-sm text-gray-500">
+                    Memuat data pemerintahan...
+                </p>
             </div>
-
         );
-
     }
 
     /*
@@ -39,235 +29,430 @@ export default function GovernmentTable({
     */
 
     if (!government.length) {
-
         return (
+            <div className="rounded-xl border border-gray-100 bg-white p-10 text-center shadow-sm">
+                <p className="text-sm font-medium text-gray-600">
+                    Belum ada data pemerintahan
+                </p>
 
-            <div className="bg-white rounded-xl shadow p-8 text-center text-gray-500">
-
-                Belum ada data pemerintahan.
-
+                <p className="mt-1 text-xs text-gray-400">
+                    Data pemerintahan akan ditampilkan di sini.
+                </p>
             </div>
-
         );
-
     }
 
     return (
+        <>
+            {/* ==========================================================
+                DESKTOP / TABLET
+            ========================================================== */}
 
-        <div className="bg-white rounded-xl shadow overflow-hidden">
+            <div className="hidden overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm sm:block">
+                <div className="w-full overflow-x-auto">
+                    <table className="w-full min-w-[750px]">
+                        {/* HEADER */}
+                        <thead className="border-b border-gray-100 bg-gray-50">
+                            <tr>
+                                <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    Foto
+                                </th>
 
-            <table className="min-w-full">
+                                <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    Nama
+                                </th>
 
-                <thead className="bg-gray-100">
+                                <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    Jabatan
+                                </th>
 
-                    <tr>
+                                <th className="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    Urutan
+                                </th>
 
-                        <th className="px-5 py-3 text-left">
+                                <th className="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    Status
+                                </th>
 
-                            Foto
+                                <th className="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    Aksi
+                                </th>
+                            </tr>
+                        </thead>
 
-                        </th>
-
-                        <th className="px-5 py-3 text-left">
-
-                            Nama
-
-                        </th>
-
-                        <th className="px-5 py-3 text-left">
-
-                            Jabatan
-
-                        </th>
-
-                        <th className="px-5 py-3 text-center">
-
-                            Kepala Desa
-
-                        </th>
-
-                        <th className="px-5 py-3 text-center">
-
-                            Urutan
-
-                        </th>
-
-                        <th className="px-5 py-3 text-center">
-
-                            Status
-
-                        </th>
-
-                        <th className="px-5 py-3 text-center">
-
-                            Aksi
-
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {
-
-                        government.map((item) => (
-
-                            <tr
-
-                                key={item.id}
-
-                                className="border-t"
-
-                            >
-
-                                {/* Foto */}
-
-                                <td className="px-5 py-3">
-
-                                    {
-
-                                        item.photo ? (
-
+                        {/* BODY */}
+                        <tbody className="divide-y divide-gray-100">
+                            {government.map((item) => (
+                                <tr
+                                    key={item.id}
+                                    className="transition hover:bg-gray-50/70"
+                                >
+                                    {/* FOTO */}
+                                    <td className="px-5 py-4">
+                                        {item.photo ? (
                                             <img
-
                                                 src={item.photo}
-
                                                 alt={item.name}
-
-                                                className="w-14 h-14 rounded-lg object-cover"
-
+                                                className="h-14 w-14 rounded-lg border border-gray-100 object-cover"
                                             />
-
                                         ) : (
+                                            <div
+                                                className="
+                                                    flex
+                                                    h-14
+                                                    w-14
+                                                    items-center
+                                                    justify-center
+                                                    rounded-lg
+                                                    bg-gray-100
+                                                    text-[11px]
+                                                    text-gray-400
+                                                "
+                                            >
+                                                No Image
+                                            </div>
+                                        )}
+                                    </td>
 
-                                            <div className="w-14 h-14 rounded-lg bg-gray-200" />
+                                    {/* NAMA */}
+                                    <td className="px-5 py-4">
+                                        <p
+                                            className="
+                                                max-w-[220px]
+                                                truncate
+                                                text-sm
+                                                font-semibold
+                                                text-gray-800
+                                            "
+                                        >
+                                            {item.name}
+                                        </p>
+                                    </td>
 
-                                        )
+                                    {/* JABATAN */}
+                                    <td className="px-5 py-4">
+                                        <span
+                                            className="
+                                                inline-flex
+                                                rounded-md
+                                                bg-gray-100
+                                                px-2.5
+                                                py-1
+                                                text-xs
+                                                font-medium
+                                                text-gray-600
+                                            "
+                                        >
+                                            {item.position}
+                                        </span>
+                                    </td>
 
-                                    }
+                                    {/* URUTAN */}
+                                    <td className="px-5 py-4 text-center">
+                                        <span className="text-sm font-medium text-gray-600">
+                                            {item.order_number}
+                                        </span>
+                                    </td>
 
-                                </td>
+                                    {/* STATUS */}
+                                    <td className="px-5 py-4 text-center">
+                                        <span
+                                            className={`
+                                                inline-flex
+                                                rounded-full
+                                                px-2.5
+                                                py-1
+                                                text-xs
+                                                font-medium
+                                                ${
+                                                    item.status === "published"
+                                                        ? "bg-green-50 text-green-700"
+                                                        : "bg-yellow-50 text-yellow-700"
+                                                }
+                                            `}
+                                        >
+                                            {item.status}
+                                        </span>
+                                    </td>
 
-                                {/* Nama */}
+                                    {/* AKSI */}
+                                    <td className="px-5 py-4">
+                                        <div className="flex justify-center gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => onEdit(item)}
+                                                title="Edit"
+                                                className="
+                                                    flex
+                                                    h-8
+                                                    w-8
+                                                    items-center
+                                                    justify-center
+                                                    rounded-lg
+                                                    border
+                                                    border-blue-100
+                                                    bg-blue-50
+                                                    text-blue-600
+                                                    transition
+                                                    hover:bg-blue-100
+                                                "
+                                            >
+                                                <Pencil size={15} />
+                                            </button>
 
-                                <td className="px-5 py-3 font-medium">
+                                            <button
+                                                type="button"
+                                                onClick={() => onDelete(item)}
+                                                title="Hapus"
+                                                className="
+                                                    flex
+                                                    h-8
+                                                    w-8
+                                                    items-center
+                                                    justify-center
+                                                    rounded-lg
+                                                    border
+                                                    border-red-100
+                                                    bg-red-50
+                                                    text-red-600
+                                                    transition
+                                                    hover:bg-red-100
+                                                "
+                                            >
+                                                <Trash2 size={15} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
-                                    {item.name}
+                {/* SCROLL HINT */}
+                <div
+                    className="
+                        border-t
+                        border-gray-100
+                        bg-gray-50
+                        px-4
+                        py-2
+                        text-center
+                        text-[11px]
+                        text-gray-400
+                    "
+                >
+                    Geser ke samping untuk melihat kolom lainnya
+                </div>
+            </div>
 
-                                </td>
+            {/* ==========================================================
+                MOBILE / CARD
+            ========================================================== */}
 
-                                {/* Jabatan */}
+            <div className="space-y-3 sm:hidden">
+                {government.map((item) => (
+                    <div
+                        key={item.id}
+                        className="
+                            overflow-hidden
+                            rounded-xl
+                            border
+                            border-gray-100
+                            bg-white
+                            shadow-sm
+                        "
+                    >
+                        {/* CARD CONTENT */}
+                        <div className="p-4">
+                            <div className="flex gap-3">
+                                {/* FOTO */}
+                                <div className="shrink-0">
+                                    {item.photo ? (
+                                        <img
+                                            src={item.photo}
+                                            alt={item.name}
+                                            className="
+                                                h-16
+                                                w-16
+                                                rounded-xl
+                                                border
+                                                border-gray-100
+                                                object-cover
+                                            "
+                                        />
+                                    ) : (
+                                        <div
+                                            className="
+                                                flex
+                                                h-16
+                                                w-16
+                                                items-center
+                                                justify-center
+                                                rounded-xl
+                                                bg-gray-100
+                                                text-[10px]
+                                                text-gray-400
+                                            "
+                                        >
+                                            No Image
+                                        </div>
+                                    )}
+                                </div>
 
-                                <td className="px-5 py-3">
-
-                                    {item.position}
-
-                                </td>
-
-                                {/* Kepala */}
-
-                                <td className="px-5 py-3 text-center">
-
-                                    {
-
-                                        item.is_head
-
-                                            ? "Ya"
-
-                                            : "Tidak"
-
-                                    }
-
-                                </td>
-
-                                {/* Order */}
-
-                                <td className="px-5 py-3 text-center">
-
-                                    {item.order_number}
-
-                                </td>
-
-                                {/* Status */}
-
-                                <td className="px-5 py-3 text-center">
-
-                                    <span
-
-                                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                            item.status === "published"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-yellow-100 text-yellow-700"
-                                        }`}
-
+                                {/* INFORMASI */}
+                                <div className="min-w-0 flex-1">
+                                    <p
+                                        className="
+                                            truncate
+                                            text-sm
+                                            font-semibold
+                                            text-gray-800
+                                        "
                                     >
+                                        {item.name}
+                                    </p>
 
-                                        {item.status}
-
-                                    </span>
-
-                                </td>
-
-                                {/* Action */}
-
-                                <td className="px-5 py-3">
-
-                                    <div className="flex justify-center gap-2">
-
-                                        <button
-
-                                            onClick={() => onEdit(item)}
-
-                                            className="p-2 rounded-lg bg-yellow-100 hover:bg-yellow-200"
-
+                                    <div className="mt-1.5">
+                                        <span
+                                            className="
+                                                inline-flex
+                                                max-w-full
+                                                rounded-md
+                                                bg-gray-100
+                                                px-2
+                                                py-1
+                                                text-[11px]
+                                                font-medium
+                                                text-gray-600
+                                            "
                                         >
-
-                                            <Pencil
-
-                                                size={18}
-
-                                                className="text-yellow-700"
-
-                                            />
-
-                                        </button>
-
-                                        <button
-
-                                            onClick={() => onDelete(item)}
-
-                                            className="p-2 rounded-lg bg-red-100 hover:bg-red-200"
-
-                                        >
-
-                                            <Trash2
-
-                                                size={18}
-
-                                                className="text-red-700"
-
-                                            />
-
-                                        </button>
-
+                                            <span className="truncate">
+                                                {item.position}
+                                            </span>
+                                        </span>
                                     </div>
 
-                                </td>
+                                    {/* STATUS */}
+                                    <div className="mt-2">
+                                        <span
+                                            className={`
+                                                inline-flex
+                                                rounded-full
+                                                px-2
+                                                py-1
+                                                text-[10px]
+                                                font-medium
+                                                ${
+                                                    item.status === "published"
+                                                        ? "bg-green-50 text-green-700"
+                                                        : "bg-yellow-50 text-yellow-700"
+                                                }
+                                            `}
+                                        >
+                                            {item.status}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
-                            </tr>
+                            {/* DETAIL */}
+                            <div
+                                className="
+                                    mt-4
+                                    grid
+                                    grid-cols-2
+                                    gap-3
+                                    border-t
+                                    border-gray-100
+                                    pt-3
+                                "
+                            >
+                                <div>
+                                    <p className="text-[10px] uppercase tracking-wide text-gray-400">
+                                        Jabatan
+                                    </p>
 
-                        ))
+                                    <p className="mt-1 truncate text-xs font-medium text-gray-700">
+                                        {item.position || "-"}
+                                    </p>
+                                </div>
 
-                    }
+                                <div>
+                                    <p className="text-[10px] uppercase tracking-wide text-gray-400">
+                                        Urutan
+                                    </p>
 
-                </tbody>
+                                    <p className="mt-1 text-xs font-medium text-gray-700">
+                                        {item.order_number ?? "-"}
+                                    </p>
+                                </div>
+                            </div>
 
-            </table>
+                            {/* ACTION */}
+                            <div
+                                className="
+                                    mt-4
+                                    grid
+                                    grid-cols-2
+                                    gap-2
+                                    border-t
+                                    border-gray-100
+                                    pt-3
+                                "
+                            >
+                                <button
+                                    type="button"
+                                    onClick={() => onEdit(item)}
+                                    className="
+                                        flex
+                                        h-9
+                                        items-center
+                                        justify-center
+                                        gap-1.5
+                                        rounded-lg
+                                        border
+                                        border-blue-100
+                                        bg-blue-50
+                                        text-xs
+                                        font-medium
+                                        text-blue-600
+                                        transition
+                                        hover:bg-blue-100
+                                    "
+                                >
+                                    <Pencil size={14} />
+                                    Edit
+                                </button>
 
-        </div>
-
+                                <button
+                                    type="button"
+                                    onClick={() => onDelete(item)}
+                                    className="
+                                        flex
+                                        h-9
+                                        items-center
+                                        justify-center
+                                        gap-1.5
+                                        rounded-lg
+                                        border
+                                        border-red-100
+                                        bg-red-50
+                                        text-xs
+                                        font-medium
+                                        text-red-600
+                                        transition
+                                        hover:bg-red-100
+                                    "
+                                >
+                                    <Trash2 size={14} />
+                                    Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </>
     );
-
 }

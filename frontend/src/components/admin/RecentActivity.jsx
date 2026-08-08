@@ -3,155 +3,287 @@ import {
     User,
     CheckCircle2,
     XCircle,
+    Activity,
 } from "lucide-react";
 
 export default function RecentActivity({
-
     activities = [],
-
 }) {
-
     return (
+        <div className="
+            bg-white
+            rounded-2xl
+            shadow-sm
+            border
+            border-gray-100
+            overflow-hidden
+        ">
 
-        <div className="bg-white rounded-xl shadow border border-gray-100">
+            {/* =====================================================
+                HEADER
+            ====================================================== */}
 
-            {/* Header */}
+            <div className="
+                px-5
+                sm:px-6
+                py-4
+                border-b
+                border-gray-100
+            ">
 
-            <div className="px-6 py-4 border-b">
+                <div className="flex items-center gap-3">
 
-                <h2 className="text-lg font-semibold text-gray-800">
+                    <div className="
+                        w-10
+                        h-10
+                        rounded-xl
+                        bg-purple-100
+                        text-purple-600
+                        flex
+                        items-center
+                        justify-center
+                        shrink-0
+                    ">
+                        <Activity size={20} />
+                    </div>
 
-                    Aktivitas Terbaru
+                    <div>
 
-                </h2>
+                        <h2 className="
+                            text-base
+                            sm:text-lg
+                            font-semibold
+                            text-gray-800
+                        ">
+                            Aktivitas Terbaru
+                        </h2>
 
-                <p className="text-sm text-gray-500 mt-1">
+                        <p className="
+                            text-xs
+                            sm:text-sm
+                            text-gray-500
+                            mt-0.5
+                        ">
+                            Riwayat aktivitas administrator.
+                        </p>
 
-                    Riwayat aktivitas administrator.
+                    </div>
 
-                </p>
+                </div>
 
             </div>
 
-            {/* Body */}
+            {/* =====================================================
+                BODY
+            ====================================================== */}
 
-            <div className="divide-y">
+            <div className="divide-y divide-gray-100">
 
-                {
+                {activities.length === 0 ? (
+                    <div className="
+                        px-5
+                        sm:px-6
+                        py-12
+                        text-center
+                    ">
 
-                    activities.length === 0 ? (
-
-                        <div className="p-6 text-center text-gray-500">
-
-                            Belum ada aktivitas.
-
+                        <div className="
+                            w-12
+                            h-12
+                            mx-auto
+                            rounded-full
+                            bg-gray-100
+                            flex
+                            items-center
+                            justify-center
+                            mb-3
+                        ">
+                            <Activity
+                                size={22}
+                                className="text-gray-400"
+                            />
                         </div>
 
-                    ) : (
+                        <p className="text-sm text-gray-500">
+                            Belum ada aktivitas.
+                        </p>
 
-                        activities.map((activity) => (
+                    </div>
+                ) : (
+                    activities.map((activity) => {
 
+                        const success =
+                            activity.status === "success";
+
+                        return (
                             <div
                                 key={activity.id}
-                                className="p-5 hover:bg-gray-50 transition"
+                                className="
+                                    px-5
+                                    sm:px-6
+                                    py-4
+                                    sm:py-5
+                                    hover:bg-gray-50
+                                    transition
+                                "
                             >
 
-                                <div className="flex items-start justify-between">
+                                <div className="
+                                    flex
+                                    items-start
+                                    gap-3
+                                    sm:gap-4
+                                ">
 
-                                    <div className="flex gap-3">
+                                    {/* Status Icon */}
+                                    <div className={`
+                                        w-9
+                                        h-9
+                                        sm:w-10
+                                        sm:h-10
+                                        rounded-full
+                                        flex
+                                        items-center
+                                        justify-center
+                                        shrink-0
+                                        ${
+                                            success
+                                                ? "bg-green-100 text-green-600"
+                                                : "bg-red-100 text-red-600"
+                                        }
+                                    `}>
 
-                                        <div
-                                            className={`
-                                                w-10
-                                                h-10
-                                                rounded-full
+                                        {success ? (
+                                            <CheckCircle2 size={19} />
+                                        ) : (
+                                            <XCircle size={19} />
+                                        )}
+
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="min-w-0 flex-1">
+
+                                        <div className="
+                                            flex
+                                            flex-col
+                                            lg:flex-row
+                                            lg:items-start
+                                            lg:justify-between
+                                            gap-1
+                                            lg:gap-4
+                                        ">
+
+                                            <div className="min-w-0">
+
+                                                <h3 className="
+                                                    text-sm
+                                                    sm:text-base
+                                                    font-semibold
+                                                    text-gray-800
+                                                    leading-5
+                                                ">
+                                                    {activity.activity || "-"}
+                                                </h3>
+
+                                                <p className="
+                                                    text-xs
+                                                    sm:text-sm
+                                                    text-gray-500
+                                                    mt-1
+                                                    leading-5
+                                                ">
+                                                    {activity.description || "-"}
+                                                </p>
+
+                                            </div>
+
+                                            {/* Time */}
+                                            <div className="
                                                 flex
                                                 items-center
-                                                justify-center
-                                                ${
-                                                    activity.status === "success"
-                                                        ? "bg-green-100 text-green-600"
-                                                        : "bg-red-100 text-red-600"
-                                                }
-                                            `}
-                                        >
+                                                gap-1
+                                                text-[10px]
+                                                sm:text-xs
+                                                text-gray-400
+                                                whitespace-nowrap
+                                                shrink-0
+                                            ">
 
-                                            {
+                                                <Clock3 size={13} />
 
-                                                activity.status === "success"
-
-                                                    ? <CheckCircle2 size={20} />
-
-                                                    : <XCircle size={20} />
-
-                                            }
-
-                                        </div>
-
-                                        <div>
-
-                                            <h3 className="font-semibold text-gray-800">
-
-                                                {activity.activity}
-
-                                            </h3>
-
-                                            <p className="text-sm text-gray-500">
-
-                                                {activity.description}
-
-                                            </p>
-
-                                            <div className="flex flex-wrap gap-4 mt-2 text-xs text-gray-400">
-
-                                                <span className="flex items-center gap-1">
-
-                                                    <User size={14} />
-
-                                                    {activity.user?.name ?? "-"}
-
-                                                </span>
-
-                                                <span>
-
-                                                    {activity.module}
-
-                                                </span>
-
-                                                <span>
-
-                                                    {activity.method}
-
-                                                </span>
+                                                {activity.created_at || "-"}
 
                                             </div>
 
                                         </div>
 
-                                    </div>
+                                        {/* Metadata */}
+                                        <div className="
+                                            flex
+                                            flex-wrap
+                                            items-center
+                                            gap-x-3
+                                            gap-y-2
+                                            mt-3
+                                        ">
 
-                                    <div className="flex items-center gap-1 text-xs text-gray-400">
+                                            <span className="
+                                                inline-flex
+                                                items-center
+                                                gap-1
+                                                text-[10px]
+                                                sm:text-xs
+                                                text-gray-500
+                                            ">
 
-                                        <Clock3 size={14} />
+                                                <User size={13} />
 
-                                        {activity.created_at}
+                                                {activity.user?.name ?? "-"}
+
+                                            </span>
+
+                                            {activity.module && (
+                                                <span className="
+                                                    px-2
+                                                    py-1
+                                                    rounded-md
+                                                    bg-gray-100
+                                                    text-gray-600
+                                                    text-[10px]
+                                                    sm:text-xs
+                                                ">
+                                                    {activity.module}
+                                                </span>
+                                            )}
+
+                                            {activity.method && (
+                                                <span className="
+                                                    px-2
+                                                    py-1
+                                                    rounded-md
+                                                    bg-gray-100
+                                                    text-gray-600
+                                                    text-[10px]
+                                                    sm:text-xs
+                                                ">
+                                                    {activity.method}
+                                                </span>
+                                            )}
+
+                                        </div>
 
                                     </div>
 
                                 </div>
 
                             </div>
-
-                        ))
-
-                    )
-
-                }
+                        );
+                    })
+                )}
 
             </div>
 
         </div>
-
     );
-
 }

@@ -4,6 +4,8 @@ import {
     Tractor,
     Store,
     Trees,
+    ArrowRight,
+    MapPin,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
@@ -16,8 +18,18 @@ export default function HeroPotential() {
 
     if (loading) {
         return (
-            <section className="h-[75vh] flex items-center justify-center">
-                <p>Loading...</p>
+            <section className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-green-800">
+
+                <div className="text-center text-white">
+
+                    <div className="w-10 h-10 mx-auto mb-4 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+
+                    <p className="text-green-100">
+                        Memuat informasi potensi desa...
+                    </p>
+
+                </div>
+
             </section>
         );
     }
@@ -25,191 +37,673 @@ export default function HeroPotential() {
     return (
 
         <section
-            className="relative h-[75vh] min-h-[600px] flex items-center bg-cover bg-center"
-            style={{
-                backgroundImage: profile?.hero_image
-                    ? `url(${profile.hero_image})`
-                    : "linear-gradient(to right,#166534,#15803d)",
-            }}
+            className="
+                relative
+                overflow-hidden
+                bg-gradient-to-br
+                from-emerald-950
+                via-emerald-900
+                to-green-800
+            "
         >
 
-            {/* Overlay */}
+            {/* =========================================================
+                BACKGROUND
+            ========================================================= */}
 
-            <div className="absolute inset-0 bg-black/65"></div>
+            <div className="absolute inset-0">
 
-            {/* Gradient */}
-
-            <div className="absolute inset-0 bg-gradient-to-r from-green-900/70 via-black/20 to-green-900/50"></div>
-
-            {/* Content */}
-
-            <div className="relative max-w-7xl mx-auto px-6 w-full pt-28">
-
-                {/* Breadcrumb */}
-
-                <div
-                    data-aos="fade-right"
-                    className="flex items-center gap-2 text-green-200 text-sm mb-6"
-                >
-
-                    <NavLink
-                        to="/"
-                        className="hover:text-white transition"
-                    >
-                        Beranda
-                    </NavLink>
-
-                    <ChevronRight size={16} />
-
-                    <span className="text-white">
-                        Potensi Desa
-                    </span>
-
-                </div>
-
-                {/* Badge */}
+                <img
+                    src={
+                        profile?.hero_image ||
+                        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2200&auto=format&fit=crop"
+                    }
+                    alt=""
+                    className="
+                        w-full
+                        h-full
+                        object-cover
+                        opacity-15
+                    "
+                />
 
                 <div
-                    data-aos="fade-right"
-                    data-aos-delay="100"
-                    className="inline-flex items-center gap-2 bg-green-600/90 backdrop-blur-md text-white px-5 py-2 rounded-full shadow-lg mb-8"
-                >
+                    className="
+                        absolute
+                        inset-0
+                        bg-black/30
+                    "
+                />
 
-                    <Sprout size={18} />
+            </div>
 
-                    Potensi Unggulan Desa {profile?.village_name}
 
-                </div>
+            {/* =========================================================
+                DECORATIVE BLUR
+            ========================================================= */}
 
-                {/* Title */}
+            <div
+                className="
+                    absolute
+                    -top-44
+                    -left-44
+                    w-[450px]
+                    h-[450px]
+                    rounded-full
+                    bg-white/5
+                    blur-3xl
+                "
+            />
 
-                <h1
-                    data-aos="fade-up"
-                    data-aos-delay="200"
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-4xl"
-                >
+            <div
+                className="
+                    absolute
+                    bottom-0
+                    right-0
+                    w-[420px]
+                    h-[420px]
+                    rounded-full
+                    bg-green-300/10
+                    blur-3xl
+                "
+            />
 
-                    Potensi
 
-                    <br />
+            {/* =========================================================
+                MAIN CONTAINER
+            ========================================================= */}
 
-                    Desa {profile?.village_name}
-
-                </h1>
-
-                {/* Description */}
-
-                <p
-                    data-aos="fade-up"
-                    data-aos-delay="300"
-                    className="mt-8 text-lg text-gray-200 leading-8 max-w-3xl"
-                >
-
-                    Desa {profile?.village_name} memiliki berbagai potensi unggulan
-                    di bidang pertanian, peternakan, UMKM,
-                    serta sumber daya masyarakat yang terus berkembang.
-                    Potensi tersebut menjadi kekuatan utama dalam
-                    meningkatkan kesejahteraan masyarakat dan
-                    mendorong pembangunan desa yang berkelanjutan.
-
-                </p>
-
-                {/* Statistics */}
+            <div
+                className="
+                    relative
+                    max-w-7xl
+                    mx-auto
+                    px-6
+                    py-20
+                    lg:py-32
+                "
+            >
 
                 <div
-                    data-aos="fade-up"
-                    data-aos-delay="400"
-                    className="grid md:grid-cols-3 gap-6 mt-14 max-w-4xl"
+                    className="
+                        grid
+                        lg:grid-cols-2
+                        gap-14
+                        items-center
+                    "
                 >
 
-                    {/* Pertanian */}
 
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+                    {/* =================================================
+                        LEFT CONTENT
+                    ================================================= */}
 
-                        <Sprout
-                            size={30}
-                            className="text-green-300 mb-4"
-                        />
+                    <div>
 
-                        <h3 className="text-3xl font-bold text-white">
+                        {/* Breadcrumb */}
 
-                            320 Ha
+                        <div
+                            data-aos="fade-right"
+                            className="
+                                flex
+                                items-center
+                                gap-2
+                                text-green-200
+                                text-sm
+                                mb-7
+                            "
+                        >
 
-                        </h3>
+                            <NavLink
+                                to="/"
+                                className="
+                                    hover:text-white
+                                    transition
+                                "
+                            >
+                                Beranda
+                            </NavLink>
 
-                        <p className="mt-2 text-green-100">
+                            <ChevronRight size={16} />
 
-                            Lahan Pertanian
+                            <span className="text-white">
+                                Potensi Desa
+                            </span>
+
+                        </div>
+
+
+                        {/* Badge */}
+
+                        <div
+                            data-aos="fade-right"
+                            data-aos-delay="100"
+                            className="
+                                inline-flex
+                                items-center
+                                gap-3
+                                rounded-full
+                                border
+                                border-white/20
+                                bg-white/10
+                                backdrop-blur-md
+                                px-5
+                                py-2
+                            "
+                        >
+
+                            <Sprout
+                                size={18}
+                                className="text-white"
+                            />
+
+                            <span
+                                className="
+                                    text-white
+                                    text-sm
+                                    font-medium
+                                    tracking-wide
+                                "
+                            >
+                                POTENSI UNGGULAN DESA
+                            </span>
+
+                        </div>
+
+
+                        {/* Title */}
+
+                        <h1
+                            data-aos="fade-up"
+                            data-aos-delay="200"
+                            className="
+                                mt-8
+                                text-4xl
+                                md:text-5xl
+                                lg:text-7xl
+                                font-black
+                                leading-tight
+                                text-white
+                            "
+                        >
+
+                            Potensi
+
+                            <span
+                                className="
+                                    block
+                                    mt-3
+                                    text-green-300
+                                "
+                            >
+                                Desa {profile?.village_name}
+                            </span>
+
+                        </h1>
+
+
+                        {/* Description */}
+
+                        <p
+                            data-aos="fade-up"
+                            data-aos-delay="300"
+                            className="
+                                mt-8
+                                max-w-xl
+                                text-lg
+                                leading-8
+                                text-slate-200
+                            "
+                        >
+
+                            Kenali berbagai potensi unggulan Desa{" "}
+                            {profile?.village_name} yang mencakup
+                            pertanian, UMKM, sumber daya masyarakat,
+                            serta berbagai potensi lokal yang terus
+                            dikembangkan untuk mendukung kesejahteraan
+                            masyarakat dan pembangunan desa.
 
                         </p>
 
+
+                        {/* Buttons */}
+
+                        <div
+                            data-aos="fade-up"
+                            data-aos-delay="400"
+                            className="
+                                mt-10
+                                flex
+                                flex-wrap
+                                gap-4
+                            "
+                        >
+
+                            <NavLink
+                                to="#potensi"
+                                className="
+                                    inline-flex
+                                    items-center
+                                    gap-3
+                                    rounded-xl
+                                    bg-green-300
+                                    px-6
+                                    py-3.5
+                                    font-semibold
+                                    text-emerald-950
+                                    shadow-lg
+                                    shadow-green-950/20
+                                    transition-all
+                                    duration-300
+                                    hover:bg-green-200
+                                    hover:-translate-y-0.5
+                                "
+                            >
+
+                                Jelajahi Potensi
+
+                                <ArrowRight size={18} />
+
+                            </NavLink>
+
+
+                            <NavLink
+                                to="/"
+                                className="
+                                    inline-flex
+                                    items-center
+                                    gap-3
+                                    rounded-xl
+                                    border
+                                    border-white/25
+                                    bg-white/10
+                                    backdrop-blur-md
+                                    px-6
+                                    py-3.5
+                                    font-semibold
+                                    text-white
+                                    transition-all
+                                    duration-300
+                                    hover:bg-white/20
+                                    hover:-translate-y-0.5
+                                "
+                            >
+
+                                Kembali ke Beranda
+
+                            </NavLink>
+
+                        </div>
+
                     </div>
 
-                    {/* Peternakan */}
 
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+                    {/* =================================================
+                        RIGHT CONTENT
+                    ================================================= */}
 
-                        <Tractor
-                            size={30}
-                            className="text-green-300 mb-4"
-                        />
+                    <div className="space-y-5">
 
-                        <h3 className="text-3xl font-bold text-white">
 
-                            500+
+                        {/* =================================================
+                            CARD 1 — PERTANIAN
+                        ================================================= */}
 
-                        </h3>
+                        <div
+                            data-aos="fade-left"
+                            data-aos-delay="100"
+                            className="
+                                rounded-3xl
+                                border
+                                border-white/15
+                                bg-white/10
+                                backdrop-blur-xl
+                                p-6
+                                transition-all
+                                duration-300
+                                hover:bg-white/15
+                                hover:-translate-y-1
+                            "
+                        >
 
-                        <p className="mt-2 text-green-100">
+                            <div className="flex items-center gap-5">
 
-                            Pelaku Pertanian
+                                <div
+                                    className="
+                                        flex
+                                        h-16
+                                        w-16
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-2xl
+                                        border
+                                        border-white/20
+                                        bg-white/10
+                                    "
+                                >
 
-                        </p>
+                                    <Sprout
+                                        size={30}
+                                        className="text-white"
+                                    />
+
+                                </div>
+
+
+                                <div>
+
+                                    <p
+                                        className="
+                                            text-sm
+                                            uppercase
+                                            tracking-wider
+                                            text-green-200
+                                        "
+                                    >
+                                        Pertanian
+                                    </p>
+
+                                    <h3
+                                        className="
+                                            mt-1
+                                            text-2xl
+                                            font-bold
+                                            text-white
+                                        "
+                                    >
+                                        320 Ha
+                                    </h3>
+
+                                    <p className="mt-1 text-sm text-slate-300">
+                                        Lahan pertanian desa
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* =================================================
+                            CARD 2 — PELAKU PERTANIAN
+                        ================================================= */}
+
+                        <div
+                            data-aos="fade-left"
+                            data-aos-delay="200"
+                            className="
+                                rounded-3xl
+                                border
+                                border-white/15
+                                bg-white/10
+                                backdrop-blur-xl
+                                p-6
+                                transition-all
+                                duration-300
+                                hover:bg-white/15
+                                hover:-translate-y-1
+                            "
+                        >
+
+                            <div className="flex items-center gap-5">
+
+                                <div
+                                    className="
+                                        flex
+                                        h-16
+                                        w-16
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-2xl
+                                        border
+                                        border-white/20
+                                        bg-white/10
+                                    "
+                                >
+
+                                    <Tractor
+                                        size={30}
+                                        className="text-white"
+                                    />
+
+                                </div>
+
+
+                                <div>
+
+                                    <p
+                                        className="
+                                            text-sm
+                                            uppercase
+                                            tracking-wider
+                                            text-green-200
+                                        "
+                                    >
+                                        Pertanian
+                                    </p>
+
+                                    <h3
+                                        className="
+                                            mt-1
+                                            text-2xl
+                                            font-bold
+                                            text-white
+                                        "
+                                    >
+                                        150+
+                                    </h3>
+
+                                    <p className="mt-1 text-sm text-slate-300">
+                                        Pelaku pertanian
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* =================================================
+                            CARD 3 — UMKM
+                        ================================================= */}
+
+                        <div
+                            data-aos="fade-left"
+                            data-aos-delay="300"
+                            className="
+                                rounded-3xl
+                                border
+                                border-white/15
+                                bg-white/10
+                                backdrop-blur-xl
+                                p-6
+                                transition-all
+                                duration-300
+                                hover:bg-white/15
+                                hover:-translate-y-1
+                            "
+                        >
+
+                            <div className="flex items-center gap-5">
+
+                                <div
+                                    className="
+                                        flex
+                                        h-16
+                                        w-16
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-2xl
+                                        border
+                                        border-white/20
+                                        bg-white/10
+                                    "
+                                >
+
+                                    <Store
+                                        size={30}
+                                        className="text-white"
+                                    />
+
+                                </div>
+
+
+                                <div>
+
+                                    <p
+                                        className="
+                                            text-sm
+                                            uppercase
+                                            tracking-wider
+                                            text-green-200
+                                        "
+                                    >
+                                        UMKM
+                                    </p>
+
+                                    <h3
+                                        className="
+                                            mt-1
+                                            text-2xl
+                                            font-bold
+                                            text-white
+                                        "
+                                    >
+                                        5+
+                                    </h3>
+
+                                    <p className="mt-1 text-sm text-slate-300">
+                                        UMKM aktif
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* =================================================
+                            BOTTOM WHITE CARD
+                        ================================================= */}
+
+                        <div
+                            data-aos="fade-up"
+                            data-aos-delay="400"
+                            className="
+                                rounded-3xl
+                                bg-white
+                                p-7
+                                shadow-2xl
+                            "
+                        >
+
+                            <div className="flex items-center gap-4">
+
+                                <div
+                                    className="
+                                        flex
+                                        h-12
+                                        w-12
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-xl
+                                        bg-green-100
+                                    "
+                                >
+
+                                    <MapPin
+                                        size={21}
+                                        className="text-green-700"
+                                    />
+
+                                </div>
+
+
+                                <div>
+
+                                    <p
+                                        className="
+                                            text-sm
+                                            uppercase
+                                            tracking-wider
+                                            text-green-700
+                                            font-semibold
+                                        "
+                                    >
+                                        Potensi Lokal
+                                    </p>
+
+                                    <h3
+                                        className="
+                                            mt-1
+                                            text-2xl
+                                            font-bold
+                                            text-slate-800
+                                        "
+                                    >
+                                        Bersama Membangun Desa
+                                    </h3>
+
+                                </div>
+
+                            </div>
+
+
+                            <p
+                                className="
+                                    mt-5
+                                    leading-8
+                                    text-slate-600
+                                "
+                            >
+
+                                Potensi lokal merupakan kekuatan penting
+                                dalam pembangunan Desa{" "}
+                                {profile?.village_name}. Mari bersama
+                                mengenali, mengembangkan, dan memanfaatkan
+                                potensi desa untuk menciptakan masyarakat
+                                yang mandiri, produktif, dan berdaya saing.
+
+                            </p>
+
+
+                            <NavLink
+                                to="#potensi"
+                                className="
+                                    group
+                                    mt-7
+                                    inline-flex
+                                    items-center
+                                    gap-3
+                                    font-semibold
+                                    text-green-700
+                                    transition
+                                "
+                            >
+
+                                Lihat Seluruh Potensi
+
+                                <ArrowRight
+                                    size={18}
+                                    className="
+                                        transition-transform
+                                        duration-300
+                                        group-hover:translate-x-2
+                                    "
+                                />
+
+                            </NavLink>
+
+                        </div>
 
                     </div>
-
-                    {/* UMKM */}
-
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-
-                        <Store
-                            size={30}
-                            className="text-green-300 mb-4"
-                        />
-
-                        <h3 className="text-3xl font-bold text-white">
-
-                            80+
-
-                        </h3>
-
-                        <p className="mt-2 text-green-100">
-
-                            UMKM Aktif
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-                {/* Highlight */}
-
-                <div
-                    data-aos="fade-up"
-                    data-aos-delay="500"
-                    className="mt-12 inline-flex items-center gap-3 text-green-200"
-                >
-
-                    <Trees size={22} />
-
-                    <span className="text-base md:text-lg">
-
-                        Bersama mengembangkan potensi lokal menuju Desa{" "}
-                        {profile?.village_name} yang mandiri, produktif,
-                        dan berdaya saing.
-
-                    </span>
 
                 </div>
 
@@ -218,5 +712,4 @@ export default function HeroPotential() {
         </section>
 
     );
-
 }

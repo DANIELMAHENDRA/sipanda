@@ -7,10 +7,8 @@ import {
 } from "lucide-react";
 
 export default function GalleryModal({
-
     gallery,
     onClose,
-
 }) {
 
     if (!gallery) return null;
@@ -27,201 +25,271 @@ export default function GalleryModal({
                 flex
                 items-center
                 justify-center
-                p-5
+                p-3
+                sm:p-5
             "
             onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-label={gallery.title || "Detail dokumentasi"}
         >
+
+            {/* Modal Container */}
 
             <div
                 onClick={(e) => e.stopPropagation()}
                 className="
+                    relative
                     bg-white
-                    rounded-3xl
+                    rounded-2xl
+                    sm:rounded-3xl
                     overflow-hidden
                     shadow-2xl
-                    max-w-5xl
                     w-full
-                    max-h-[90vh]
+                    max-w-5xl
+                    max-h-[95vh]
+                    sm:max-h-[90vh]
                     flex
                     flex-col
-                    animate-fadeIn
                 "
             >
 
-                {/* Image */}
+                {/* =========================
+                    IMAGE
+                ========================= */}
 
-                <div className="relative">
+                <div className="relative shrink-0 bg-black">
 
                     <img
-                        src={gallery.image}
-                        alt={gallery.title}
+                        src={gallery.image || "/images/no-image.png"}
+                        alt={gallery.title || "Dokumentasi Desa"}
                         className="
                             w-full
-                            h-[500px]
-                            object-cover
+                            h-[260px]
+                            sm:h-[350px]
+                            md:h-[450px]
+                            lg:h-[500px]
+                            object-contain
                         "
                     />
 
+                    {/* Close Button */}
+
                     <button
+                        type="button"
                         onClick={onClose}
+                        aria-label="Tutup galeri"
                         className="
                             absolute
-                            top-5
-                            right-5
-                            w-12
-                            h-12
+                            top-3
+                            right-3
+                            sm:top-5
+                            sm:right-5
+                            w-10
+                            h-10
+                            sm:w-12
+                            sm:h-12
                             rounded-full
-                            bg-white
+                            bg-white/95
+                            text-gray-700
                             shadow-lg
                             flex
                             items-center
                             justify-center
                             hover:bg-red-500
                             hover:text-white
-                            transition
+                            active:scale-95
+                            transition-all
+                            duration-300
                         "
                     >
 
-                        <X size={24} />
+                        <X
+                            size={22}
+                            className="sm:w-6 sm:h-6"
+                        />
 
                     </button>
 
                 </div>
 
-                {/* Content */}
+                {/* =========================
+                    CONTENT
+                ========================= */}
 
-                <div className="p-8 overflow-y-auto">
+                <div
+                    className="
+                        p-5
+                        sm:p-8
+                        overflow-y-auto
+                    "
+                >
 
                     {/* Category */}
 
-                    <span
-                        className="
-                            inline-block
-                            px-4
-                            py-2
-                            rounded-full
-                            bg-green-100
-                            text-green-700
-                            font-semibold
-                            text-sm
-                            mb-5
-                        "
-                    >
+                    {gallery.category && (
 
-                        {gallery.category}
+                        <span
+                            className="
+                                inline-flex
+                                items-center
+                                px-4
+                                py-2
+                                rounded-full
+                                bg-green-100
+                                text-green-700
+                                font-semibold
+                                text-xs
+                                sm:text-sm
+                                mb-4
+                            "
+                        >
 
-                    </span>
+                            {gallery.category}
+
+                        </span>
+
+                    )}
 
                     {/* Title */}
 
                     <h2
                         className="
-                            text-3xl
+                            text-2xl
+                            sm:text-3xl
+                            lg:text-4xl
                             font-bold
                             text-gray-900
                             leading-tight
                         "
                     >
 
-                        {gallery.title}
+                        {gallery.title || "Dokumentasi Kegiatan Desa"}
 
                     </h2>
 
-                    {/* Metadata */}
+                    {/* =========================
+                        METADATA
+                    ========================= */}
 
                     <div
                         className="
                             flex
                             flex-wrap
-                            gap-6
+                            gap-x-6
+                            gap-y-4
                             mt-6
+                            text-sm
+                            sm:text-base
                             text-gray-500
                         "
                     >
 
-                        <div className="flex items-center gap-2">
+                        {/* Date */}
 
-                            <CalendarDays size={18} />
+                        {gallery.taken_at && (
 
-                            <span>
+                            <div className="flex items-center gap-2">
 
-                                {gallery.taken_at}
+                                <CalendarDays
+                                    size={18}
+                                    className="text-green-700 shrink-0"
+                                />
 
-                            </span>
+                                <span>
 
-                        </div>
+                                    {gallery.taken_at}
 
-                        <div className="flex items-center gap-2">
+                                </span>
 
-                            <Tag size={18} />
+                            </div>
 
-                            <span>
+                        )}
 
-                                {gallery.category}
+                        {/* Category */}
 
-                            </span>
+                        {gallery.category && (
 
-                        </div>
+                            <div className="flex items-center gap-2">
 
-                        {
+                                <Tag
+                                    size={18}
+                                    className="text-green-700 shrink-0"
+                                />
 
-                            gallery.location && (
+                                <span>
 
-                                <div className="flex items-center gap-2">
+                                    {gallery.category}
 
-                                    <MapPin size={18} />
+                                </span>
 
-                                    <span>
+                            </div>
 
-                                        {gallery.location}
+                        )}
 
-                                    </span>
+                        {/* Location */}
 
-                                </div>
+                        {gallery.location && (
 
-                            )
+                            <div className="flex items-center gap-2">
 
-                        }
+                                <MapPin
+                                    size={18}
+                                    className="text-green-700 shrink-0"
+                                />
 
-                        {
+                                <span>
 
-                            gallery.photographer && (
+                                    {gallery.location}
 
-                                <div className="flex items-center gap-2">
+                                </span>
 
-                                    <Camera size={18} />
+                            </div>
 
-                                    <span>
+                        )}
 
-                                        {gallery.photographer}
+                        {/* Photographer */}
 
-                                    </span>
+                        {gallery.photographer && (
 
-                                </div>
+                            <div className="flex items-center gap-2">
 
-                            )
+                                <Camera
+                                    size={18}
+                                    className="text-green-700 shrink-0"
+                                />
 
-                        }
+                                <span>
+
+                                    {gallery.photographer}
+
+                                </span>
+
+                            </div>
+
+                        )}
 
                     </div>
 
-                    {/* Description */}
+                    {/* =========================
+                        DESCRIPTION
+                    ========================= */}
 
                     <div
                         className="
                             mt-8
                             text-gray-700
-                            leading-8
+                            leading-7
+                            sm:leading-8
+                            text-sm
+                            sm:text-base
                             whitespace-pre-line
                         "
                     >
 
-                        {
-
-                            gallery.description
-                                ? gallery.description
-                                : "Tidak ada deskripsi."
-
+                        {gallery.description
+                            ? gallery.description
+                            : "Tidak ada deskripsi untuk dokumentasi ini."
                         }
 
                     </div>
@@ -233,5 +301,4 @@ export default function GalleryModal({
         </div>
 
     );
-
 }

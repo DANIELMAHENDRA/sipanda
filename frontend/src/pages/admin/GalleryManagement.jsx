@@ -1,164 +1,97 @@
-import { useState } from "react";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 import useGallery from "../../hooks/useGallery";
-
 import GalleryTable from "../../components/admin/gallery/GalleryTable";
 import GalleryFormModal from "../../components/admin/gallery/GalleryFormModal";
 import DeleteGalleryModal from "../../components/admin/gallery/DeleteGalleryModal";
 
 export default function GalleryManagement() {
-
     const {
-
         gallery,
-
         loading,
-
         refresh,
-
     } = useGallery();
 
     const [selectedGallery, setSelectedGallery] = useState(null);
-
     const [openForm, setOpenForm] = useState(false);
-
     const [openDelete, setOpenDelete] = useState(false);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Tambah Gallery
-    |--------------------------------------------------------------------------
-    */
-
     const handleCreate = () => {
-
         setSelectedGallery(null);
-
         setOpenForm(true);
-
     };
-
-    /*
-    |--------------------------------------------------------------------------
-    | Edit Gallery
-    |--------------------------------------------------------------------------
-    */
 
     const handleEdit = (item) => {
-
         setSelectedGallery(item);
-
         setOpenForm(true);
-
     };
 
-    /*
-    |--------------------------------------------------------------------------
-    | Delete Gallery
-    |--------------------------------------------------------------------------
-    */
-
     const handleDelete = (item) => {
-
         setSelectedGallery(item);
-
         setOpenDelete(true);
-
     };
 
     return (
+        <div className="space-y-5 sm:space-y-6">
 
-        <div className="space-y-6">
-
-            {/* ==========================================================
-                Header
-            ========================================================== */}
-
-            <div className="flex items-center justify-between">
-
+            {/* Header */}
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-
-                    <h1 className="text-3xl font-bold">
-
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
                         Gallery Management
-
                     </h1>
 
-                    <p className="text-gray-500 mt-1">
-
+                    <p className="mt-1 text-sm text-gray-500">
                         Kelola seluruh galeri website SIPANDA.
-
                     </p>
-
                 </div>
 
                 <button
-
+                    type="button"
                     onClick={handleCreate}
-
-                    className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-white hover:bg-green-700"
-
+                    className="
+                        w-full sm:w-auto
+                        inline-flex items-center justify-center gap-2
+                        rounded-xl
+                        bg-green-600
+                        px-4 sm:px-5
+                        py-3
+                        text-sm font-semibold text-white
+                        shadow-sm
+                        hover:bg-green-700
+                        transition
+                    "
                 >
-
                     <Plus size={18} />
-
                     Tambah Galeri
-
                 </button>
-
             </div>
 
-            {/* ==========================================================
-                Table
-            ========================================================== */}
-
+            {/* Table */}
             <GalleryTable
-
                 gallery={gallery}
-
                 loading={loading}
-
                 onEdit={handleEdit}
-
                 onDelete={handleDelete}
-
             />
 
-            {/* ==========================================================
-                Modal Form
-            ========================================================== */}
-
+            {/* Form */}
             <GalleryFormModal
-
                 open={openForm}
-
                 onClose={() => setOpenForm(false)}
-
                 gallery={selectedGallery}
-
                 reload={refresh}
-
             />
 
-            {/* ==========================================================
-                Delete Modal
-            ========================================================== */}
-
+            {/* Delete */}
             <DeleteGalleryModal
-
                 open={openDelete}
-
                 onClose={() => setOpenDelete(false)}
-
                 gallery={selectedGallery}
-
                 reload={refresh}
-
             />
 
         </div>
-
     );
-
 }
