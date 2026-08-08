@@ -14,6 +14,7 @@ class GalleryService
      */
     private const IMAGE_FOLDER = 'gallery/image';
 
+
     /**
      * Constructor.
      */
@@ -23,19 +24,159 @@ class GalleryService
     ) {
     }
 
+
     /**
      * Mengambil seluruh data galeri.
+     *
+     * Mendukung:
+     * - keyword
+     * - category
+     * - pagination
      */
     public function getAll(
-        int $perPage = 10
+        int $perPage = 10,
+        ?string $keyword = null,
+        ?string $category = null
     ): LengthAwarePaginator {
 
         return Gallery::query()
             ->with('user')
-            ->latest()
-            ->paginate($perPage);
 
+            /*
+            |--------------------------------------------------------------------------
+            | Hanya Gallery Published
+            |--------------------------------------------------------------------------
+            */
+
+            ->where('status', 'published')
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Search Keyword
+            |--------------------------------------------------------------------------
+            |
+            | Pencarian dilakukan pada:
+            | - title
+            | - description
+            | - category
+            | - location
+            | - photographer
+            |
+            */
+
+            ->when(
+                $keyword,
+                function ($query) use ($keyword) {
+
+                    $query->where(function ($query) use ($keyword) {
+
+                        $query
+                            ->where('title', 'like', "%{$keyword}%")
+                            ->orWhere(
+                                'description',
+                                'like',
+                                "%{$keyword}%"
+                            )
+                            ->orWhere(
+                                'category',
+                                'like',
+                                "%{$keyword}%"
+                            )
+                            ->orWhere(
+                                'location',
+                                'like',
+                                "%{$keyword}%"
+                            )
+                            ->orWhere(
+                                'photographer',
+                                'like',
+                                "%{$keyword}%"
+                            );
+
+                    });
+
+                }
+            )
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Filter Category
+            |--------------------------------------------------------------------------
+            */
+
+            ->when(
+                $category,
+                function ($query) use ($category) {
+
+                    $query->where(
+                        'category',
+                        $category
+                    );
+
+                }
+            )
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Urutan Data
+            |--------------------------------------------------------------------------
+            */
+
+            ->orderByDesc('is_featured')
+            ->orderBy('order_number')
+            ->latest()
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Pagination
+            |--------------------------------------------------------------------------
+            */
+
+            ->paginate($perPage);
     }
+
+
+    /**
+     * Mengambil statistik galeri.
+     */
+    public function getStatistics(): array
+    {
+        $totalGallery = Gallery::query()
+            ->where('status', 'published')
+            ->count();
+
+
+        $totalCategories = Gallery::query()
+            ->where('status', 'published')
+            ->whereNotNull('category')
+            ->distinct('category')
+            ->count('category');
+
+
+        $totalFeatured = Gallery::query()
+            ->where('status', 'published')
+            ->where('is_featured', true)
+            ->count();
+
+
+        $totalThisYear = Gallery::query()
+            ->where('status', 'published')
+            ->whereYear('taken_at', now()->year)
+            ->count();
+
+
+        return [
+            'total_gallery' => $totalGallery,
+            'total_categories' => $totalCategories,
+            'total_featured' => $totalFeatured,
+            'total_this_year' => $totalThisYear,
+        ];
+    }
+
 
     /**
      * Mengambil detail galeri.
@@ -46,9 +187,10 @@ class GalleryService
 
         return Gallery::query()
             ->with('user')
+            ->where('status', 'published')
             ->findOrFail($id);
-
     }
+
 
     /**
      * Menambahkan galeri.
@@ -70,12 +212,13 @@ class GalleryService
                 && $data['image']
             ) {
 
-                $data['image'] = $this->fileUploadService->upload(
-                    file: $data['image'],
-                    folder: self::IMAGE_FOLDER,
-                );
-
+                $data['image'] =
+                    $this->fileUploadService->upload(
+                        file: $data['image'],
+                        folder: self::IMAGE_FOLDER,
+                    );
             }
+
 
             /*
             |--------------------------------------------------------------------------
@@ -83,7 +226,9 @@ class GalleryService
             |--------------------------------------------------------------------------
             */
 
-            $data['slug'] = Str::slug($data['title']);
+            $data['slug'] =
+                Str::slug($data['title']);
+
 
             /*
             |--------------------------------------------------------------------------
@@ -91,7 +236,9 @@ class GalleryService
             |--------------------------------------------------------------------------
             */
 
-            $data['user_id'] = auth()->id();
+            $data['user_id'] =
+                auth()->id();
+
 
             /*
             |--------------------------------------------------------------------------
@@ -99,7 +246,9 @@ class GalleryService
             |--------------------------------------------------------------------------
             */
 
-            $gallery = Gallery::create($data);
+            $gallery =
+                Gallery::create($data);
+
 
             /*
             |--------------------------------------------------------------------------
@@ -114,11 +263,11 @@ class GalleryService
                 status: 'success',
             );
 
+
             return $gallery->fresh();
-
         });
-
     }
+
 
     /**
      * Memperbarui galeri.
@@ -128,7 +277,10 @@ class GalleryService
         array $data
     ): Gallery {
 
-        return DB::transaction(function () use ($gallery, $data) {
+        return DB::transaction(function () use (
+            $gallery,
+            $data
+        ) {
 
             /*
             |--------------------------------------------------------------------------
@@ -141,13 +293,14 @@ class GalleryService
                 && $data['image']
             ) {
 
-                $data['image'] = $this->fileUploadService->replace(
-                    file: $data['image'],
-                    oldPath: $gallery->image,
-                    folder: self::IMAGE_FOLDER,
-                );
-
+                $data['image'] =
+                    $this->fileUploadService->replace(
+                        file: $data['image'],
+                        oldPath: $gallery->image,
+                        folder: self::IMAGE_FOLDER,
+                    );
             }
+
 
             /*
             |--------------------------------------------------------------------------
@@ -157,9 +310,10 @@ class GalleryService
 
             if (isset($data['title'])) {
 
-                $data['slug'] = Str::slug($data['title']);
-
+                $data['slug'] =
+                    Str::slug($data['title']);
             }
+
 
             /*
             |--------------------------------------------------------------------------
@@ -168,6 +322,7 @@ class GalleryService
             */
 
             $gallery->update($data);
+
 
             /*
             |--------------------------------------------------------------------------
@@ -182,11 +337,11 @@ class GalleryService
                 status: 'success',
             );
 
+
             return $gallery->fresh();
-
         });
-
     }
+
 
     /**
      * Menghapus galeri.
@@ -208,8 +363,8 @@ class GalleryService
                 $this->fileUploadService->delete(
                     $gallery->image
                 );
-
             }
+
 
             /*
             |--------------------------------------------------------------------------
@@ -218,6 +373,7 @@ class GalleryService
             */
 
             $gallery->delete();
+
 
             /*
             |--------------------------------------------------------------------------
@@ -231,8 +387,6 @@ class GalleryService
                 description: 'Menghapus data galeri.',
                 status: 'success',
             );
-
         });
-
     }
 }

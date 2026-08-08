@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Dashboard\DashboardController;
 use App\Http\Controllers\Api\ActivityLog\ActivityLogController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Authentication
@@ -36,11 +37,20 @@ Route::prefix('auth')->group(function () {
 
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC API
 |--------------------------------------------------------------------------
 | Endpoint yang digunakan oleh Frontend React
+|--------------------------------------------------------------------------
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| Settings
+|--------------------------------------------------------------------------
 */
 
 Route::prefix('settings')->group(function () {
@@ -49,17 +59,38 @@ Route::prefix('settings')->group(function () {
 
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Hero Sections
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('hero-sections')->group(function () {
 
     Route::get('/{page}', [HeroSectionController::class, 'index']);
 
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Profile
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('profile')->group(function () {
 
     Route::get('/', [ProfileController::class, 'index']);
 
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| News
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('news')->group(function () {
 
@@ -69,13 +100,58 @@ Route::prefix('news')->group(function () {
 
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Gallery
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('gallery')->group(function () {
 
-    Route::get('/', [GalleryController::class, 'index']);
+    /*
+    |--------------------------------------------------------------------------
+    | Statistik Gallery
+    |--------------------------------------------------------------------------
+    | HARUS diletakkan sebelum /{gallery}
+    |--------------------------------------------------------------------------
+    */
 
-    Route::get('/{gallery}', [GalleryController::class, 'show']);
+    Route::get('/statistics', [
+        GalleryController::class,
+        'statistics'
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Semua Gallery
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/', [
+        GalleryController::class,
+        'index'
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Detail Gallery
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/{gallery}', [
+        GalleryController::class,
+        'show'
+    ]);
 
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Potential
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('potential')->group(function () {
 
@@ -85,6 +161,13 @@ Route::prefix('potential')->group(function () {
 
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Government
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('government')->group(function () {
 
     Route::get('/', [GovernmentController::class, 'index']);
@@ -92,6 +175,13 @@ Route::prefix('government')->group(function () {
     Route::get('/{government}', [GovernmentController::class, 'show']);
 
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Service
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('service')->group(function () {
 
@@ -101,38 +191,65 @@ Route::prefix('service')->group(function () {
 
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Contact
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('contact')->group(function () {
 
     Route::get('/', [ContactController::class, 'index']);
 
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | ADMIN API
 |--------------------------------------------------------------------------
 | Semua endpoint di bawah ini membutuhkan login Sanctum
+|--------------------------------------------------------------------------
 */
 
 Route::middleware('auth:sanctum')->group(function () {
 
+
     /*
     |--------------------------------------------------------------------------
-    | User Management (Super Admin)
+    | User Management
+    |--------------------------------------------------------------------------
+    | Hanya Super Admin
     |--------------------------------------------------------------------------
     */
 
     Route::middleware('role:super_admin')->group(function () {
 
-        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/users', [
+            UserController::class,
+            'index'
+        ]);
 
-        Route::get('/users/{user}', [UserController::class, 'show']);
+        Route::get('/users/{user}', [
+            UserController::class,
+            'show'
+        ]);
 
-        Route::post('/users', [UserController::class, 'store']);
+        Route::post('/users', [
+            UserController::class,
+            'store'
+        ]);
 
-        Route::put('/users/{user}', [UserController::class, 'update']);
+        Route::put('/users/{user}', [
+            UserController::class,
+            'update'
+        ]);
 
-        Route::delete('/users/{user}', [UserController::class, 'destroy']);
+        Route::delete('/users/{user}', [
+            UserController::class,
+            'destroy'
+        ]);
 
         Route::patch('/users/{user}/toggle-status', [
             UserController::class,
@@ -146,6 +263,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
+
     /*
     |--------------------------------------------------------------------------
     | Dashboard
@@ -154,47 +272,54 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index']);
+        Route::get('/dashboard', [
+            DashboardController::class,
+            'index'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
     | Activity Log
+    |--------------------------------------------------------------------------
+    | Hanya Super Admin
     |--------------------------------------------------------------------------
     */
 
     Route::middleware('role:super_admin')->group(function () {
 
         Route::get('/activity-logs', [
-
             ActivityLogController::class,
-
             'index'
-
         ]);
 
         Route::get('/activity-logs/{activityLog}', [
-
             ActivityLogController::class,
-
             'show'
-
         ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
     | Settings
     |--------------------------------------------------------------------------
+    | Hanya Super Admin
+    |--------------------------------------------------------------------------
     */
 
     Route::middleware('role:super_admin')->group(function () {
 
-        Route::put('/settings', [SettingController::class, 'update']);
+        Route::put('/settings', [
+            SettingController::class,
+            'update'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -204,9 +329,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::put('/hero-sections/{page}', [HeroSectionController::class, 'update']);
+        Route::put('/hero-sections/{page}', [
+            HeroSectionController::class,
+            'update'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -216,9 +345,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::put('/profile', [ProfileController::class, 'update']);
+        Route::put('/profile', [
+            ProfileController::class,
+            'update'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -228,13 +361,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::post('/news', [NewsController::class, 'store']);
+        Route::post('/news', [
+            NewsController::class,
+            'store'
+        ]);
 
-        Route::put('/news/{news}', [NewsController::class, 'update']);
+        Route::put('/news/{news}', [
+            NewsController::class,
+            'update'
+        ]);
 
-        Route::delete('/news/{news}', [NewsController::class, 'destroy']);
+        Route::delete('/news/{news}', [
+            NewsController::class,
+            'destroy'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -244,13 +387,41 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::post('/gallery', [GalleryController::class, 'store']);
+        /*
+        |--------------------------------------------------------------------------
+        | Create Gallery
+        |--------------------------------------------------------------------------
+        */
 
-        Route::put('/gallery/{gallery}', [GalleryController::class, 'update']);
+        Route::post('/gallery', [
+            GalleryController::class,
+            'store'
+        ]);
 
-        Route::delete('/gallery/{gallery}', [GalleryController::class, 'destroy']);
+        /*
+        |--------------------------------------------------------------------------
+        | Update Gallery
+        |--------------------------------------------------------------------------
+        */
+
+        Route::put('/gallery/{gallery}', [
+            GalleryController::class,
+            'update'
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete Gallery
+        |--------------------------------------------------------------------------
+        */
+
+        Route::delete('/gallery/{gallery}', [
+            GalleryController::class,
+            'destroy'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -260,13 +431,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::post('/potential', [PotentialController::class, 'store']);
+        Route::post('/potential', [
+            PotentialController::class,
+            'store'
+        ]);
 
-        Route::put('/potential/{potential}', [PotentialController::class, 'update']);
+        Route::put('/potential/{potential}', [
+            PotentialController::class,
+            'update'
+        ]);
 
-        Route::delete('/potential/{potential}', [PotentialController::class, 'destroy']);
+        Route::delete('/potential/{potential}', [
+            PotentialController::class,
+            'destroy'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -276,13 +457,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::post('/government', [GovernmentController::class, 'store']);
+        Route::post('/government', [
+            GovernmentController::class,
+            'store'
+        ]);
 
-        Route::put('/government/{government}', [GovernmentController::class, 'update']);
+        Route::put('/government/{government}', [
+            GovernmentController::class,
+            'update'
+        ]);
 
-        Route::delete('/government/{government}', [GovernmentController::class, 'destroy']);
+        Route::delete('/government/{government}', [
+            GovernmentController::class,
+            'destroy'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -292,13 +483,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::post('/service', [ServiceController::class, 'store']);
+        Route::post('/service', [
+            ServiceController::class,
+            'store'
+        ]);
 
-        Route::put('/service/{service}', [ServiceController::class, 'update']);
+        Route::put('/service/{service}', [
+            ServiceController::class,
+            'update'
+        ]);
 
-        Route::delete('/service/{service}', [ServiceController::class, 'destroy']);
+        Route::delete('/service/{service}', [
+            ServiceController::class,
+            'destroy'
+        ]);
 
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -308,7 +509,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:super_admin,admin')->group(function () {
 
-        Route::put('/contact', [ContactController::class, 'update']);
+        Route::put('/contact', [
+            ContactController::class,
+            'update'
+        ]);
 
     });
 

@@ -17,7 +17,7 @@ class ProfileSeeder extends Seeder
         Profile::create([
 
             'village_name'   => 'Desa Panca Tunggal',
-            'village_head'   => 'Bapak Sugiyanto',
+            'village_head'   => 'Agus Suroto',
 
             'district'       => 'Merbau Mataram',
             'regency'        => 'Lampung Selatan',
@@ -30,27 +30,29 @@ class ProfileSeeder extends Seeder
 
             'history'        =>'Sejarah Desa Panca Tunggal dimulai sejak proses pembukaan wilayah transmigrasi pada tahun .... Selanjutnya desa berkembang menjadi salah satu desa yang memiliki sektor pertanian dan perkebunan sebagai mata pencaharian utama masyarakat.',
 
-            'vision'         => 'Terwujudnya Desa Panca Tunggal yang Maju, Mandiri, Sejahtera, Transparan, dan Berdaya Saing.',
+            'vision'         => 'Dengan Bermusyawarah/Bergotong Royong Menuju Desa Panca Tunggal Maju, Mandiri, Berakhlak dan Transparan',
 
             'mission'        => '
-1. Meningkatkan kualitas pelayanan kepada masyarakat.
-2. Mengembangkan potensi pertanian dan perkebunan.
-3. Meningkatkan kualitas SDM masyarakat.
-4. Mendorong digitalisasi pelayanan desa.
-5. Mewujudkan tata kelola pemerintahan desa yang transparan dan akuntabel.
+1. Mewujudkan Pemerintahan Desa yang jujur dan berwibawa dengan pengambilan keputusan yang cepat dan tepat.
+2. Mengedepankan kejujuran dan musywarah mufakat dalam kehidupan sehari-hari baik dengan pemerintahan maupun Masyarakat desa.
+3. Meningkatkan profesionalitas dan mengaktifkan seluruh perangkat desa.
+4. Mewujudkan sarana dan prasarana desa yang memadai.
+5. Mewujudkan perekonomian dan kesejahteraan warga desa.
+6. Meningkatkan Pelayanan Kesehatan Masyarakat Desa yang maksimal.
+7. Meningkatkan kehidupan desa secara dinamis dalam segi keagamaan dan budaya.
 ',
 
             'area'           => 850.50,
 
-            'population'     => 4625,
+            'population'     => 5051,
 
             'family_count'   => 1328,
 
-            'hamlet_count'   => 5,
+            'hamlet_count'   => 11,
 
-            'rt_count'       => 18,
+            'rt_count'       => 32,
 
-            'rw_count'       => 7,
+            'rw_count'       => 11,
 
             'north_boundary' => 'Desa Karang Rejo',
 

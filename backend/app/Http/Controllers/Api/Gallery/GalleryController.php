@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Gallery;
 
 use Throwable;
 use App\Models\Gallery;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\GalleryService;
 use App\Http\Controllers\Api\BaseApiController;
@@ -21,14 +22,38 @@ class GalleryController extends BaseApiController
     ) {
     }
 
+
     /**
      * Menampilkan seluruh data galeri.
+     *
+     * Mendukung:
+     * ?keyword=
+     * ?category=
+     * ?per_page=
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         try {
 
-            $gallery = $this->galleryService->getAll();
+            $perPage = (int) $request->input(
+                'per_page',
+                10
+            );
+
+            $perPage = min(
+                max($perPage, 1),
+                100
+            );
+
+            $keyword = $request->input('keyword');
+
+            $category = $request->input('category');
+
+            $gallery = $this->galleryService->getAll(
+                perPage: $perPage,
+                keyword: $keyword,
+                category: $category
+            );
 
             return $this->success(
                 data: GalleryResource::collection($gallery),
@@ -42,9 +67,35 @@ class GalleryController extends BaseApiController
                     ? $e->getMessage()
                     : 'Terjadi kesalahan pada server.'
             );
-
         }
     }
+
+
+    /**
+     * Menampilkan statistik galeri.
+     */
+    public function statistics(): JsonResponse
+    {
+        try {
+
+            $statistics =
+                $this->galleryService->getStatistics();
+
+            return $this->success(
+                data: $statistics,
+                message: 'Statistik galeri berhasil diambil.'
+            );
+
+        } catch (Throwable $e) {
+
+            return $this->serverError(
+                app()->hasDebugModeEnabled()
+                    ? $e->getMessage()
+                    : 'Terjadi kesalahan pada server.'
+            );
+        }
+    }
+
 
     /**
      * Menampilkan detail galeri.
@@ -55,9 +106,10 @@ class GalleryController extends BaseApiController
 
         try {
 
-            $gallery = $this->galleryService->getById(
-                $gallery->id
-            );
+            $gallery =
+                $this->galleryService->getById(
+                    $gallery->id
+                );
 
             return $this->success(
                 data: new GalleryResource($gallery),
@@ -71,9 +123,9 @@ class GalleryController extends BaseApiController
                     ? $e->getMessage()
                     : 'Terjadi kesalahan pada server.'
             );
-
         }
     }
+
 
     /**
      * Menambahkan galeri.
@@ -84,9 +136,10 @@ class GalleryController extends BaseApiController
 
         try {
 
-            $gallery = $this->galleryService->store(
-                $request->validated()
-            );
+            $gallery =
+                $this->galleryService->store(
+                    $request->validated()
+                );
 
             return $this->success(
                 data: new GalleryResource($gallery),
@@ -100,9 +153,9 @@ class GalleryController extends BaseApiController
                     ? $e->getMessage()
                     : 'Terjadi kesalahan pada server.'
             );
-
         }
     }
+
 
     /**
      * Memperbarui galeri.
@@ -114,10 +167,11 @@ class GalleryController extends BaseApiController
 
         try {
 
-            $gallery = $this->galleryService->update(
-                $gallery,
-                $request->validated()
-            );
+            $gallery =
+                $this->galleryService->update(
+                    $gallery,
+                    $request->validated()
+                );
 
             return $this->success(
                 data: new GalleryResource($gallery),
@@ -131,9 +185,9 @@ class GalleryController extends BaseApiController
                     ? $e->getMessage()
                     : 'Terjadi kesalahan pada server.'
             );
-
         }
     }
+
 
     /**
      * Menghapus galeri.
@@ -159,7 +213,6 @@ class GalleryController extends BaseApiController
                     ? $e->getMessage()
                     : 'Terjadi kesalahan pada server.'
             );
-
         }
     }
 }
