@@ -1,27 +1,14 @@
 import SectionTitle from "../../../components/common/SectionTitle";
-import historyImage from "../../../assets/images/profile/history.jpg";
+import historyImage from "../../../assets/images/sejarah.jpg";
 import { Landmark } from "lucide-react";
 
 export default function HistorySection({ profile }) {
 
     const timeline = [
         {
-            year: "1982",
-            title: "Pembukaan Wilayah",
+            title: "Pemekaran Wilayah",
             description:
-                "Wilayah mulai dibuka oleh masyarakat sebagai kawasan permukiman dan pertanian."
-        },
-        {
-            year: "1990",
-            title: "Menjadi Desa Definitif",
-            description:
-                "Desa Panca Tunggal resmi menjadi desa definitif dalam wilayah Kecamatan Merbau Mataram."
-        },
-        {
-            year: "2026",
-            title: "Transformasi Digital",
-            description:
-                "Pemerintah desa mulai mengembangkan SIPANDA sebagai sistem informasi desa berbasis digital."
+                "Desa Panca Tunggal lahir dari proses pemekaran desa-desa di Kecamatan Merbau Mataram (seperti wilayah Merbau Mataram dan Suban) untuk mempercepat pelayanan publik dan pemerataan pembangunan."
         }
     ];
 
@@ -50,11 +37,11 @@ export default function HistorySection({ profile }) {
 
                         <div className="absolute -z-10 -top-10 -left-10 w-72 h-72 bg-green-500/20 rounded-full blur-3xl"></div>
 
-                        <img
-                            src={profile?.hero_image || historyImage}
-                            alt="Sejarah Desa"
-                            className="rounded-3xl shadow-2xl object-cover h-[620px] w-full"
-                        />
+                    <img
+                        src={historyImage}
+                        alt="Sejarah Desa"
+                        className="rounded-3xl shadow-2xl object-cover h-[620px] w-full"
+                    />
 
                         <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-xl rounded-2xl px-6 py-5 shadow-lg flex gap-4 items-center">
 

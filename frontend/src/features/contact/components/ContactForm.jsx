@@ -1,10 +1,10 @@
 import {
-    Send,
     User,
-    Mail,
-    Phone,
-    FileText,
     MessageSquare,
+    MapPin,
+    Clock,
+    Landmark,
+    Info,
 } from "lucide-react";
 
 export default function ContactForm() {
@@ -15,7 +15,9 @@ export default function ContactForm() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                {/* Heading */}
+                {/* =========================
+                    HEADING
+                ========================= */}
 
                 <div
                     data-aos="fade-up"
@@ -36,7 +38,7 @@ export default function ContactForm() {
                             sm:text-base
                         "
                     >
-                        Formulir Kontak
+                        Informasi Desa
                     </span>
 
                     <h2
@@ -50,7 +52,7 @@ export default function ContactForm() {
                             sm:mt-6
                         "
                     >
-                        Kirim Pesan Kepada Kami
+                        Informasi dan Aspirasi Masyarakat
                     </h2>
 
                     <p
@@ -66,12 +68,18 @@ export default function ContactForm() {
                             sm:leading-8
                         "
                     >
-                        Silakan isi formulir di bawah ini apabila Anda memiliki
-                        pertanyaan, saran, kritik, maupun membutuhkan informasi
-                        mengenai pelayanan Pemerintah Desa Panca Tunggal.
+                        Pemerintah Desa Panca Tunggal terbuka terhadap
+                        pertanyaan, saran, kritik, dan aspirasi masyarakat
+                        untuk mendukung peningkatan pelayanan serta
+                        pembangunan desa.
                     </p>
 
                 </div>
+
+
+                {/* =========================
+                    CONTENT
+                ========================= */}
 
                 <div
                     className="
@@ -79,28 +87,60 @@ export default function ContactForm() {
                         lg:grid-cols-2
                         gap-10
                         lg:gap-16
-                        items-start
+                        items-stretch
                     "
                 >
 
-                    {/* Left */}
+                    {/* =========================
+                        LEFT - INFORMASI
+                    ========================= */}
 
                     <div
                         data-aos="fade-right"
-                        className="space-y-6 sm:space-y-8"
+                        className="
+                            bg-white
+                            rounded-2xl
+                            sm:rounded-3xl
+                            shadow-lg
+                            p-6
+                            sm:p-8
+                            lg:p-10
+                        "
                     >
 
                         <div>
 
+                            <span
+                                className="
+                                    inline-flex
+                                    items-center
+                                    gap-2
+                                    bg-green-100
+                                    text-green-700
+                                    px-4
+                                    py-2
+                                    rounded-full
+                                    text-sm
+                                    font-semibold
+                                "
+                            >
+
+                                <Info size={16} />
+
+                                Informasi Pelayanan
+
+                            </span>
+
                             <h3
                                 className="
+                                    mt-5
                                     text-2xl
                                     sm:text-3xl
                                     font-bold
                                     text-gray-900
                                 "
                             >
-                                Mari Terhubung
+                                Mari Terhubung dengan Pemerintah Desa
                             </h3>
 
                             <p
@@ -114,16 +154,23 @@ export default function ContactForm() {
                                     sm:leading-8
                                 "
                             >
-                                Pemerintah Desa Panca Tunggal selalu terbuka
-                                menerima masukan dari masyarakat demi
-                                meningkatkan kualitas pelayanan publik.
+                                Masyarakat Desa Panca Tunggal dapat
+                                memperoleh informasi pelayanan,
+                                menyampaikan pertanyaan, serta memberikan
+                                kritik dan saran secara langsung kepada
+                                Pemerintah Desa.
                             </p>
 
                         </div>
 
-                        <div className="space-y-5 sm:space-y-6">
 
-                            {/* Item */}
+                        {/* =========================
+                            INFORMATION ITEMS
+                        ========================= */}
+
+                        <div className="mt-8 space-y-6">
+
+                            {/* Pelayanan */}
 
                             <div className="flex items-start gap-3 sm:gap-4">
 
@@ -152,17 +199,28 @@ export default function ContactForm() {
                                         Pelayanan Ramah
                                     </h4>
 
-                                    <p className="text-sm sm:text-base text-gray-600 leading-6 sm:leading-7">
-                                        Kami siap membantu masyarakat
-                                        dengan pelayanan yang cepat
-                                        dan profesional.
+                                    <p
+                                        className="
+                                            mt-1
+                                            text-sm
+                                            sm:text-base
+                                            text-gray-600
+                                            leading-6
+                                            sm:leading-7
+                                        "
+                                    >
+                                        Pemerintah Desa berkomitmen
+                                        memberikan pelayanan yang ramah,
+                                        mudah, dan profesional kepada
+                                        seluruh masyarakat.
                                     </p>
 
                                 </div>
 
                             </div>
 
-                            {/* Item */}
+
+                            {/* Respon */}
 
                             <div className="flex items-start gap-3 sm:gap-4">
 
@@ -188,19 +246,30 @@ export default function ContactForm() {
                                 <div>
 
                                     <h4 className="font-bold text-base sm:text-lg">
-                                        Respon Cepat
+                                        Respon dan Pelayanan
                                     </h4>
 
-                                    <p className="text-sm sm:text-base text-gray-600 leading-6 sm:leading-7">
-                                        Pesan yang dikirim akan ditindaklanjuti
-                                        oleh admin desa.
+                                    <p
+                                        className="
+                                            mt-1
+                                            text-sm
+                                            sm:text-base
+                                            text-gray-600
+                                            leading-6
+                                            sm:leading-7
+                                        "
+                                    >
+                                        Setiap kebutuhan masyarakat akan
+                                        dilayani sesuai dengan prosedur
+                                        dan ketentuan yang berlaku.
                                     </p>
 
                                 </div>
 
                             </div>
 
-                            {/* Item */}
+
+                            {/* Aspirasi */}
 
                             <div className="flex items-start gap-3 sm:gap-4">
 
@@ -220,7 +289,7 @@ export default function ContactForm() {
                                         text-white
                                     "
                                 >
-                                    <Send size={22} />
+                                    <Landmark size={22} />
                                 </div>
 
                                 <div>
@@ -229,9 +298,20 @@ export default function ContactForm() {
                                         Aspirasi Masyarakat
                                     </h4>
 
-                                    <p className="text-sm sm:text-base text-gray-600 leading-6 sm:leading-7">
-                                        Kami menerima kritik dan saran
-                                        sebagai bagian dari pembangunan desa.
+                                    <p
+                                        className="
+                                            mt-1
+                                            text-sm
+                                            sm:text-base
+                                            text-gray-600
+                                            leading-6
+                                            sm:leading-7
+                                        "
+                                    >
+                                        Kritik, saran, dan aspirasi
+                                        masyarakat menjadi bagian penting
+                                        dalam mendukung kemajuan Desa
+                                        Panca Tunggal.
                                     </p>
 
                                 </div>
@@ -242,278 +322,189 @@ export default function ContactForm() {
 
                     </div>
 
-                    {/* Right */}
 
-                    <form
+                    {/* =========================
+                        RIGHT - INFO CARD
+                    ========================= */}
+
+                    <div
                         data-aos="fade-left"
                         className="
-                            bg-white
+                            bg-green-700
                             rounded-2xl
                             sm:rounded-3xl
                             shadow-xl
-                            p-5
-                            sm:p-7
+                            p-6
+                            sm:p-8
                             lg:p-10
-                            space-y-5
-                            sm:space-y-6
+                            text-white
+                            flex
+                            flex-col
+                            justify-center
                         "
                     >
 
-                        {/* Nama */}
-
-                        <div>
-
-                            <label className="font-semibold text-sm sm:text-base text-gray-700">
-                                Nama Lengkap
-                            </label>
-
-                            <div className="relative mt-2">
-
-                                <User
-                                    className="
-                                        absolute
-                                        left-4
-                                        top-1/2
-                                        -translate-y-1/2
-                                        text-gray-400
-                                    "
-                                    size={20}
-                                />
-
-                                <input
-                                    type="text"
-                                    placeholder="Masukkan nama lengkap"
-                                    className="
-                                        w-full
-                                        pl-12
-                                        pr-4
-                                        py-3.5
-                                        sm:py-4
-                                        rounded-xl
-                                        border
-                                        border-gray-300
-                                        text-sm
-                                        sm:text-base
-                                        focus:ring-2
-                                        focus:ring-green-600
-                                        focus:border-green-600
-                                        outline-none
-                                        transition
-                                    "
-                                />
-
-                            </div>
-
-                        </div>
-
-                        {/* Email */}
-
-                        <div>
-
-                            <label className="font-semibold text-sm sm:text-base text-gray-700">
-                                Email
-                            </label>
-
-                            <div className="relative mt-2">
-
-                                <Mail
-                                    className="
-                                        absolute
-                                        left-4
-                                        top-1/2
-                                        -translate-y-1/2
-                                        text-gray-400
-                                    "
-                                    size={20}
-                                />
-
-                                <input
-                                    type="email"
-                                    placeholder="Masukkan email"
-                                    className="
-                                        w-full
-                                        pl-12
-                                        pr-4
-                                        py-3.5
-                                        sm:py-4
-                                        rounded-xl
-                                        border
-                                        border-gray-300
-                                        text-sm
-                                        sm:text-base
-                                        focus:ring-2
-                                        focus:ring-green-600
-                                        focus:border-green-600
-                                        outline-none
-                                        transition
-                                    "
-                                />
-
-                            </div>
-
-                        </div>
-
-                        {/* Nomor HP */}
-
-                        <div>
-
-                            <label className="font-semibold text-sm sm:text-base text-gray-700">
-                                Nomor Telepon
-                            </label>
-
-                            <div className="relative mt-2">
-
-                                <Phone
-                                    className="
-                                        absolute
-                                        left-4
-                                        top-1/2
-                                        -translate-y-1/2
-                                        text-gray-400
-                                    "
-                                    size={20}
-                                />
-
-                                <input
-                                    type="tel"
-                                    placeholder="08xxxxxxxxxx"
-                                    className="
-                                        w-full
-                                        pl-12
-                                        pr-4
-                                        py-3.5
-                                        sm:py-4
-                                        rounded-xl
-                                        border
-                                        border-gray-300
-                                        text-sm
-                                        sm:text-base
-                                        focus:ring-2
-                                        focus:ring-green-600
-                                        focus:border-green-600
-                                        outline-none
-                                        transition
-                                    "
-                                />
-
-                            </div>
-
-                        </div>
-
-                        {/* Subjek */}
-
-                        <div>
-
-                            <label className="font-semibold text-sm sm:text-base text-gray-700">
-                                Subjek
-                            </label>
-
-                            <div className="relative mt-2">
-
-                                <FileText
-                                    className="
-                                        absolute
-                                        left-4
-                                        top-1/2
-                                        -translate-y-1/2
-                                        text-gray-400
-                                    "
-                                    size={20}
-                                />
-
-                                <input
-                                    type="text"
-                                    placeholder="Masukkan subjek"
-                                    className="
-                                        w-full
-                                        pl-12
-                                        pr-4
-                                        py-3.5
-                                        sm:py-4
-                                        rounded-xl
-                                        border
-                                        border-gray-300
-                                        text-sm
-                                        sm:text-base
-                                        focus:ring-2
-                                        focus:ring-green-600
-                                        focus:border-green-600
-                                        outline-none
-                                        transition
-                                    "
-                                />
-
-                            </div>
-
-                        </div>
-
-                        {/* Pesan */}
-
-                        <div>
-
-                            <label className="font-semibold text-sm sm:text-base text-gray-700">
-                                Pesan
-                            </label>
-
-                            <textarea
-                                rows="5"
-                                placeholder="Tuliskan pesan Anda..."
-                                className="
-                                    mt-2
-                                    w-full
-                                    rounded-xl
-                                    border
-                                    border-gray-300
-                                    p-4
-                                    text-sm
-                                    sm:text-base
-                                    focus:ring-2
-                                    focus:ring-green-600
-                                    focus:border-green-600
-                                    outline-none
-                                    resize-none
-                                    transition
-                                "
-                            />
-
-                        </div>
-
-                        {/* Button */}
-
-                        <button
-                            type="submit"
+                        <div
                             className="
-                                w-full
-                                bg-green-700
-                                hover:bg-green-800
-                                active:scale-[0.98]
-                                transition
-                                text-white
-                                py-3.5
-                                sm:py-4
-                                rounded-xl
-                                font-semibold
-                                text-sm
-                                sm:text-base
+                                w-16
+                                h-16
+                                rounded-2xl
+                                bg-white/10
                                 flex
                                 items-center
                                 justify-center
-                                gap-3
                             "
                         >
 
-                            <Send size={20} />
+                            <MapPin size={32} />
 
-                            Kirim Pesan
+                        </div>
 
-                        </button>
+                        <h3
+                            className="
+                                mt-6
+                                text-2xl
+                                sm:text-3xl
+                                font-bold
+                            "
+                        >
+                            Kunjungi Kantor Desa
+                        </h3>
 
-                    </form>
+                        <p
+                            className="
+                                mt-4
+                                text-green-100
+                                text-sm
+                                sm:text-base
+                                leading-7
+                                sm:leading-8
+                            "
+                        >
+                            Untuk mendapatkan informasi lebih lanjut,
+                            mengurus pelayanan administrasi, atau
+                            menyampaikan aspirasi secara langsung,
+                            masyarakat dapat mengunjungi Kantor Desa
+                            Panca Tunggal pada jam pelayanan.
+                        </p>
+
+
+                        {/* Lokasi */}
+
+                        <div
+                            className="
+                                mt-8
+                                bg-white/10
+                                rounded-2xl
+                                p-5
+                                sm:p-6
+                            "
+                        >
+
+                            <div className="flex items-start gap-4">
+
+                                <MapPin
+                                    size={24}
+                                    className="shrink-0 mt-1 text-green-200"
+                                />
+
+                                <div>
+
+                                    <p className="text-green-200 text-sm">
+                                        Lokasi
+                                    </p>
+
+                                    <p className="mt-1 font-semibold">
+                                        Desa Panca Tunggal
+                                    </p>
+
+                                    <p className="text-green-100 text-sm mt-1">
+                                        Kecamatan Merbau Mataram,
+                                        Kabupaten Lampung Selatan,
+                                        Provinsi Lampung
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Jam Pelayanan */}
+
+                        <div
+                            className="
+                                mt-4
+                                bg-white/10
+                                rounded-2xl
+                                p-5
+                                sm:p-6
+                            "
+                        >
+
+                            <div className="flex items-start gap-4">
+
+                                <Clock
+                                    size={24}
+                                    className="shrink-0 mt-1 text-green-200"
+                                />
+
+                                <div>
+
+                                    <p className="text-green-200 text-sm">
+                                        Jam Pelayanan
+                                    </p>
+
+                                    <p className="mt-1 font-semibold">
+                                        Senin - Jumat
+                                    </p>
+
+                                    <p className="text-green-100 text-sm mt-1">
+                                        08.00 WIB - 15.00 WIB
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Information */}
+
+                        <div
+                            className="
+                                mt-6
+                                flex
+                                items-start
+                                gap-3
+                                text-sm
+                                text-green-100
+                                leading-6
+                            "
+                        >
+
+                            <Info
+                                size={18}
+                                className="shrink-0 mt-1"
+                            />
+
+                            <p>
+                               Silakan datang langsung ke
+                                kantor desa untuk mendapatkan pelayanan
+                                dan informasi lebih lanjut.
+                            </p>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
         </section>
+
     );
 }

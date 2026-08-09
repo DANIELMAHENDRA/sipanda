@@ -116,30 +116,6 @@ export default function CTASection() {
                             mt-12
                         "
                     >
-
-                        <NavLink
-                            to="/kontak"
-                            className="
-                                inline-flex
-                                items-center
-                                gap-3
-                                bg-white
-                                text-green-700
-                                px-8
-                                py-4
-                                rounded-full
-                                font-semibold
-                                hover:scale-105
-                                transition
-                            "
-                        >
-
-                            <Phone size={20} />
-
-                            Hubungi Pemerintah Desa
-
-                        </NavLink>
-
                         <NavLink
                             to="/potensi"
                             className="

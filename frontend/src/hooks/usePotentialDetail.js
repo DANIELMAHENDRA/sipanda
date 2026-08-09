@@ -9,19 +9,10 @@ export default function usePotentialDetail(id) {
 
     const fetchPotential = async () => {
 
-        useEffect(() => {
-
-            if (!id) {
-
-                setLoading(false);
-
-                return;
-
-            }
-
-            fetchPotential();
-
-        }, [id]);
+        if (!id) {
+            setLoading(false);
+            return;
+        }
 
         try {
 
@@ -30,7 +21,11 @@ export default function usePotentialDetail(id) {
 
             const response = await potentialService.getById(id);
 
-            setPotential(response.data?.data ?? null);
+            console.log("Detail Potential Response:", response.data);
+
+            setPotential(
+                response.data?.data ?? null
+            );
 
         } catch (err) {
 
@@ -40,6 +35,7 @@ export default function usePotentialDetail(id) {
             );
 
             setError(err);
+            setPotential(null);
 
         } finally {
 

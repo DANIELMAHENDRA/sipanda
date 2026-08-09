@@ -290,46 +290,6 @@ export default function CTASection() {
                             "
                         >
 
-                            {/* Primary */}
-
-                            <NavLink
-                                to="/kontak"
-                                className="
-                                    group
-                                    inline-flex
-                                    min-h-14
-                                    items-center
-                                    justify-center
-                                    gap-3
-                                    rounded-2xl
-                                    bg-white
-                                    px-7
-                                    sm:px-8
-                                    py-4
-                                    font-bold
-                                    text-emerald-800
-                                    shadow-xl
-                                    transition-all
-                                    duration-300
-                                    hover:bg-green-50
-                                    hover:scale-[1.03]
-                                    active:scale-95
-                                "
-                            >
-
-                                <Phone
-                                    size={19}
-                                    className="
-                                        transition-transform
-                                        duration-300
-                                        group-hover:rotate-6
-                                    "
-                                />
-
-                                Hubungi Kami
-
-                            </NavLink>
-
 
                             {/* Secondary */}
 

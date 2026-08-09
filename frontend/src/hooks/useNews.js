@@ -5,17 +5,44 @@ import profileService from "../services/profileService";
 
 export default function useNews() {
 
+    // ===========================
+    // DATA
+    // ===========================
+
     const [profile, setProfile] = useState(null);
     const [news, setNews] = useState([]);
     const [categories, setCategories] = useState([]);
     const [pagination, setPagination] = useState(null);
 
+    // ===========================
+    // SEARCH
+    // ===========================
+
+    // Isi yang sedang diketik di input
     const [keyword, setKeyword] = useState("");
+
+    // Keyword yang benar-benar digunakan untuk pencarian
+    const [searchKeyword, setSearchKeyword] = useState("");
+
+    // ===========================
+    // FILTER
+    // ===========================
+
     const [selectedCategory, setSelectedCategory] = useState(null);
+
     const [page, setPage] = useState(1);
+
+    // ===========================
+    // STATUS
+    // ===========================
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+
+    // ===========================
+    // FETCH DATA
+    // ===========================
 
     const fetchData = async () => {
 
@@ -25,61 +52,108 @@ export default function useNews() {
             setError(null);
 
             // ===========================
-            // Ambil Profile
+            // PROFILE
             // ===========================
-            const profileResponse = await profileService.get();
 
-            setProfile(profileResponse.data.data);
+            const profileResponse =
+                await profileService.get();
+
+            setProfile(
+                profileResponse.data.data
+            );
+
 
             // ===========================
-            // Ambil Data Berita
+            // BERITA
             // ===========================
-            const newsResponse = await newsService.getAll({
-                search: keyword,
-                category: selectedCategory,
-                page,
-            });
 
-            console.log("NEWS RESPONSE", newsResponse.data);
+            const newsResponse =
+                await newsService.getAll({
 
-            /**
-             * Sesuaikan dengan response API
-             */
-            const response = newsResponse.data.data;
+                    // PENTING:
+                    // gunakan searchKeyword,
+                    // bukan keyword
+                    search: searchKeyword,
 
-            /**
-             * Jika backend menggunakan paginate()
-             */
-            if (response.data) {
+                    category: selectedCategory,
 
-                setNews(response.data);
+                    page: page,
+
+                });
+
+
+            console.log(
+                "NEWS RESPONSE",
+                newsResponse.data
+            );
+
+
+            // ===========================
+            // RESPONSE API
+            // ===========================
+
+            const response =
+                newsResponse.data.data;
+
+
+            // ===========================
+            // JIKA MENGGUNAKAN PAGINATION
+            // ===========================
+
+            if (
+                response &&
+                response.data
+            ) {
+
+                setNews(
+                    response.data
+                );
 
                 setPagination({
-                    current_page: response.current_page,
-                    last_page: response.last_page,
-                    next_page_url: response.next_page_url,
-                    prev_page_url: response.prev_page_url,
+
+                    current_page:
+                        response.current_page,
+
+                    last_page:
+                        response.last_page,
+
+                    next_page_url:
+                        response.next_page_url,
+
+                    prev_page_url:
+                        response.prev_page_url,
+
                 });
 
             } else {
 
-                /**
-                 * Jika backend mengembalikan array biasa
-                 */
-                setNews(response);
+                // ===========================
+                // JIKA ARRAY BIASA
+                // ===========================
+
+                setNews(
+                    Array.isArray(response)
+                        ? response
+                        : []
+                );
 
                 setPagination(null);
 
             }
 
-            /**
-             * sementara kategori dikosongkan
-             */
+
+            // ===========================
+            // KATEGORI
+            // ===========================
+
             setCategories([]);
 
         } catch (err) {
 
-            console.error(err);
+            console.error(
+                "NEWS ERROR:",
+                err
+            );
 
             setError(err);
 
@@ -91,15 +165,43 @@ export default function useNews() {
 
     };
 
+
+    // ===========================
+    // SEARCH
+    // ===========================
+
+    const handleSearch = () => {
+
+        // Kembali ke halaman pertama
+        setPage(1);
+
+        // BARU di sini keyword input
+        // dijadikan keyword pencarian
+        setSearchKeyword(
+            keyword.trim()
+        );
+
+    };
+
+
+    // ===========================
+    // FETCH SAAT FILTER BERUBAH
+    // ===========================
+
     useEffect(() => {
 
         fetchData();
 
     }, [
-        keyword,
+        searchKeyword,
         selectedCategory,
         page,
     ]);
+
+
+    // ===========================
+    // RETURN
+    // ===========================
 
     return {
 
@@ -111,21 +213,50 @@ export default function useNews() {
 
         pagination,
 
+
+        // ===========================
+        // SEARCH
+        // ===========================
+
         keyword,
 
         setKeyword,
+
+        searchKeyword,
+
+        handleSearch,
+
+
+        // ===========================
+        // CATEGORY
+        // ===========================
 
         selectedCategory,
 
         setSelectedCategory,
 
+
+        // ===========================
+        // PAGINATION
+        // ===========================
+
         page,
 
         setPage,
 
+
+        // ===========================
+        // STATUS
+        // ===========================
+
         loading,
 
         error,
+
+
+        // ===========================
+        // REFRESH
+        // ===========================
 
         refresh: fetchData,
 

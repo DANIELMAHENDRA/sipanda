@@ -1,14 +1,14 @@
 import { ChevronDown, ChevronRight, MapPin } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
+import village from "../../../assets/images/village.jpg";
+
 export default function HeroProfile({ profile }) {
     return (
         <section
             className="relative min-h-screen flex items-center overflow-hidden"
             style={{
-                backgroundImage: profile?.hero_image
-                    ? `url(${profile.hero_image})`
-                    : "url('/images/default-hero.jpg')",
+                backgroundImage: `url(${village})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             }}

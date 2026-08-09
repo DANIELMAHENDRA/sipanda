@@ -7,13 +7,11 @@ import {
     Landmark,
     HeartHandshake,
     Building2,
-    ArrowRight,
 } from "lucide-react";
 
 export default function GovernmentServiceSection() {
 
     const services = [
-
         {
             icon: FileText,
             title: "Surat Keterangan",
@@ -55,7 +53,6 @@ export default function GovernmentServiceSection() {
             description:
                 "Memberikan informasi mengenai program pemerintah desa, pembangunan, serta kegiatan masyarakat.",
         },
-
     ];
 
     return (
@@ -106,19 +103,6 @@ export default function GovernmentServiceSection() {
 
                                 </p>
 
-                                <button
-                                    className="mt-8 inline-flex items-center gap-2 font-semibold text-green-700 group-hover:text-green-800 transition"
-                                >
-
-                                    Selengkapnya
-
-                                    <ArrowRight
-                                        size={18}
-                                        className="group-hover:translate-x-2 transition"
-                                    />
-
-                                </button>
-
                             </div>
 
                         );
@@ -132,5 +116,4 @@ export default function GovernmentServiceSection() {
         </section>
 
     );
-
-}s
+}

@@ -185,36 +185,6 @@ export default function ServiceHoursSection() {
 
                             </div>
 
-                            <div className="mt-10 rounded-2xl bg-white/10 backdrop-blur-md p-6 border border-white/20">
-
-                                <div className="flex items-center gap-4">
-
-                                    <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
-
-                                        <PhoneCall size={26} />
-
-                                    </div>
-
-                                    <div>
-
-                                        <p className="text-green-100 text-sm">
-
-                                            Kontak Pelayanan
-
-                                        </p>
-
-                                        <h4 className="font-bold text-xl">
-
-                                            +62 812-3456-7890
-
-                                        </h4>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
                             <div className="mt-8 flex items-center gap-3 text-green-100">
 
                                 <Sparkles size={18} />

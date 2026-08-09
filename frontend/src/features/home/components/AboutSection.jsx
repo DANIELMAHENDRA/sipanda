@@ -38,11 +38,11 @@ export default function AboutSection({ profile }) {
 
                         <div className="absolute -top-6 -left-6 w-full h-full rounded-3xl border-2 border-green-200" />
 
-                        <img
-                            src={profile?.hero_image || village}
-                            alt={profile?.village_name}
-                            className="relative rounded-3xl shadow-2xl w-full h-[550px] object-cover"
-                        />
+                    <img
+                        src={village}
+                        alt="Desa Panca Tunggal"
+                        className="relative rounded-3xl shadow-2xl w-full h-[550px] object-cover"
+                    />
 
                     </div>
 

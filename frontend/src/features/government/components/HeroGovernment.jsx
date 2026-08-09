@@ -87,23 +87,6 @@ export default function HeroGovernment({ profile }) {
                     fungsi pemerintahan, serta pelayanan publik yang
                     tersedia bagi seluruh warga.
                 </p>
-
-                {/* Button */}
-
-                <div
-                    data-aos="fade-up"
-                    data-aos-delay="400"
-                    className="mt-10"
-                >
-                    <a
-                        href="#kepala-desa"
-                        className="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-green-600 hover:bg-green-700 transition text-white font-semibold shadow-lg"
-                    >
-                        Lihat Struktur Pemerintahan
-
-                        <ChevronRight size={20} />
-                    </a>
-                </div>
             </div>
         </section>
     );

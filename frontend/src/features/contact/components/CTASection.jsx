@@ -108,63 +108,6 @@ export default function CTASection() {
                         "
                     >
 
-                        <a
-                            href="tel:+6281234567890"
-                            className="
-                                inline-flex
-                                items-center
-                                justify-center
-                                gap-3
-                                bg-white
-                                text-green-700
-                                px-6
-                                sm:px-7
-                                py-3.5
-                                sm:py-4
-                                rounded-2xl
-                                font-semibold
-                                text-sm
-                                sm:text-base
-                                hover:scale-105
-                                transition
-                                duration-300
-                                shadow-lg
-                            "
-                        >
-                            <Phone size={20} />
-
-                            Telepon Desa
-                        </a>
-
-                        <a
-                            href="mailto:desapancatunggal@gmail.com"
-                            className="
-                                inline-flex
-                                items-center
-                                justify-center
-                                gap-3
-                                bg-green-600
-                                border
-                                border-green-400
-                                text-white
-                                px-6
-                                sm:px-7
-                                py-3.5
-                                sm:py-4
-                                rounded-2xl
-                                font-semibold
-                                text-sm
-                                sm:text-base
-                                hover:bg-green-500
-                                transition
-                                duration-300
-                            "
-                        >
-                            <Mail size={20} />
-
-                            Kirim Email
-                        </a>
-
                     </div>
 
                     {/* Button */}
@@ -178,7 +121,7 @@ export default function CTASection() {
                                 items-center
                                 justify-center
                                 gap-3
-                                bg-yellow-400
+                                bg-green-380
                                 hover:bg-yellow-300
                                 text-gray-900
                                 font-bold

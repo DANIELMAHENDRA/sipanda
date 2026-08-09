@@ -11,23 +11,47 @@ export default function News() {
 
     const {
 
+        // ===========================
+        // BERITA
+        // ===========================
+
         news,
+
+        // ===========================
+        // KATEGORI
+        // ===========================
 
         categories,
 
+        selectedCategory,
+        setSelectedCategory,
+
+        // ===========================
+        // PAGINATION
+        // ===========================
+
         pagination,
 
+        // ===========================
+        // SEARCH
+        // ===========================
+
         keyword,
-
         setKeyword,
+        handleSearch,
 
-        selectedCategory,
-
-        setSelectedCategory,
+        // ===========================
+        // STATUS
+        // ===========================
 
         loading,
 
     } = useNews();
+
+
+    // ===========================
+    // LOADING
+    // ===========================
 
     if (loading) {
 
@@ -43,30 +67,82 @@ export default function News() {
 
     }
 
+
+    // ===========================
+    // PAGE
+    // ===========================
+
     return (
 
         <>
 
+            {/* ===========================
+                HERO
+            =========================== */}
+
             <HeroNews />
 
+
+            {/* ===========================
+                SEARCH
+            =========================== */}
+
             <SearchSection
+
                 keyword={keyword}
+
                 setKeyword={setKeyword}
+
+                // PENTING:
+                // Pencarian hanya dilakukan
+                // ketika tombol Cari diklik
+                onSearch={handleSearch}
+
             />
+
+
+            {/* ===========================
+                CATEGORY
+            =========================== */}
 
             <CategorySection
+
                 categories={categories}
+
                 selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
+
+                setSelectedCategory={
+                    setSelectedCategory
+                }
+
             />
+
+
+            {/* ===========================
+                NEWS
+            =========================== */}
 
             <NewsGrid
+
                 news={news}
+
             />
 
+
+            {/* ===========================
+                PAGINATION
+            =========================== */}
+
             <PaginationSection
+
                 pagination={pagination}
+
             />
+
+
+            {/* ===========================
+                CTA
+            =========================== */}
 
             <CTASection />
 

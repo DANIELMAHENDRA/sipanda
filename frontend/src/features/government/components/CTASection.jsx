@@ -68,17 +68,6 @@ export default function CTASection() {
                         <div className="mt-10 flex flex-wrap gap-4">
 
                             <Button
-                                to="/kontak"
-                                variant="white"
-                            >
-
-                                <PhoneCall size={20} />
-
-                                Hubungi Kami
-
-                            </Button>
-
-                            <Button
                                 to="/berita"
                                 variant="outline"
                                 className="border-white text-white hover:bg-white hover:text-green-700"

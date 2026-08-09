@@ -5,7 +5,6 @@ import {
     Landmark,
     Users,
     ShieldCheck,
-    ArrowRight,
 } from "lucide-react";
 
 export default function DutiesSection() {
@@ -99,21 +98,6 @@ export default function DutiesSection() {
                                     {item.description}
 
                                 </p>
-
-                                {/* Footer */}
-
-                                <div className="relative mt-8 flex items-center text-green-700 font-semibold">
-
-                                    <span>
-                                        Pelajari lebih lanjut
-                                    </span>
-
-                                    <ArrowRight
-                                        size={18}
-                                        className="ml-2 transition-transform duration-300 group-hover:translate-x-2"
-                                    />
-
-                                </div>
 
                             </div>
 

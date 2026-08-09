@@ -1,8 +1,6 @@
 import {
     ChevronRight,
     MapPin,
-    Phone,
-    Mail,
     Clock,
     MessageCircle,
 } from "lucide-react";
@@ -171,77 +169,44 @@ export default function HeroContact() {
                 </p>
 
 
-                {/* Information Cards */}
+                {/* Location Card */}
 
                 <div
                     data-aos="fade-up"
                     data-aos-delay="400"
                     className="
-                        grid
-                        grid-cols-1
-                        sm:grid-cols-2
-                        md:grid-cols-3
-                        gap-4
-                        sm:gap-6
                         mt-10
                         sm:mt-14
-                        max-w-5xl
+                        max-w-md
                     "
                 >
 
-                    {/* Telepon */}
+                    <div
+                        className="
+                            bg-white/10
+                            backdrop-blur-md
+                            rounded-2xl
+                            p-5
+                            sm:p-6
+                            border
+                            border-white/20
+                        "
+                    >
 
-                    <div className="
-                        bg-white/10
-                        backdrop-blur-md
-                        rounded-2xl
-                        p-5
-                        sm:p-6
-                        border
-                        border-white/20
-                    ">
-
-                        <Phone
+                        <MapPin
                             size={30}
                             className="text-green-300 mb-4"
                         />
 
-                        <h3 className="text-lg sm:text-xl font-bold text-white">
-
-                            Telepon
-
-                        </h3>
-
-                        <p className="mt-2 text-sm sm:text-base text-green-100">
-
-                            (0721) 123456
-
-                        </p>
-
-                    </div>
-
-
-                    {/* Email */}
-
-                    <div className="
-                        bg-white/10
-                        backdrop-blur-md
-                        rounded-2xl
-                        p-5
-                        sm:p-6
-                        border
-                        border-white/20
-                    ">
-
-                        <Mail
-                            size={30}
-                            className="text-green-300 mb-4"
-                        />
-
-                        <h3 className="text-lg sm:text-xl font-bold text-white">
-
-                            Email
-
+                        <h3
+                            className="
+                                text-lg
+                                sm:text-xl
+                                font-bold
+                                text-white
+                            "
+                        >
+                            Lokasi
                         </h3>
 
                         <p
@@ -250,50 +215,10 @@ export default function HeroContact() {
                                 text-sm
                                 sm:text-base
                                 text-green-100
-                                break-all
                             "
                         >
-
-                            desapancatunggal@gmail.com
-
-                        </p>
-
-                    </div>
-
-
-                    {/* Lokasi */}
-
-                    <div className="
-                        bg-white/10
-                        backdrop-blur-md
-                        rounded-2xl
-                        p-5
-                        sm:p-6
-                        border
-                        border-white/20
-                    ">
-
-                        <MapPin
-                            size={30}
-                            className="text-green-300 mb-4"
-                        />
-
-                        <h3 className="text-lg sm:text-xl font-bold text-white">
-
-                            Lokasi
-
-                        </h3>
-
-                        <p className="
-                            mt-2
-                            text-sm
-                            sm:text-base
-                            text-green-100
-                        ">
-
                             Merbau Mataram,
                             Lampung Selatan
-
                         </p>
 
                     </div>
@@ -322,13 +247,15 @@ export default function HeroContact() {
                         className="shrink-0 mt-1 sm:mt-0"
                     />
 
-                    <span className="
-                        text-sm
-                        sm:text-base
-                        md:text-lg
-                        leading-6
-                        sm:leading-normal
-                    ">
+                    <span
+                        className="
+                            text-sm
+                            sm:text-base
+                            md:text-lg
+                            leading-6
+                            sm:leading-normal
+                        "
+                    >
 
                         Jam Pelayanan :
                         Senin - Jumat •

@@ -5,6 +5,8 @@ import {
     Landmark,
 } from "lucide-react";
 
+import village from "../../../assets/images/village.jpg";
+
 export default function AboutVillage({ profile }) {
 
     return (
@@ -23,15 +25,11 @@ export default function AboutVillage({ profile }) {
                         data-aos="fade-right"
                         className="relative"
                     >
-                        <img
-                            src={
-                                profile?.about_image ||
-                                profile?.hero_image ||
-                                "/images/default-about.jpg"
-                            }
-                            alt={profile?.village_name}
-                            className="rounded-3xl shadow-2xl object-cover h-[550px] w-full"
-                        />
+                    <img
+                        src={village}
+                        alt="Desa Panca Tunggal"
+                        className="rounded-3xl shadow-2xl object-cover h-[550px] w-full"
+                    />
 
                     </div>
 

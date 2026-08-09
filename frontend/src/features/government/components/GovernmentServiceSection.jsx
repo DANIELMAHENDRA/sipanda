@@ -7,7 +7,6 @@ import {
     Landmark,
     HeartHandshake,
     Building2,
-    ArrowRight,
     Sparkles,
 } from "lucide-react";
 
@@ -134,20 +133,6 @@ export default function GovernmentServiceSection() {
                                         {service.description}
 
                                     </p>
-
-                                    <button
-                                        className="mt-8 inline-flex items-center gap-2 font-semibold text-green-700 group-hover:text-green-800 transition"
-                                    >
-
-                                        Selengkapnya
-
-                                        <ArrowRight
-                                            size={18}
-                                            className="group-hover:translate-x-2 transition"
-                                        />
-
-                                    </button>
-
                                 </div>
 
                             </div>

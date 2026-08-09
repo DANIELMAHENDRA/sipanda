@@ -5,7 +5,6 @@ import {
     Trees,
     Landmark,
     GraduationCap,
-    ArrowRight,
     Sparkles,
 } from "lucide-react";
 
@@ -14,44 +13,26 @@ const categories = [
     {
         title: "Pertanian",
         icon: Sprout,
-        total: "12 Potensi",
         description:
             "Jagung, padi, singkong, cabai, dan berbagai komoditas unggulan desa.",
     },
     {
         title: "Peternakan",
         icon: Beef,
-        total: "6 Potensi",
         description:
             "Pengembangan ternak sapi, kambing, ayam, dan usaha peternakan rakyat.",
     },
     {
         title: "UMKM",
         icon: Store,
-        total: "18 UMKM",
         description:
             "Produk olahan pangan, kerajinan, kuliner, dan usaha mikro masyarakat.",
     },
     {
-        title: "Wisata",
-        icon: Trees,
-        total: "4 Destinasi",
-        description:
-            "Potensi wisata alam, edukasi, dan ruang terbuka hijau desa.",
-    },
-    {
         title: "Budaya",
         icon: Landmark,
-        total: "5 Kegiatan",
         description:
             "Pelestarian adat, seni budaya, dan kegiatan masyarakat desa.",
-    },
-    {
-        title: "Pendidikan",
-        icon: GraduationCap,
-        total: "3 Program",
-        description:
-            "Pengembangan literasi, pendidikan, dan pemberdayaan generasi muda.",
     },
 ];
 
@@ -391,41 +372,6 @@ export default function CategorySection() {
                                     {item.description}
 
                                 </p>
-
-
-                                {/* =================================================
-                                    ACTION
-                                ================================================= */}
-
-                                <button
-                                    type="button"
-                                    className="
-                                        relative
-                                        mt-7
-                                        inline-flex
-                                        items-center
-                                        gap-2
-                                        font-semibold
-                                        text-green-700
-                                        transition-all
-                                        duration-300
-                                        group-hover:gap-3
-                                    "
-                                >
-
-                                    Lihat Potensi
-
-                                    <ArrowRight
-                                        size={18}
-                                        className="
-                                            transition-transform
-                                            duration-300
-                                            group-hover:translate-x-1
-                                        "
-                                    />
-
-                                </button>
-
 
                                 {/* =================================================
                                     BOTTOM ACCENT
