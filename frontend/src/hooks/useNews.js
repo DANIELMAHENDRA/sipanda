@@ -1,108 +1,194 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import newsService from "../services/newsService";
 import profileService from "../services/profileService";
 
-export default function useNews() {
+export default function useNews({
+    admin = false,
+} = {}) {
 
-    // ===========================
+    // ============================================================
     // DATA
-    // ===========================
+    // ============================================================
 
     const [profile, setProfile] = useState(null);
+
     const [news, setNews] = useState([]);
+
     const [categories, setCategories] = useState([]);
+
     const [pagination, setPagination] = useState(null);
 
-    // ===========================
-    // SEARCH
-    // ===========================
 
-    // Isi yang sedang diketik di input
+    // ============================================================
+    // SEARCH
+    // ============================================================
+
     const [keyword, setKeyword] = useState("");
 
-    // Keyword yang benar-benar digunakan untuk pencarian
     const [searchKeyword, setSearchKeyword] = useState("");
 
-    // ===========================
-    // FILTER
-    // ===========================
 
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    // ============================================================
+    // FILTER
+    // ============================================================
+
+    const [selectedCategory, setSelectedCategory] =
+        useState(null);
 
     const [page, setPage] = useState(1);
 
-    // ===========================
+
+    // ============================================================
     // STATUS
-    // ===========================
+    // ============================================================
 
     const [loading, setLoading] = useState(true);
+
     const [error, setError] = useState(null);
 
 
-    // ===========================
+    // ============================================================
     // FETCH DATA
-    // ===========================
+    // ============================================================
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
 
         try {
 
             setLoading(true);
+
             setError(null);
 
-            // ===========================
+
+            // ====================================================
             // PROFILE
-            // ===========================
+            // ====================================================
 
-            const profileResponse =
-                await profileService.get();
+            /*
+            | Profile hanya diperlukan untuk halaman public.
+            | Admin tidak perlu mengambil profile setiap kali
+            | berita di-refresh.
+            */
 
-            setProfile(
-                profileResponse.data.data
-            );
+            if (!admin) {
+
+                try {
+
+                    const profileResponse =
+                        await profileService.get();
+
+                    setProfile(
+                        profileResponse.data?.data ?? null
+                    );
+
+                } catch (profileError) {
+
+                    console.error(
+                        "PROFILE ERROR:",
+                        profileError
+                    );
+
+                }
+
+            }
 
 
-            // ===========================
-            // BERITA
-            // ===========================
+            // ====================================================
+            // PARAMETER
+            // ====================================================
 
-            const newsResponse =
-                await newsService.getAll({
+            const params = {
+                page,
+            };
 
-                    // PENTING:
-                    // gunakan searchKeyword,
-                    // bukan keyword
-                    search: searchKeyword,
 
-                    category: selectedCategory,
+            /*
+            | Search hanya dikirim jika ada isinya.
+            */
 
-                    page: page,
+            if (searchKeyword.trim()) {
 
-                });
+                params.search =
+                    searchKeyword.trim();
+
+            }
+
+
+            /*
+            | Category hanya dikirim jika dipilih.
+            */
+
+            if (selectedCategory) {
+
+                params.category =
+                    selectedCategory;
+
+            }
+
+
+            // ====================================================
+            // REQUEST BERITA
+            // ====================================================
+
+            let newsResponse;
+
+
+            if (admin) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | ADMIN
+                |--------------------------------------------------------------------------
+                | GET /api/admin/news
+                */
+
+                newsResponse =
+                    await newsService.getAdminAll(
+                        params
+                    );
+
+            } else {
+
+                /*
+                |--------------------------------------------------------------------------
+                | PUBLIC
+                |--------------------------------------------------------------------------
+                | GET /api/news
+                */
+
+                newsResponse =
+                    await newsService.getAll(
+                        params
+                    );
+
+            }
 
 
             console.log(
-                "NEWS RESPONSE",
+                admin
+                    ? "ADMIN NEWS RESPONSE:"
+                    : "NEWS RESPONSE:",
                 newsResponse.data
             );
 
 
-            // ===========================
+            // ====================================================
             // RESPONSE API
-            // ===========================
+            // ====================================================
 
             const response =
-                newsResponse.data.data;
+                newsResponse.data?.data;
 
 
-            // ===========================
-            // JIKA MENGGUNAKAN PAGINATION
-            // ===========================
+            // ====================================================
+            // PAGINATION
+            // ====================================================
 
             if (
                 response &&
-                response.data
+                !Array.isArray(response) &&
+                Array.isArray(response.data)
             ) {
 
                 setNews(
@@ -117,6 +203,12 @@ export default function useNews() {
                     last_page:
                         response.last_page,
 
+                    per_page:
+                        response.per_page,
+
+                    total:
+                        response.total,
+
                     next_page_url:
                         response.next_page_url,
 
@@ -127,9 +219,9 @@ export default function useNews() {
 
             } else {
 
-                // ===========================
-                // JIKA ARRAY BIASA
-                // ===========================
+                /*
+                | API mengembalikan array biasa.
+                */
 
                 setNews(
                     Array.isArray(response)
@@ -142,20 +234,49 @@ export default function useNews() {
             }
 
 
-            // ===========================
-            // KATEGORI
-            // ===========================
+            // ====================================================
+            // CATEGORY
+            // ====================================================
 
-            setCategories([]);
+            /*
+            | Untuk sementara kategori diambil dari data berita.
+            | Tidak mengubah backend.
+            */
+
+            const newsData =
+                Array.isArray(response)
+                    ? response
+                    : response?.data ?? [];
+
+            const uniqueCategories =
+                [
+                    ...new Set(
+                        newsData
+                            .map(
+                                (item) =>
+                                    item.category
+                            )
+                            .filter(Boolean)
+                    ),
+                ];
+
+            setCategories(
+                uniqueCategories
+            );
+
 
         } catch (err) {
 
             console.error(
-                "NEWS ERROR:",
+                admin
+                    ? "ADMIN NEWS ERROR:"
+                    : "NEWS ERROR:",
                 err
             );
 
             setError(err);
+
+            setNews([]);
 
         } finally {
 
@@ -163,20 +284,22 @@ export default function useNews() {
 
         }
 
-    };
+    }, [
+        admin,
+        searchKeyword,
+        selectedCategory,
+        page,
+    ]);
 
 
-    // ===========================
+    // ============================================================
     // SEARCH
-    // ===========================
+    // ============================================================
 
     const handleSearch = () => {
 
-        // Kembali ke halaman pertama
         setPage(1);
 
-        // BARU di sini keyword input
-        // dijadikan keyword pencarian
         setSearchKeyword(
             keyword.trim()
         );
@@ -184,26 +307,43 @@ export default function useNews() {
     };
 
 
-    // ===========================
-    // FETCH SAAT FILTER BERUBAH
-    // ===========================
+    // ============================================================
+    // FILTER CATEGORY
+    // ============================================================
+
+    const handleCategoryChange = (
+        category
+    ) => {
+
+        setPage(1);
+
+        setSelectedCategory(
+            category
+        );
+
+    };
+
+
+    // ============================================================
+    // FETCH
+    // ============================================================
 
     useEffect(() => {
 
         fetchData();
 
     }, [
-        searchKeyword,
-        selectedCategory,
-        page,
+        fetchData,
     ]);
 
 
-    // ===========================
+    // ============================================================
     // RETURN
-    // ===========================
+    // ============================================================
 
     return {
+
+        // DATA
 
         profile,
 
@@ -214,9 +354,7 @@ export default function useNews() {
         pagination,
 
 
-        // ===========================
         // SEARCH
-        // ===========================
 
         keyword,
 
@@ -227,38 +365,33 @@ export default function useNews() {
         handleSearch,
 
 
-        // ===========================
         // CATEGORY
-        // ===========================
 
         selectedCategory,
 
         setSelectedCategory,
 
+        handleCategoryChange,
 
-        // ===========================
+
         // PAGINATION
-        // ===========================
 
         page,
 
         setPage,
 
 
-        // ===========================
         // STATUS
-        // ===========================
 
         loading,
 
         error,
 
 
-        // ===========================
         // REFRESH
-        // ===========================
 
-        refresh: fetchData,
+        refresh:
+            fetchData,
 
     };
 

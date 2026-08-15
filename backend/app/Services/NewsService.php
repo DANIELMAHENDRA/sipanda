@@ -24,8 +24,59 @@ class NewsService
     ) {
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | PUBLIC
+    |--------------------------------------------------------------------------
+    */
+
     /**
-     * Mengambil seluruh data berita.
+     * Mengambil berita yang sudah dipublikasikan.
+     *
+     * Digunakan oleh website public.
+     *
+     * Draft TIDAK akan ikut.
+     */
+    public function getPublished(
+        int $perPage = 10
+    ): LengthAwarePaginator {
+
+        return News::query()
+            ->with('user')
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->latest('published_at')
+            ->paginate($perPage);
+    }
+
+    /**
+     * Mengambil detail berita yang sudah dipublikasikan.
+     *
+     * Digunakan oleh website public.
+     */
+    public function getPublishedById(
+        int $id
+    ): News {
+
+        return News::query()
+            ->with('user')
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->findOrFail($id);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Mengambil seluruh berita untuk admin.
+     *
+     * Termasuk draft dan published.
      */
     public function getAll(
         int $perPage = 10
@@ -38,7 +89,9 @@ class NewsService
     }
 
     /**
-     * Mengambil detail berita.
+     * Mengambil detail berita untuk admin.
+     *
+     * Admin boleh melihat draft.
      */
     public function getById(
         int $id
@@ -48,6 +101,12 @@ class NewsService
             ->with('user')
             ->findOrFail($id);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
 
     /**
      * Menambahkan berita baru.
@@ -73,7 +132,6 @@ class NewsService
                     file: $data['thumbnail'],
                     folder: self::THUMBNAIL_FOLDER,
                 );
-
             }
 
             /*
@@ -94,22 +152,58 @@ class NewsService
 
             /*
             |--------------------------------------------------------------------------
-            | Published At
+            | Status Draft
             |--------------------------------------------------------------------------
+            |
+            | Kalau draft:
+            | published_at HARUS NULL.
+            |
             */
 
             if (
-                $data['status'] === 'published'
-                && empty($data['published_at'])
+                isset($data['status'])
+                && $data['status'] === 'draft'
             ) {
 
-                $data['published_at'] = now();
-
+                $data['published_at'] = null;
             }
 
             /*
             |--------------------------------------------------------------------------
-            | Simpan Data
+            | Status Published
+            |--------------------------------------------------------------------------
+            |
+            | Kalau published dan belum ada tanggal publish,
+            | otomatis gunakan waktu sekarang.
+            |
+            */
+
+            if (
+                isset($data['status'])
+                && $data['status'] === 'published'
+                && empty($data['published_at'])
+            ) {
+
+                $data['published_at'] = now();
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Draft Tidak Boleh Featured
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                isset($data['status'])
+                && $data['status'] === 'draft'
+            ) {
+
+                $data['is_featured'] = false;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Simpan
             |--------------------------------------------------------------------------
             */
 
@@ -122,22 +216,21 @@ class NewsService
             */
 
             $this->activityLogService->log(
-
                 activity: 'Create News',
-
                 module: 'News',
-
                 description: 'Menambahkan berita baru.',
-
                 status: 'success',
-
             );
 
             return $news->fresh();
-
         });
-
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
 
     /**
      * Memperbarui berita.
@@ -161,15 +254,10 @@ class NewsService
             ) {
 
                 $data['thumbnail'] = $this->fileUploadService->replace(
-
                     file: $data['thumbnail'],
-
                     oldPath: $news->thumbnail,
-
                     folder: self::THUMBNAIL_FOLDER,
-
                 );
-
             }
 
             /*
@@ -183,23 +271,57 @@ class NewsService
             ) {
 
                 $data['slug'] = Str::slug($data['title']);
-
             }
 
             /*
             |--------------------------------------------------------------------------
-            | Published At
+            | Status
             |--------------------------------------------------------------------------
             */
 
             if (
                 isset($data['status'])
-                && $data['status'] === 'published'
-                && empty($news->published_at)
             ) {
 
-                $data['published_at'] = now();
+                /*
+                |--------------------------------------------------------------------------
+                | Kalau diubah menjadi DRAFT
+                |--------------------------------------------------------------------------
+                |
+                | published_at wajib dikosongkan.
+                |
+                */
 
+                if (
+                    $data['status'] === 'draft'
+                ) {
+
+                    $data['published_at'] = null;
+
+                    /*
+                    | Draft tidak boleh menjadi berita utama.
+                    */
+
+                    $data['is_featured'] = false;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Kalau diubah menjadi PUBLISHED
+                |--------------------------------------------------------------------------
+                |
+                | Kalau sebelumnya belum pernah dipublish,
+                | gunakan waktu sekarang.
+                |
+                */
+
+                if (
+                    $data['status'] === 'published'
+                    && empty($news->published_at)
+                ) {
+
+                    $data['published_at'] = now();
+                }
             }
 
             /*
@@ -217,22 +339,21 @@ class NewsService
             */
 
             $this->activityLogService->log(
-
                 activity: 'Update News',
-
                 module: 'News',
-
                 description: 'Memperbarui berita.',
-
                 status: 'success',
-
             );
 
             return $news->fresh();
-
         });
-
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE
+    |--------------------------------------------------------------------------
+    */
 
     /**
      * Menghapus berita.
@@ -254,7 +375,6 @@ class NewsService
                 $this->fileUploadService->delete(
                     $news->thumbnail
                 );
-
             }
 
             /*
@@ -272,18 +392,11 @@ class NewsService
             */
 
             $this->activityLogService->log(
-
                 activity: 'Delete News',
-
                 module: 'News',
-
                 description: 'Menghapus berita.',
-
                 status: 'success',
-
             );
-
         });
-
     }
 }

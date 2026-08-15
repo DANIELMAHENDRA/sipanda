@@ -11,7 +11,9 @@ export default function GalleryManagement() {
         gallery,
         loading,
         refresh,
-    } = useGallery();
+    } = useGallery({
+        admin: true,
+    });
 
     const [selectedGallery, setSelectedGallery] = useState(null);
     const [openForm, setOpenForm] = useState(false);
@@ -34,8 +36,6 @@ export default function GalleryManagement() {
 
     return (
         <div className="space-y-5 sm:space-y-6">
-
-            {/* Header */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
@@ -68,7 +68,6 @@ export default function GalleryManagement() {
                 </button>
             </div>
 
-            {/* Table */}
             <GalleryTable
                 gallery={gallery}
                 loading={loading}
@@ -76,7 +75,6 @@ export default function GalleryManagement() {
                 onDelete={handleDelete}
             />
 
-            {/* Form */}
             <GalleryFormModal
                 open={openForm}
                 onClose={() => setOpenForm(false)}
@@ -84,14 +82,12 @@ export default function GalleryManagement() {
                 reload={refresh}
             />
 
-            {/* Delete */}
             <DeleteGalleryModal
                 open={openDelete}
                 onClose={() => setOpenDelete(false)}
                 gallery={selectedGallery}
                 reload={refresh}
             />
-
         </div>
     );
 }

@@ -12,7 +12,9 @@ export default function NewsManagement() {
         news = [],
         loading,
         refresh,
-    } = useNews();
+    } = useNews({
+        admin: true,
+    });
 
     const [selectedNews, setSelectedNews] = useState(null);
     const [openForm, setOpenForm] = useState(false);

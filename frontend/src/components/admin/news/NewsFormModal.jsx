@@ -14,7 +14,7 @@ export default function NewsFormModal({
     const [form, setForm] = useState({
         title: "",
         category: "",
-        excerpt: "",
+        description: "",
         content: "",
         thumbnail: null,
         status: "draft",
@@ -24,27 +24,33 @@ export default function NewsFormModal({
 
     /*
     |--------------------------------------------------------------------------
-    | Load Edit Data
+    | Load Data Saat Edit
     |--------------------------------------------------------------------------
     */
 
     useEffect(() => {
+        if (!open) return;
+
         if (news) {
             setForm({
                 title: news.title || "",
                 category: news.category || "",
-                excerpt: news.excerpt || "",
+                description:
+                    news.description ||
+                    news.excerpt ||
+                    "",
                 content: news.content || "",
                 thumbnail: null,
                 status: news.status || "draft",
             });
 
             setPreview(news.thumbnail || null);
+
         } else {
             setForm({
                 title: "",
                 category: "",
-                excerpt: "",
+                description: "",
                 content: "",
                 thumbnail: null,
                 status: "draft",
@@ -52,7 +58,9 @@ export default function NewsFormModal({
 
             setPreview(null);
         }
-    }, [news]);
+
+    }, [news, open]);
+
 
     /*
     |--------------------------------------------------------------------------
@@ -61,6 +69,7 @@ export default function NewsFormModal({
     */
 
     const handleChange = (e) => {
+
         const {
             name,
             value,
@@ -68,8 +77,17 @@ export default function NewsFormModal({
             type,
         } = e.target;
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | File
+        |--------------------------------------------------------------------------
+        */
+
         if (type === "file") {
-            const file = files?.[0] || null;
+
+            const file =
+                files?.[0] || null;
 
             setForm((prev) => ({
                 ...prev,
@@ -77,17 +95,50 @@ export default function NewsFormModal({
             }));
 
             if (file) {
-                setPreview(URL.createObjectURL(file));
+
+                const objectUrl =
+                    URL.createObjectURL(file);
+
+                setPreview(objectUrl);
             }
 
             return;
         }
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Status
+        |--------------------------------------------------------------------------
+        */
+
+        if (name === "status") {
+
+            setForm((prev) => ({
+                ...prev,
+                status:
+                    value === "published"
+                        ? "published"
+                        : "draft",
+            }));
+
+            return;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Input biasa
+        |--------------------------------------------------------------------------
+        */
+
         setForm((prev) => ({
             ...prev,
             [name]: value,
         }));
+
     };
+
 
     /*
     |--------------------------------------------------------------------------
@@ -96,55 +147,175 @@ export default function NewsFormModal({
     */
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
+
+        if (loading) return;
 
         setLoading(true);
 
         try {
-            const formData = new FormData();
 
-            Object.keys(form).forEach((key) => {
-                if (
-                    form[key] !== null &&
-                    form[key] !== ""
-                ) {
-                    formData.append(
+            const formData =
+                new FormData();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Field utama
+            |--------------------------------------------------------------------------
+            */
+
+            formData.append(
+                "title",
+                form.title.trim()
+            );
+
+            formData.append(
+                "category",
+                form.category.trim()
+            );
+
+            formData.append(
+                "description",
+                form.description.trim()
+            );
+
+            formData.append(
+                "content",
+                form.content.trim()
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | STATUS
+            |--------------------------------------------------------------------------
+            | WAJIB dikirim.
+            |--------------------------------------------------------------------------
+            */
+
+            formData.append(
+                "status",
+                form.status === "published"
+                    ? "published"
+                    : "draft"
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Thumbnail
+            |--------------------------------------------------------------------------
+            */
+
+            if (form.thumbnail) {
+
+                formData.append(
+                    "thumbnail",
+                    form.thumbnail
+                );
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Debug
+            |--------------------------------------------------------------------------
+            */
+
+            console.log(
+                "NEWS FORM DATA:"
+            );
+
+            for (const [key, value] of formData.entries()) {
+
+                if (key === "thumbnail") {
+
+                    console.log(
                         key,
-                        form[key]
+                        value?.name || value
                     );
+
+                } else {
+
+                    console.log(
+                        key,
+                        value
+                    );
+
                 }
-            });
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | UPDATE
+            |--------------------------------------------------------------------------
+            */
 
             if (news) {
-                formData.append("_method", "PUT");
+
+                formData.append(
+                    "_method",
+                    "PUT"
+                );
 
                 await newsService.update(
                     news.id,
                     formData
                 );
-            } else {
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CREATE
+            |--------------------------------------------------------------------------
+            */
+
+            else {
+
                 await newsService.create(
                     formData
                 );
+
             }
 
-            reload();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Reload
+            |--------------------------------------------------------------------------
+            */
+
+            await reload();
+
             onClose();
 
         } catch (error) {
-            console.error(error);
 
-            if (error.response?.data?.errors) {
-                console.error(
-                    "Validation:",
-                    error.response.data.errors
-                );
-            }
+            console.error(
+                "NEWS SAVE ERROR:",
+                error
+            );
+
+            console.error(
+                "RESPONSE:",
+                error.response?.data
+            );
 
         } finally {
+
             setLoading(false);
+
         }
+
     };
+
 
     /*
     |--------------------------------------------------------------------------
@@ -153,15 +324,36 @@ export default function NewsFormModal({
     */
 
     const handleClose = () => {
+
         if (loading) return;
 
         onClose();
+
     };
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Modal
+    |--------------------------------------------------------------------------
+    */
 
     if (!open) return null;
 
+
     return (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+        <div className="
+            fixed
+            inset-0
+            z-50
+            bg-black/50
+            backdrop-blur-sm
+            flex
+            items-center
+            justify-center
+            p-3
+            sm:p-4
+        ">
 
             <div
                 className="
@@ -179,14 +371,41 @@ export default function NewsFormModal({
             >
 
                 {/* ======================================================
-                    Header
+                    HEADER
                 ====================================================== */}
 
-                <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 border-b border-gray-100 shrink-0">
+                <div className="
+                    flex
+                    items-center
+                    justify-between
+                    gap-4
+                    px-5
+                    sm:px-6
+                    py-4
+                    sm:py-5
+                    border-b
+                    border-gray-100
+                    shrink-0
+                ">
 
-                    <div className="flex items-center gap-3 min-w-0">
+                    <div className="
+                        flex
+                        items-center
+                        gap-3
+                        min-w-0
+                    ">
 
-                        <div className="hidden sm:flex w-11 h-11 rounded-xl bg-green-100 items-center justify-center shrink-0">
+                        <div className="
+                            hidden
+                            sm:flex
+                            w-11
+                            h-11
+                            rounded-xl
+                            bg-green-100
+                            items-center
+                            justify-center
+                            shrink-0
+                        ">
 
                             <Newspaper
                                 size={22}
@@ -197,7 +416,13 @@ export default function NewsFormModal({
 
                         <div className="min-w-0">
 
-                            <h2 className="text-lg sm:text-xl font-bold text-gray-800 truncate">
+                            <h2 className="
+                                text-lg
+                                sm:text-xl
+                                font-bold
+                                text-gray-800
+                                truncate
+                            ">
 
                                 {news
                                     ? "Edit Berita"
@@ -205,7 +430,12 @@ export default function NewsFormModal({
 
                             </h2>
 
-                            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                            <p className="
+                                text-xs
+                                sm:text-sm
+                                text-gray-500
+                                mt-1
+                            ">
 
                                 {news
                                     ? "Perbarui informasi berita."
@@ -216,6 +446,7 @@ export default function NewsFormModal({
                         </div>
 
                     </div>
+
 
                     <button
                         type="button"
@@ -232,13 +463,16 @@ export default function NewsFormModal({
                             shrink-0
                         "
                     >
+
                         <X size={20} />
+
                     </button>
 
                 </div>
 
+
                 {/* ======================================================
-                    Form Body
+                    FORM
                 ====================================================== */}
 
                 <form
@@ -256,64 +490,94 @@ export default function NewsFormModal({
                     <div className="space-y-5">
 
                         {/* ==================================================
-                            Judul + Kategori
+                            JUDUL
                         ================================================== */}
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
 
-                            {/* Judul */}
-                            <div className="md:col-span-2">
+                            <label
+                                htmlFor="title"
+                                className="
+                                    block
+                                    text-sm
+                                    font-semibold
+                                    text-gray-700
+                                    mb-2
+                                "
+                            >
 
-                                <label
-                                    htmlFor="title"
-                                    className="block text-sm font-semibold text-gray-700 mb-2"
-                                >
-                                    Judul Berita
-                                    <span className="text-red-500 ml-1">
-                                        *
-                                    </span>
-                                </label>
+                                Judul Berita
 
-                                <input
-                                    id="title"
-                                    type="text"
-                                    name="title"
-                                    value={form.title}
-                                    onChange={handleChange}
-                                    placeholder="Masukkan judul berita"
-                                    required
-                                    className="
-                                        w-full
-                                        px-4
-                                        py-3
-                                        border
-                                        border-gray-300
-                                        rounded-xl
-                                        text-sm
-                                        text-gray-800
-                                        placeholder:text-gray-400
-                                        focus:outline-none
-                                        focus:ring-2
-                                        focus:ring-green-500/20
-                                        focus:border-green-500
-                                        transition
-                                    "
-                                />
+                                <span className="text-red-500 ml-1">
+                                    *
+                                </span>
 
-                            </div>
+                            </label>
+
+
+                            <input
+                                id="title"
+                                type="text"
+                                name="title"
+                                value={form.title}
+                                onChange={handleChange}
+                                placeholder="Masukkan judul berita"
+                                required
+                                className="
+                                    w-full
+                                    px-4
+                                    py-3
+                                    border
+                                    border-gray-300
+                                    rounded-xl
+                                    text-sm
+                                    text-gray-800
+                                    placeholder:text-gray-400
+                                    focus:outline-none
+                                    focus:ring-2
+                                    focus:ring-green-500/20
+                                    focus:border-green-500
+                                    transition
+                                "
+                            />
+
+                        </div>
+
+
+                        {/* ==================================================
+                            KATEGORI + STATUS
+                        ================================================== */}
+
+                        <div className="
+                            grid
+                            grid-cols-1
+                            md:grid-cols-2
+                            gap-5
+                        ">
 
                             {/* Kategori */}
+
                             <div>
 
                                 <label
                                     htmlFor="category"
-                                    className="block text-sm font-semibold text-gray-700 mb-2"
+                                    className="
+                                        block
+                                        text-sm
+                                        font-semibold
+                                        text-gray-700
+                                        mb-2
+                                    "
                                 >
+
                                     Kategori
+
                                     <span className="text-red-500 ml-1">
                                         *
                                     </span>
+
                                 </label>
+
 
                                 <input
                                     id="category"
@@ -343,21 +607,37 @@ export default function NewsFormModal({
 
                             </div>
 
+
                             {/* Status */}
+
                             <div>
 
                                 <label
                                     htmlFor="status"
-                                    className="block text-sm font-semibold text-gray-700 mb-2"
+                                    className="
+                                        block
+                                        text-sm
+                                        font-semibold
+                                        text-gray-700
+                                        mb-2
+                                    "
                                 >
+
                                     Status
+
+                                    <span className="text-red-500 ml-1">
+                                        *
+                                    </span>
+
                                 </label>
+
 
                                 <select
                                     id="status"
                                     name="status"
                                     value={form.status}
                                     onChange={handleChange}
+                                    required
                                     className="
                                         w-full
                                         px-4
@@ -375,6 +655,7 @@ export default function NewsFormModal({
                                         transition
                                     "
                                 >
+
                                     <option value="draft">
                                         Draft
                                     </option>
@@ -382,32 +663,45 @@ export default function NewsFormModal({
                                     <option value="published">
                                         Published
                                     </option>
+
                                 </select>
 
                             </div>
 
                         </div>
 
+
                         {/* ==================================================
-                            Ringkasan
+                            DESKRIPSI
                         ================================================== */}
 
                         <div>
 
                             <label
-                                htmlFor="excerpt"
-                                className="block text-sm font-semibold text-gray-700 mb-2"
+                                htmlFor="description"
+                                className="
+                                    block
+                                    text-sm
+                                    font-semibold
+                                    text-gray-700
+                                    mb-2
+                                "
                             >
+
                                 Ringkasan
+
                             </label>
 
+
                             <textarea
-                                id="excerpt"
+                                id="description"
+                                name="description"
                                 rows={4}
-                                name="excerpt"
-                                value={form.excerpt}
+                                value={form.description}
                                 onChange={handleChange}
-                                placeholder="Tuliskan ringkasan singkat berita..."
+                                placeholder="
+                                    Tuliskan ringkasan singkat berita...
+                                "
                                 className="
                                     w-full
                                     px-4
@@ -427,32 +721,39 @@ export default function NewsFormModal({
                                 "
                             />
 
-                            <p className="text-xs text-gray-400 mt-1.5">
-                                Ringkasan akan membantu pembaca memahami isi berita secara singkat.
-                            </p>
-
                         </div>
 
+
                         {/* ==================================================
-                            Isi Berita
+                            ISI
                         ================================================== */}
 
                         <div>
 
                             <label
                                 htmlFor="content"
-                                className="block text-sm font-semibold text-gray-700 mb-2"
+                                className="
+                                    block
+                                    text-sm
+                                    font-semibold
+                                    text-gray-700
+                                    mb-2
+                                "
                             >
+
                                 Isi Berita
+
                                 <span className="text-red-500 ml-1">
                                     *
                                 </span>
+
                             </label>
+
 
                             <textarea
                                 id="content"
-                                rows={10}
                                 name="content"
+                                rows={10}
                                 value={form.content}
                                 onChange={handleChange}
                                 placeholder="Tuliskan isi berita..."
@@ -478,15 +779,25 @@ export default function NewsFormModal({
 
                         </div>
 
+
                         {/* ==================================================
-                            Thumbnail
+                            THUMBNAIL
                         ================================================== */}
 
                         <div>
 
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            <label className="
+                                block
+                                text-sm
+                                font-semibold
+                                text-gray-700
+                                mb-2
+                            ">
+
                                 Thumbnail
+
                             </label>
+
 
                             <label
                                 htmlFor="thumbnail"
@@ -513,15 +824,40 @@ export default function NewsFormModal({
                             >
 
                                 {preview ? (
+
                                     <img
                                         src={preview}
                                         alt="Preview thumbnail"
-                                        className="absolute inset-0 w-full h-full object-cover"
+                                        className="
+                                            absolute
+                                            inset-0
+                                            w-full
+                                            h-full
+                                            object-cover
+                                        "
                                     />
-                                ) : (
-                                    <div className="flex flex-col items-center justify-center px-5 text-center">
 
-                                        <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-3">
+                                ) : (
+
+                                    <div className="
+                                        flex
+                                        flex-col
+                                        items-center
+                                        justify-center
+                                        px-5
+                                        text-center
+                                    ">
+
+                                        <div className="
+                                            w-12
+                                            h-12
+                                            rounded-full
+                                            bg-green-100
+                                            flex
+                                            items-center
+                                            justify-center
+                                            mb-3
+                                        ">
 
                                             <Upload
                                                 size={22}
@@ -530,16 +866,32 @@ export default function NewsFormModal({
 
                                         </div>
 
-                                        <p className="text-sm font-semibold text-gray-700">
+
+                                        <p className="
+                                            text-sm
+                                            font-semibold
+                                            text-gray-700
+                                        ">
+
                                             Pilih thumbnail berita
+
                                         </p>
 
-                                        <p className="text-xs text-gray-400 mt-1">
+
+                                        <p className="
+                                            text-xs
+                                            text-gray-400
+                                            mt-1
+                                        ">
+
                                             JPG, PNG, WEBP
+
                                         </p>
 
                                     </div>
+
                                 )}
+
 
                                 <input
                                     id="thumbnail"
@@ -552,18 +904,28 @@ export default function NewsFormModal({
 
                             </label>
 
+
                             {preview && (
-                                <p className="text-xs text-gray-400 mt-2">
+
+                                <p className="
+                                    text-xs
+                                    text-gray-400
+                                    mt-2
+                                ">
+
                                     Klik area gambar untuk mengganti thumbnail.
+
                                 </p>
+
                             )}
 
                         </div>
 
                     </div>
 
+
                     {/* ======================================================
-                        Footer
+                        FOOTER
                     ====================================================== */}
 
                     <div className="
@@ -605,8 +967,11 @@ export default function NewsFormModal({
                                 transition
                             "
                         >
+
                             Batal
+
                         </button>
+
 
                         <button
                             type="submit"
@@ -633,6 +998,7 @@ export default function NewsFormModal({
                         >
 
                             {loading && (
+
                                 <span className="
                                     w-4
                                     h-4
@@ -642,13 +1008,15 @@ export default function NewsFormModal({
                                     rounded-full
                                     animate-spin
                                 " />
+
                             )}
+
 
                             {loading
                                 ? "Menyimpan..."
                                 : news
-                                ? "Simpan Perubahan"
-                                : "Simpan Berita"}
+                                    ? "Simpan Perubahan"
+                                    : "Simpan Berita"}
 
                         </button>
 
@@ -657,6 +1025,7 @@ export default function NewsFormModal({
                 </form>
 
             </div>
+
         </div>
     );
 }
