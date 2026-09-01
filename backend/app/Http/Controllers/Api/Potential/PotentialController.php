@@ -3,13 +3,19 @@
 namespace App\Http\Controllers\Api\Potential;
 
 use Throwable;
+
 use App\Models\Potential;
 use Illuminate\Http\JsonResponse;
+
 use App\Services\PotentialService;
+
+use App\Http\Resources\PotentialResource;
+
 use App\Http\Controllers\Api\BaseApiController;
+
 use App\Http\Requests\Potential\StorePotentialRequest;
 use App\Http\Requests\Potential\UpdatePotentialRequest;
-use App\Http\Resources\PotentialResource;
+
 
 class PotentialController extends BaseApiController
 {
@@ -21,19 +27,35 @@ class PotentialController extends BaseApiController
     ) {
     }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | PUBLIC
+    |--------------------------------------------------------------------------
+    */
+
+
     /**
-     * Menampilkan seluruh data potensi.
+     * Menampilkan potensi desa yang sudah dipublikasikan.
+     *
+     * Public hanya boleh melihat:
+     *
+     * status = published
      */
     public function index(): JsonResponse
     {
         try {
 
-            $potential = $this->potentialService->getAll();
+            $potential = $this->potentialService->getPublished();
+
 
             return $this->success(
-                data: PotentialResource::collection($potential),
+                data: PotentialResource::collection(
+                    $potential
+                ),
                 message: 'Data potensi desa berhasil diambil.'
             );
+
 
         } catch (Throwable $e) {
 
@@ -46,10 +68,114 @@ class PotentialController extends BaseApiController
         }
     }
 
+
     /**
-     * Menampilkan detail potensi.
+     * Menampilkan detail potensi untuk public.
+     *
+     * Draft tidak boleh diakses.
      */
     public function show(
+        Potential $potential
+    ): JsonResponse {
+
+        try {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Pastikan Published
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                $potential->status !== 'published'
+            ) {
+
+                return $this->notFound(
+                    message: 'Data potensi desa tidak ditemukan.'
+                );
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Ambil Data Published
+            |--------------------------------------------------------------------------
+            */
+
+            $potential = $this->potentialService->getPublishedById(
+                $potential->id
+            );
+
+
+            return $this->success(
+                data: new PotentialResource(
+                    $potential
+                ),
+                message: 'Detail potensi desa berhasil diambil.'
+            );
+
+
+        } catch (Throwable $e) {
+
+            return $this->serverError(
+                app()->hasDebugModeEnabled()
+                    ? $e->getMessage()
+                    : 'Terjadi kesalahan pada server.'
+            );
+
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN
+    |--------------------------------------------------------------------------
+    */
+
+
+    /**
+     * Menampilkan seluruh data potensi untuk admin.
+     *
+     * Admin dapat melihat:
+     *
+     * - draft
+     * - published
+     */
+    public function indexAdmin(): JsonResponse
+    {
+        try {
+
+            $potential = $this->potentialService->getAll();
+
+
+            return $this->success(
+                data: PotentialResource::collection(
+                    $potential
+                ),
+                message: 'Data potensi desa berhasil diambil.'
+            );
+
+
+        } catch (Throwable $e) {
+
+            return $this->serverError(
+                app()->hasDebugModeEnabled()
+                    ? $e->getMessage()
+                    : 'Terjadi kesalahan pada server.'
+            );
+
+        }
+    }
+
+
+    /**
+     * Menampilkan detail potensi untuk admin.
+     *
+     * Admin boleh melihat draft maupun published.
+     */
+    public function showAdmin(
         Potential $potential
     ): JsonResponse {
 
@@ -59,10 +185,14 @@ class PotentialController extends BaseApiController
                 $potential->id
             );
 
+
             return $this->success(
-                data: new PotentialResource($potential),
+                data: new PotentialResource(
+                    $potential
+                ),
                 message: 'Detail potensi desa berhasil diambil.'
             );
+
 
         } catch (Throwable $e) {
 
@@ -75,8 +205,18 @@ class PotentialController extends BaseApiController
         }
     }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | STORE
+    |--------------------------------------------------------------------------
+    */
+
+
     /**
-     * Menambahkan data potensi.
+     * Menambahkan data potensi baru.
+     *
+     * Endpoint ini digunakan oleh admin.
      */
     public function store(
         StorePotentialRequest $request
@@ -88,10 +228,14 @@ class PotentialController extends BaseApiController
                 $request->validated()
             );
 
+
             return $this->success(
-                data: new PotentialResource($potential),
+                data: new PotentialResource(
+                    $potential
+                ),
                 message: 'Potensi desa berhasil ditambahkan.'
             );
+
 
         } catch (Throwable $e) {
 
@@ -104,8 +248,21 @@ class PotentialController extends BaseApiController
         }
     }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
+
+
     /**
      * Memperbarui data potensi.
+     *
+     * Status dapat diubah:
+     *
+     * published -> draft
+     * draft     -> published
      */
     public function update(
         UpdatePotentialRequest $request,
@@ -119,10 +276,14 @@ class PotentialController extends BaseApiController
                 $request->validated()
             );
 
+
             return $this->success(
-                data: new PotentialResource($potential),
+                data: new PotentialResource(
+                    $potential
+                ),
                 message: 'Potensi desa berhasil diperbarui.'
             );
+
 
         } catch (Throwable $e) {
 
@@ -134,6 +295,14 @@ class PotentialController extends BaseApiController
 
         }
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE
+    |--------------------------------------------------------------------------
+    */
+
 
     /**
      * Menghapus data potensi.
@@ -148,9 +317,11 @@ class PotentialController extends BaseApiController
                 $potential
             );
 
+
             return $this->success(
                 message: 'Potensi desa berhasil dihapus.'
             );
+
 
         } catch (Throwable $e) {
 

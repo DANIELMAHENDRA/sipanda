@@ -28,7 +28,7 @@ class ProfileSeeder extends Seeder
 
             'about'          =>'Desa Panca Tunggal merupakan salah satu desa di Kecamatan Merbau Mataram, Kabupaten Lampung Selatan yang memiliki potensi di bidang pertanian, perkebunan, serta pengembangan UMKM masyarakat. Desa ini terus berkembang melalui pembangunan infrastruktur, pelayanan publik yang baik, dan pemberdayaan masyarakat.',
 
-            'history'        =>'Sejarah Desa Panca Tunggal dimulai sejak proses pembukaan wilayah transmigrasi pada tahun .... Selanjutnya desa berkembang menjadi salah satu desa yang memiliki sektor pertanian dan perkebunan sebagai mata pencaharian utama masyarakat.',
+            'history'        =>'Sejarah Desa Panca Tunggal dimulai sejak proses pembukaan wilayah transmigrasi, Selanjutnya desa berkembang menjadi salah satu desa yang memiliki sektor pertanian dan perkebunan sebagai mata pencaharian utama masyarakat.',
 
             'vision'         => 'Dengan Bermusyawarah/Bergotong Royong Menuju Desa Panca Tunggal Maju, Mandiri, Berakhlak dan Transparan',
 
@@ -42,11 +42,9 @@ class ProfileSeeder extends Seeder
 7. Meningkatkan kehidupan desa secara dinamis dalam segi keagamaan dan budaya.
 ',
 
-            'area'           => 850.50,
+            'area'           => 1.153,
 
             'population'     => 5051,
-
-            'family_count'   => 1328,
 
             'hamlet_count'   => 11,
 

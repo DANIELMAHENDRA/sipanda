@@ -9,28 +9,41 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PotentialService
 {
-    /**
-     * Folder upload thumbnail.
-     */
     private const THUMBNAIL_FOLDER = 'potential/thumbnail';
 
-    /**
-     * Folder upload cover.
-     */
     private const COVER_FOLDER = 'potential/cover';
 
-    /**
-     * Constructor.
-     */
     public function __construct(
         protected FileUploadService $fileUploadService,
         protected ActivityLogService $activityLogService,
     ) {
     }
 
-    /**
-     * Mengambil seluruh data potensi.
-     */
+
+    public function getPublished(
+        int $perPage = 10
+    ): LengthAwarePaginator {
+
+        return Potential::query()
+            ->with('user')
+            ->where('status', 'published')
+            ->latest()
+            ->paginate($perPage);
+
+    }
+
+
+    public function getPublishedById(
+        int $id
+    ): Potential {
+
+        return Potential::query()
+            ->with('user')
+            ->where('status', 'published')
+            ->findOrFail($id);
+
+    }
+
     public function getAll(
         int $perPage = 10
     ): LengthAwarePaginator {
@@ -42,9 +55,6 @@ class PotentialService
 
     }
 
-    /**
-     * Mengambil detail potensi.
-     */
     public function getById(
         int $id
     ): Potential {
@@ -55,20 +65,12 @@ class PotentialService
 
     }
 
-    /**
-     * Menambahkan potensi.
-     */
     public function store(
         array $data
     ): Potential {
 
         return DB::transaction(function () use ($data) {
 
-            /*
-            |--------------------------------------------------------------------------
-            | Upload Thumbnail
-            |--------------------------------------------------------------------------
-            */
 
             if (
                 array_key_exists('thumbnail', $data)
@@ -82,12 +84,6 @@ class PotentialService
 
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Upload Cover
-            |--------------------------------------------------------------------------
-            */
-
             if (
                 array_key_exists('cover_image', $data)
                 && $data['cover_image']
@@ -100,35 +96,34 @@ class PotentialService
 
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Generate Slug
-            |--------------------------------------------------------------------------
-            */
-
-            $data['slug'] = Str::slug($data['title']);
-
-            /*
-            |--------------------------------------------------------------------------
-            | User Login
-            |--------------------------------------------------------------------------
-            */
+            $data['slug'] = Str::slug(
+                $data['title']
+            );
 
             $data['user_id'] = auth()->id();
 
-            /*
-            |--------------------------------------------------------------------------
-            | Simpan Data
-            |--------------------------------------------------------------------------
-            */
+            if (
+                isset($data['status'])
+                && $data['status'] === 'published'
+                && empty($data['published_at'])
+            ) {
 
-            $potential = Potential::create($data);
+                $data['published_at'] = now();
 
-            /*
-            |--------------------------------------------------------------------------
-            | Activity Log
-            |--------------------------------------------------------------------------
-            */
+            }
+
+            if (
+                isset($data['status'])
+                && $data['status'] === 'draft'
+            ) {
+
+                $data['published_at'] = null;
+
+            }
+
+            $potential = Potential::create(
+                $data
+            );
 
             $this->activityLogService->log(
                 activity: 'Create Potential',
@@ -137,27 +132,24 @@ class PotentialService
                 status: 'success',
             );
 
-            return $potential->fresh();
+
+            return $potential->fresh([
+                'user'
+            ]);
 
         });
 
     }
 
-    /**
-     * Memperbarui potensi.
-     */
     public function update(
         Potential $potential,
         array $data
     ): Potential {
 
-        return DB::transaction(function () use ($potential, $data) {
-
-            /*
-            |--------------------------------------------------------------------------
-            | Replace Thumbnail
-            |--------------------------------------------------------------------------
-            */
+        return DB::transaction(function () use (
+            $potential,
+            $data
+        ) {
 
             if (
                 array_key_exists('thumbnail', $data)
@@ -172,12 +164,6 @@ class PotentialService
 
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Replace Cover
-            |--------------------------------------------------------------------------
-            */
-
             if (
                 array_key_exists('cover_image', $data)
                 && $data['cover_image']
@@ -191,31 +177,45 @@ class PotentialService
 
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Update Slug
-            |--------------------------------------------------------------------------
-            */
+            if (
+                array_key_exists('title', $data)
+                && $data['title']
+            ) {
 
-            if (isset($data['title'])) {
-
-                $data['slug'] = Str::slug($data['title']);
+                $data['slug'] = Str::slug(
+                    $data['title']
+                );
 
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Update Database
-            |--------------------------------------------------------------------------
-            */
+            if (
+                isset($data['status'])
+                && $data['status'] === 'published'
+            ) {
 
-            $potential->update($data);
+                if (
+                    empty($potential->published_at)
+                    && empty($data['published_at'])
+                ) {
 
-            /*
-            |--------------------------------------------------------------------------
-            | Activity Log
-            |--------------------------------------------------------------------------
-            */
+                    $data['published_at'] = now();
+
+                }
+
+            }
+
+            if (
+                isset($data['status'])
+                && $data['status'] === 'draft'
+            ) {
+
+                $data['published_at'] = null;
+
+            }
+
+            $potential->update(
+                $data
+            );
 
             $this->activityLogService->log(
                 activity: 'Update Potential',
@@ -224,28 +224,27 @@ class PotentialService
                 status: 'success',
             );
 
-            return $potential->fresh();
+
+            return $potential->fresh([
+                'user'
+            ]);
 
         });
 
     }
 
-    /**
-     * Menghapus potensi.
-     */
+
     public function destroy(
         Potential $potential
     ): void {
 
-        DB::transaction(function () use ($potential) {
+        DB::transaction(function () use (
+            $potential
+        ) {
 
-            /*
-            |--------------------------------------------------------------------------
-            | Delete Thumbnail
-            |--------------------------------------------------------------------------
-            */
-
-            if ($potential->thumbnail) {
+            if (
+                $potential->thumbnail
+            ) {
 
                 $this->fileUploadService->delete(
                     $potential->thumbnail
@@ -253,13 +252,9 @@ class PotentialService
 
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Delete Cover
-            |--------------------------------------------------------------------------
-            */
-
-            if ($potential->cover_image) {
+            if (
+                $potential->cover_image
+            ) {
 
                 $this->fileUploadService->delete(
                     $potential->cover_image
@@ -267,19 +262,7 @@ class PotentialService
 
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Soft Delete
-            |--------------------------------------------------------------------------
-            */
-
             $potential->delete();
-
-            /*
-            |--------------------------------------------------------------------------
-            | Activity Log
-            |--------------------------------------------------------------------------
-            */
 
             $this->activityLogService->log(
                 activity: 'Delete Potential',

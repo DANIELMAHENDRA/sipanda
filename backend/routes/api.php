@@ -86,6 +86,7 @@ Route::prefix('gallery')->group(function () {
 });
 
 Route::prefix('potential')->group(function () {
+
     Route::get('/', [
         PotentialController::class,
         'index'
@@ -95,17 +96,18 @@ Route::prefix('potential')->group(function () {
         PotentialController::class,
         'show'
     ]);
+
 });
 
 Route::prefix('government')->group(function () {
     Route::get('/', [
         GovernmentController::class,
-        'index'
+        'indexPublic'
     ]);
 
     Route::get('/{government}', [
         GovernmentController::class,
-        'show'
+        'showPublic'
     ]);
 });
 
@@ -262,6 +264,17 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('role:super_admin,admin')->group(function () {
+
+        Route::get('/admin/potential', [
+            PotentialController::class,
+            'indexAdmin'
+        ]);
+
+        Route::get('/admin/potential/{potential}', [
+            PotentialController::class,
+            'showAdmin'
+        ]);
+
         Route::post('/potential', [
             PotentialController::class,
             'store'
@@ -276,9 +289,21 @@ Route::middleware('auth:sanctum')->group(function () {
             PotentialController::class,
             'destroy'
         ]);
+
     });
 
     Route::middleware('role:super_admin,admin')->group(function () {
+
+        Route::get('/admin/government', [
+            GovernmentController::class,
+            'indexAdmin'
+        ]);
+
+        Route::get('/admin/government/{government}', [
+            GovernmentController::class,
+            'showAdmin'
+        ]);
+
         Route::post('/government', [
             GovernmentController::class,
             'store'
@@ -293,6 +318,7 @@ Route::middleware('auth:sanctum')->group(function () {
             GovernmentController::class,
             'destroy'
         ]);
+
     });
 
     Route::middleware('role:super_admin,admin')->group(function () {
