@@ -48,7 +48,7 @@ export default function HeroSection({ profile }) {
 
                             <span className="text-white text-sm font-medium tracking-wide">
 
-                                WEBSITE RESMI PEMERINTAH DESA
+                                WEBSITE PROFIL DESA PANCA TUNGGAL
 
                             </span>
 
@@ -119,9 +119,22 @@ export default function HeroSection({ profile }) {
 
                                     <h3 className="text-2xl font-bold text-white">
 
+                                        Kecamatan Merbau Mataram
+
+                                    </h3>
+
+                                    <h3 className="text-2xl font-bold text-white">
+
                                         Lampung Selatan
 
                                     </h3>
+
+                                    <h3 className="text-2xl font-bold text-white">
+
+                                        Provinsi Lampung 
+
+                                    </h3>
+
 
                                 </div>
 
@@ -151,7 +164,7 @@ export default function HeroSection({ profile }) {
 
                                     <h3 className="text-2xl font-bold text-white">
 
-                                        Pertanian • UMKM • Wisata
+                                        Pertanian • UMKM • Peternakan
 
                                     </h3>
 

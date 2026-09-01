@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import galleryService from "../services/galleryService";
 
 
-export default function useGallery(params = {}) {
+export default function useGallery(
+    params = {},
+    isAdmin = false
+) {
 
     const [gallery, setGallery] = useState([]);
 
@@ -39,8 +42,15 @@ export default function useGallery(params = {}) {
             setError(null);
 
 
-            const response =
-                await galleryService.getAll(params);
+            /*
+            |--------------------------------------------------------------------------
+            | Public / Admin
+            |--------------------------------------------------------------------------
+            */
+
+            const response = isAdmin
+                ? await galleryService.getAdmin(params)
+                : await galleryService.getAll(params);
 
 
             /*
@@ -129,9 +139,13 @@ export default function useGallery(params = {}) {
 
         params.category,
 
+        params.status,
+
         params.per_page,
 
         params.page,
+
+        isAdmin,
 
     ]);
 

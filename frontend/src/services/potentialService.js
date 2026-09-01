@@ -7,6 +7,12 @@ const potentialService = {
         });
     },
 
+    getAdmin(params = {}) {
+        return api.get("/admin/potential", {
+            params,
+        });
+    },
+
     getById(id) {
         return api.get(`/potential/${id}`);
     },

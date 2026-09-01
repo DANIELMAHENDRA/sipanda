@@ -26,13 +26,8 @@ export default function ContactInfo() {
             </section>
         );
     }
-
     if (!contact) {
-        return (
-            <section className="py-16 sm:py-20 lg:py-24 text-center">
-                <p>Data kontak belum tersedia.</p>
-            </section>
-        );
+        return null;
     }
 
     const contacts = [

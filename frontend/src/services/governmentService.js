@@ -7,6 +7,12 @@ const governmentService = {
         });
     },
 
+    getAdmin(params = {}) {
+    return api.get("/admin/government", {
+        params,
+    });
+},
+
     getById(id) {
         return api.get(`/government/${id}`);
     },
@@ -24,9 +30,7 @@ const governmentService = {
     },
 
     update(id, formData) {
-        formData.append("_method", "PUT");
-
-        return api.post(
+        return api.put(
             `/government/${id}`,
             formData,
             {

@@ -9,15 +9,11 @@ import DeletePotentialModal from "../../components/admin/potential/DeletePotenti
 
 export default function PotentialManagement() {
 
-    const {
-
-        potential,
-
-        loading,
-
-        refresh,
-
-    } = usePotential();
+const {
+    potential,
+    loading,
+    refresh,
+} = usePotential({}, true);
 
     const [selectedPotential, setSelectedPotential] = useState(null);
 

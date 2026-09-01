@@ -10,28 +10,34 @@ import {
 
 export default function BoundarySection({ profile }) {
 
+    /*
+    |--------------------------------------------------------------------------
+    | Batas Wilayah Desa
+    |--------------------------------------------------------------------------
+    */
+
     const boundaries = [
         {
             title: "Utara",
-            value: profile?.north_boundary || "-",
+            value: "Desa Budi Lestari",
             icon: ArrowUp,
             color: "bg-emerald-50 text-emerald-700",
         },
         {
             title: "Timur",
-            value: profile?.east_boundary || "-",
+            value: "Talang Jawa",
             icon: ArrowRight,
             color: "bg-blue-50 text-blue-700",
         },
         {
             title: "Selatan",
-            value: profile?.south_boundary || "-",
+            value: "Desa Tri Harjo",
             icon: ArrowDown,
             color: "bg-orange-50 text-orange-700",
         },
         {
             title: "Barat",
-            value: profile?.west_boundary || "-",
+            value: "Desa Galih Lunik",
             icon: ArrowLeft,
             color: "bg-purple-50 text-purple-700",
         },
@@ -43,19 +49,24 @@ export default function BoundarySection({ profile }) {
 
             <div className="max-w-7xl mx-auto px-6">
 
+                {/* =====================================================
+                    SECTION TITLE
+                ====================================================== */}
+
                 <SectionTitle
                     subtitle="Administrasi Wilayah"
                     title="Batas Wilayah Desa"
-                    description="Letak batas administratif Desa dengan wilayah di sekitarnya."
+                    description="Letak batas administratif Desa Panca Tunggal dengan wilayah di sekitarnya."
                 />
+
 
                 <div className="mt-16 max-w-5xl mx-auto">
 
                     <div className="grid grid-cols-3 gap-6 items-center">
 
-                        {/* ==================== */}
-                        {/* UTARA */}
-                        {/* ==================== */}
+                        {/* =================================================
+                            UTARA
+                        ================================================== */}
 
                         <div></div>
 
@@ -65,19 +76,40 @@ export default function BoundarySection({ profile }) {
 
                         <div></div>
 
-                        {/* ==================== */}
-                        {/* BARAT */}
-                        {/* ==================== */}
+
+                        {/* =================================================
+                            BARAT
+                        ================================================== */}
 
                         <BoundaryCard
                             data={boundaries[3]}
                         />
 
-                        {/* CENTER */}
 
-                        <div className="flex flex-col items-center justify-center">
+                        {/* =================================================
+                            CENTER / DESA
+                        ================================================== */}
 
-                            <div className="w-36 h-36 rounded-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-xl">
+                        <div className="
+                            flex
+                            flex-col
+                            items-center
+                            justify-center
+                            text-center
+                        ">
+
+                            <div className="
+                                w-36
+                                h-36
+                                rounded-full
+                                bg-gradient-to-br
+                                from-green-600
+                                to-green-700
+                                flex
+                                items-center
+                                justify-center
+                                shadow-xl
+                            ">
 
                                 <Compass
                                     size={64}
@@ -86,28 +118,47 @@ export default function BoundarySection({ profile }) {
 
                             </div>
 
-                            <h3 className="mt-6 text-2xl font-bold text-gray-900">
 
-                                {profile?.village_name}
+                            <h3 className="
+                                mt-6
+                                text-2xl
+                                font-bold
+                                text-gray-900
+                            ">
+
+                                {profile?.village_name || "Desa Panca Tunggal"}
 
                             </h3>
 
-                            <p className="text-gray-500 mt-2 text-center">
 
-                                Kecamatan {profile?.district}
+                            <p className="
+                                text-gray-500
+                                mt-2
+                                text-center
+                            ">
+
+                                Kecamatan{" "}
+                                {profile?.district || "Merbau Mataram"}
+
                             </p>
 
                         </div>
 
-                        {/* TIMUR */}
+
+                        {/* =================================================
+                            TIMUR
+                        ================================================== */}
 
                         <BoundaryCard
                             data={boundaries[1]}
                         />
 
-                        <div></div>
 
-                        {/* SELATAN */}
+                        {/* =================================================
+                            SELATAN
+                        ================================================== */}
+
+                        <div></div>
 
                         <BoundaryCard
                             data={boundaries[2]}
@@ -124,8 +175,14 @@ export default function BoundarySection({ profile }) {
         </section>
 
     );
-
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| Boundary Card
+|--------------------------------------------------------------------------
+*/
 
 function BoundaryCard({ data }) {
 
@@ -133,15 +190,41 @@ function BoundaryCard({ data }) {
 
     return (
 
-        <div className="group rounded-3xl bg-white border border-gray-200 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+        <div className="
+            group
+            rounded-3xl
+            bg-white
+            border
+            border-gray-200
+            p-6
+            shadow-sm
+            hover:shadow-xl
+            hover:-translate-y-1
+            transition-all
+            duration-300
+        ">
+
+            {/* Icon */}
 
             <div
-                className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${data.color}`}
+                className={`
+                    w-14
+                    h-14
+                    rounded-2xl
+                    flex
+                    items-center
+                    justify-center
+                    mb-5
+                    ${data.color}
+                `}
             >
 
                 <Icon size={26} />
 
             </div>
+
+
+            {/* Label */}
 
             <p className="text-sm text-gray-500">
 
@@ -149,7 +232,16 @@ function BoundaryCard({ data }) {
 
             </p>
 
-            <h3 className="mt-2 text-xl font-bold text-gray-900 leading-8">
+
+            {/* Value */}
+
+            <h3 className="
+                mt-2
+                text-xl
+                font-bold
+                text-gray-900
+                leading-8
+            ">
 
                 {data.value}
 

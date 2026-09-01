@@ -19,7 +19,9 @@ export default function GovernmentManagement() {
         government,
         loading,
         refresh,
-    } = useGovernment();
+    } = useGovernment({
+        admin: true,
+    });
 
     /*
     |--------------------------------------------------------------------------

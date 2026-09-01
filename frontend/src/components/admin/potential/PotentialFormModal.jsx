@@ -3,12 +3,9 @@ import {
     X,
     FileText,
     ImagePlus,
-    BarChart3,
-    Quote,
-    Settings,
-    Save,
     FolderOpen,
-    CalendarDays,
+    Save,
+    Sprout,
 } from "lucide-react";
 
 import potentialService from "../../../services/potentialService";
@@ -23,29 +20,18 @@ export default function PotentialFormModal({
 
     const initialState = {
         title: "",
-        thumbnail: null,
-        cover_image: null,
         category: "",
         excerpt: "",
-        content: "",
-        statistic_1_title: "",
-        statistic_1_value: "",
-        statistic_2_title: "",
-        statistic_2_value: "",
-        statistic_3_title: "",
-        statistic_3_value: "",
-        quote: "",
-        quote_author: "",
-        is_featured: false,
+        thumbnail: null,
+        cover_image: null,
         status: "draft",
-        published_at: "",
     };
 
     const [form, setForm] = useState(initialState);
 
     /*
     |--------------------------------------------------------------------------
-    | Load Data Edit
+    | Load Data
     |--------------------------------------------------------------------------
     */
 
@@ -53,76 +39,33 @@ export default function PotentialFormModal({
         if (potential) {
             setForm({
                 title: potential.title || "",
+                category: potential.category || "",
+                excerpt:
+                    potential.excerpt ||
+                    potential.content ||
+                    "",
                 thumbnail: null,
                 cover_image: null,
-                category: potential.category || "",
-                excerpt: potential.excerpt || "",
-                content: potential.content || "",
-
-                statistic_1_title:
-                    potential.statistics?.[0]?.title || "",
-
-                statistic_1_value:
-                    potential.statistics?.[0]?.value || "",
-
-                statistic_2_title:
-                    potential.statistics?.[1]?.title || "",
-
-                statistic_2_value:
-                    potential.statistics?.[1]?.value || "",
-
-                statistic_3_title:
-                    potential.statistics?.[2]?.title || "",
-
-                statistic_3_value:
-                    potential.statistics?.[2]?.value || "",
-
-                quote: potential.quote || "",
-
-                quote_author:
-                    potential.quote_author || "",
-
-                is_featured:
-                    potential.is_featured || false,
-
-                status:
-                    potential.status || "draft",
-
-                published_at: potential.published_at
-                    ? potential.published_at
-                          .replace(" ", "T")
-                          .slice(0, 16)
-                    : "",
+                status: potential.status || "draft",
             });
         } else {
             setForm(initialState);
         }
-    }, [potential]);
+    }, [potential, open]);
 
     /*
     |--------------------------------------------------------------------------
-    | Input
+    | Handle Change
     |--------------------------------------------------------------------------
     */
 
     const handleChange = (e) => {
-        const {
-            name,
-            value,
-            type,
-            checked,
-            files,
-        } = e.target;
+        const { name, value, files } = e.target;
 
-        setForm({
-            ...form,
-            [name]:
-                type === "checkbox"
-                    ? checked
-                    : type === "file"
-                    ? files[0]
-                    : value,
-        });
+        setForm((prev) => ({
+            ...prev,
+            [name]: files ? files[0] : value,
+        }));
     };
 
     /*
@@ -139,18 +82,24 @@ export default function PotentialFormModal({
         try {
             const formData = new FormData();
 
-            Object.entries(form).forEach(([key, value]) => {
-                if (value !== null && value !== "") {
-                    if (typeof value === "boolean") {
-                        formData.append(
-                            key,
-                            value ? 1 : 0
-                        );
-                    } else {
-                        formData.append(key, value);
-                    }
-                }
-            });
+            formData.append("title", form.title);
+            formData.append("category", form.category);
+            formData.append("excerpt", form.excerpt);
+            formData.append("status", form.status);
+
+            if (form.thumbnail) {
+                formData.append(
+                    "thumbnail",
+                    form.thumbnail
+                );
+            }
+
+            if (form.cover_image) {
+                formData.append(
+                    "cover_image",
+                    form.cover_image
+                );
+            }
 
             if (potential) {
                 formData.append("_method", "PUT");
@@ -165,24 +114,27 @@ export default function PotentialFormModal({
                 );
             }
 
-            reload();
+            await reload();
+
             onClose();
-        } catch (err) {
+        } catch (error) {
             console.error(
-                "Gagal menyimpan potential:",
-                err
+                "Gagal menyimpan data potensi:",
+                error
             );
         } finally {
             setLoading(false);
         }
     };
 
-    if (!open) return null;
+    if (!open) {
+        return null;
+    }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-[2px]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
 
-            <div className="flex w-full max-w-4xl max-h-[92vh] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+            <div className="flex w-full max-w-3xl max-h-[90vh] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
 
                 {/* =====================================================
                     HEADER
@@ -193,19 +145,21 @@ export default function PotentialFormModal({
                     <div className="flex items-center gap-3">
 
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-50 text-green-600">
-                            <FileText size={19} />
+                            <Sprout size={20} />
                         </div>
 
                         <div>
+
                             <h2 className="text-base font-semibold text-gray-800 sm:text-lg">
                                 {potential
                                     ? "Edit Potensi"
                                     : "Tambah Potensi"}
                             </h2>
 
-                            <p className="mt-0.5 text-xs text-gray-400">
+                            <p className="text-xs text-gray-400">
                                 Kelola informasi potensi Desa Panca Tunggal
                             </p>
+
                         </div>
 
                     </div>
@@ -214,16 +168,15 @@ export default function PotentialFormModal({
                         type="button"
                         onClick={onClose}
                         disabled={loading}
-                        className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50"
+                        className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
                     >
                         <X size={19} />
                     </button>
 
                 </div>
 
-
                 {/* =====================================================
-                    FORM CONTENT
+                    FORM
                 ====================================================== */}
 
                 <form
@@ -232,35 +185,36 @@ export default function PotentialFormModal({
                 >
 
                     {/* =================================================
-                        INFORMASI UTAMA
+                        INFORMASI POTENSI
                     ================================================== */}
 
                     <section>
 
-                        <div className="mb-4 flex items-center gap-2.5">
+                        <div className="mb-5 flex items-center gap-2.5">
 
                             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-50 text-green-600">
                                 <FolderOpen size={16} />
                             </div>
 
                             <div>
+
                                 <h3 className="text-sm font-semibold text-gray-800">
-                                    Informasi Utama
+                                    Informasi Potensi
                                 </h3>
 
                                 <p className="text-xs text-gray-400">
                                     Informasi dasar mengenai potensi desa
                                 </p>
+
                             </div>
 
                         </div>
 
-
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div className="space-y-4">
 
                             {/* Judul */}
 
-                            <div className="sm:col-span-2">
+                            <div>
 
                                 <label className="mb-1.5 block text-xs font-medium text-gray-600">
                                     Judul Potensi
@@ -273,11 +227,10 @@ export default function PotentialFormModal({
                                     onChange={handleChange}
                                     placeholder="Contoh: Potensi Perkebunan Desa"
                                     required
-                                    className="h-10 w-full rounded-lg border border-gray-200 px-3 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                                    className="h-11 w-full rounded-lg border border-gray-200 px-3 text-sm text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
                                 />
 
                             </div>
-
 
                             {/* Kategori */}
 
@@ -294,26 +247,46 @@ export default function PotentialFormModal({
                                     onChange={handleChange}
                                     placeholder="Contoh: Pertanian"
                                     required
-                                    className="h-10 w-full rounded-lg border border-gray-200 px-3 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                                    className="h-11 w-full rounded-lg border border-gray-200 px-3 text-sm text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
                                 />
 
                             </div>
 
+                            {/* Deskripsi */}
+
+                            <div>
+
+                                <label className="mb-1.5 block text-xs font-medium text-gray-600">
+                                    Deskripsi
+                                </label>
+
+                                <textarea
+                                    name="excerpt"
+                                    value={form.excerpt}
+                                    onChange={handleChange}
+                                    rows={5}
+                                    placeholder="Tuliskan deskripsi mengenai potensi desa..."
+                                    required
+                                    className="w-full resize-none rounded-lg border border-gray-200 px-3 py-3 text-sm text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                                />
+
+                            </div>
 
                             {/* Status */}
 
                             <div>
 
                                 <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Status
+                                    Status Publikasi
                                 </label>
 
                                 <select
                                     name="status"
                                     value={form.status}
                                     onChange={handleChange}
-                                    className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                                    className="h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
                                 >
+
                                     <option value="draft">
                                         Draft
                                     </option>
@@ -321,48 +294,8 @@ export default function PotentialFormModal({
                                     <option value="published">
                                         Published
                                     </option>
+
                                 </select>
-
-                            </div>
-
-
-                            {/* Ringkasan */}
-
-                            <div className="sm:col-span-2">
-
-                                <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Ringkasan
-                                </label>
-
-                                <textarea
-                                    name="excerpt"
-                                    value={form.excerpt}
-                                    onChange={handleChange}
-                                    rows={3}
-                                    placeholder="Tuliskan ringkasan singkat mengenai potensi..."
-                                    className="w-full resize-none rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                />
-
-                            </div>
-
-
-                            {/* Isi */}
-
-                            <div className="sm:col-span-2">
-
-                                <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Isi Potensi
-                                </label>
-
-                                <textarea
-                                    name="content"
-                                    value={form.content}
-                                    onChange={handleChange}
-                                    rows={7}
-                                    required
-                                    placeholder="Tuliskan informasi lengkap mengenai potensi desa..."
-                                    className="w-full resize-none rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                />
 
                             </div>
 
@@ -370,56 +303,55 @@ export default function PotentialFormModal({
 
                     </section>
 
-
                     <div className="my-6 border-t border-gray-100" />
 
-
                     {/* =================================================
-                        GAMBAR
+                        FOTO
                     ================================================== */}
 
                     <section>
 
-                        <div className="mb-4 flex items-center gap-2.5">
+                        <div className="mb-5 flex items-center gap-2.5">
 
                             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 text-purple-600">
                                 <ImagePlus size={16} />
                             </div>
 
                             <div>
+
                                 <h3 className="text-sm font-semibold text-gray-800">
-                                    Media Potensi
+                                    Foto Potensi
                                 </h3>
 
                                 <p className="text-xs text-gray-400">
-                                    Kelola thumbnail dan gambar cover
+                                    Upload foto asli dan foto cover
                                 </p>
+
                             </div>
 
                         </div>
 
-
                         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 
                             {/* =================================================
-                                THUMBNAIL
+                                FOTO ASLI / THUMBNAIL
                             ================================================== */}
 
                             <div>
 
                                 <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Thumbnail
+                                    Foto Asli
                                 </label>
 
-                                <label className="group flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 text-center transition hover:border-green-400 hover:bg-green-50">
+                                <label className="group flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 text-center transition hover:border-green-400 hover:bg-green-50">
 
                                     <ImagePlus
-                                        size={25}
-                                        className="text-gray-400 transition group-hover:text-green-500"
+                                        size={28}
+                                        className="text-gray-400 group-hover:text-green-500"
                                     />
 
                                     <p className="mt-2 text-sm font-medium text-gray-600">
-                                        Pilih thumbnail
+                                        Pilih foto asli
                                     </p>
 
                                     <p className="mt-1 text-xs text-gray-400">
@@ -438,49 +370,40 @@ export default function PotentialFormModal({
 
                                 {form.thumbnail && (
                                     <p className="mt-2 truncate text-xs text-green-600">
-                                        File dipilih:{" "}
                                         {form.thumbnail.name}
                                     </p>
                                 )}
 
-                                {potential?.thumbnail && !form.thumbnail && (
-                                    <div className="mt-3">
-
-                                        <p className="mb-2 text-xs text-gray-400">
-                                            Thumbnail saat ini
-                                        </p>
-
+                                {potential?.thumbnail &&
+                                    !form.thumbnail && (
                                         <img
                                             src={potential.thumbnail}
                                             alt={potential.title}
-                                            className="h-24 w-full rounded-lg object-cover"
+                                            className="mt-3 h-28 w-full rounded-lg object-cover"
                                         />
-
-                                    </div>
-                                )}
+                                    )}
 
                             </div>
 
-
                             {/* =================================================
-                                COVER
+                                FOTO COVER
                             ================================================== */}
 
                             <div>
 
                                 <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Cover Image
+                                    Foto Cover
                                 </label>
 
-                                <label className="group flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 text-center transition hover:border-green-400 hover:bg-green-50">
+                                <label className="group flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 text-center transition hover:border-green-400 hover:bg-green-50">
 
                                     <ImagePlus
-                                        size={25}
-                                        className="text-gray-400 transition group-hover:text-green-500"
+                                        size={28}
+                                        className="text-gray-400 group-hover:text-green-500"
                                     />
 
                                     <p className="mt-2 text-sm font-medium text-gray-600">
-                                        Pilih cover image
+                                        Pilih foto cover
                                     </p>
 
                                     <p className="mt-1 text-xs text-gray-400">
@@ -499,354 +422,24 @@ export default function PotentialFormModal({
 
                                 {form.cover_image && (
                                     <p className="mt-2 truncate text-xs text-green-600">
-                                        File dipilih:{" "}
                                         {form.cover_image.name}
                                     </p>
                                 )}
 
-                                {potential?.cover_image && !form.cover_image && (
-                                    <div className="mt-3">
-
-                                        <p className="mb-2 text-xs text-gray-400">
-                                            Cover saat ini
-                                        </p>
-
+                                {potential?.cover_image &&
+                                    !form.cover_image && (
                                         <img
                                             src={potential.cover_image}
                                             alt={potential.title}
-                                            className="h-24 w-full rounded-lg object-cover"
+                                            className="mt-3 h-28 w-full rounded-lg object-cover"
                                         />
-
-                                    </div>
-                                )}
+                                    )}
 
                             </div>
 
                         </div>
 
                     </section>
-
-
-                    <div className="my-6 border-t border-gray-100" />
-
-
-                    {/* =================================================
-                        STATISTIK
-                    ================================================== */}
-
-                    <section>
-
-                        <div className="mb-4 flex items-center gap-2.5">
-
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-                                <BarChart3 size={16} />
-                            </div>
-
-                            <div>
-                                <h3 className="text-sm font-semibold text-gray-800">
-                                    Statistik Potensi
-                                </h3>
-
-                                <p className="text-xs text-gray-400">
-                                    Masukkan data statistik yang ingin ditampilkan
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-
-                            {/* Statistik 1 */}
-
-                            <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
-
-                                <div className="mb-3 flex items-center gap-2">
-
-                                    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-100 text-xs font-semibold text-blue-600">
-                                        1
-                                    </span>
-
-                                    <span className="text-xs font-semibold text-gray-600">
-                                        Statistik 1
-                                    </span>
-
-                                </div>
-
-                                <div className="space-y-3">
-
-                                    <input
-                                        name="statistic_1_title"
-                                        value={form.statistic_1_title}
-                                        onChange={handleChange}
-                                        placeholder="Judul"
-                                        className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                    />
-
-                                    <input
-                                        name="statistic_1_value"
-                                        value={form.statistic_1_value}
-                                        onChange={handleChange}
-                                        placeholder="Nilai"
-                                        className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                    />
-
-                                </div>
-
-                            </div>
-
-
-                            {/* Statistik 2 */}
-
-                            <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
-
-                                <div className="mb-3 flex items-center gap-2">
-
-                                    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-100 text-xs font-semibold text-blue-600">
-                                        2
-                                    </span>
-
-                                    <span className="text-xs font-semibold text-gray-600">
-                                        Statistik 2
-                                    </span>
-
-                                </div>
-
-                                <div className="space-y-3">
-
-                                    <input
-                                        name="statistic_2_title"
-                                        value={form.statistic_2_title}
-                                        onChange={handleChange}
-                                        placeholder="Judul"
-                                        className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                    />
-
-                                    <input
-                                        name="statistic_2_value"
-                                        value={form.statistic_2_value}
-                                        onChange={handleChange}
-                                        placeholder="Nilai"
-                                        className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                    />
-
-                                </div>
-
-                            </div>
-
-
-                            {/* Statistik 3 */}
-
-                            <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
-
-                                <div className="mb-3 flex items-center gap-2">
-
-                                    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-100 text-xs font-semibold text-blue-600">
-                                        3
-                                    </span>
-
-                                    <span className="text-xs font-semibold text-gray-600">
-                                        Statistik 3
-                                    </span>
-
-                                </div>
-
-                                <div className="space-y-3">
-
-                                    <input
-                                        name="statistic_3_title"
-                                        value={form.statistic_3_title}
-                                        onChange={handleChange}
-                                        placeholder="Judul"
-                                        className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                    />
-
-                                    <input
-                                        name="statistic_3_value"
-                                        value={form.statistic_3_value}
-                                        onChange={handleChange}
-                                        placeholder="Nilai"
-                                        className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                    />
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    <div className="my-6 border-t border-gray-100" />
-
-
-                    {/* =================================================
-                        QUOTE
-                    ================================================== */}
-
-                    <section>
-
-                        <div className="mb-4 flex items-center gap-2.5">
-
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-50 text-orange-600">
-                                <Quote size={16} />
-                            </div>
-
-                            <div>
-                                <h3 className="text-sm font-semibold text-gray-800">
-                                    Quote
-                                </h3>
-
-                                <p className="text-xs text-gray-400">
-                                    Kutipan yang berkaitan dengan potensi
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
-                            <div>
-
-                                <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Quote
-                                </label>
-
-                                <textarea
-                                    rows={4}
-                                    name="quote"
-                                    value={form.quote}
-                                    onChange={handleChange}
-                                    placeholder="Tuliskan quote..."
-                                    className="w-full resize-none rounded-lg border border-gray-200 px-3 py-2.5 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                />
-
-                            </div>
-
-
-                            <div>
-
-                                <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Penulis Quote
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="quote_author"
-                                    value={form.quote_author}
-                                    onChange={handleChange}
-                                    placeholder="Nama penulis quote"
-                                    className="h-10 w-full rounded-lg border border-gray-200 px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                />
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    <div className="my-6 border-t border-gray-100" />
-
-
-                    {/* =================================================
-                        PUBLISHING
-                    ================================================== */}
-
-                    <section>
-
-                        <div className="mb-4 flex items-center gap-2.5">
-
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
-                                <Settings size={16} />
-                            </div>
-
-                            <div>
-                                <h3 className="text-sm font-semibold text-gray-800">
-                                    Pengaturan Publikasi
-                                </h3>
-
-                                <p className="text-xs text-gray-400">
-                                    Atur status dan waktu publikasi
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
-                            {/* Status */}
-
-                            <div>
-
-                                <label className="mb-1.5 block text-xs font-medium text-gray-600">
-                                    Status
-                                </label>
-
-                                <select
-                                    name="status"
-                                    value={form.status}
-                                    onChange={handleChange}
-                                    className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                >
-                                    <option value="draft">
-                                        Draft
-                                    </option>
-
-                                    <option value="published">
-                                        Published
-                                    </option>
-                                </select>
-
-                            </div>
-
-
-                            {/* Published At */}
-
-                            <div>
-
-                                <label className="mb-1.5 flex items-center gap-1 text-xs font-medium text-gray-600">
-                                    <CalendarDays size={13} />
-                                    Tanggal Publikasi
-                                </label>
-
-                                <input
-                                    type="datetime-local"
-                                    name="published_at"
-                                    value={form.published_at}
-                                    onChange={handleChange}
-                                    className="h-10 w-full rounded-lg border border-gray-200 px-3 text-sm outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
-                                />
-
-                            </div>
-
-                        </div>
-
-
-                        {/* Featured */}
-
-                    <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-
-                        <input
-                            type="checkbox"
-                            name="is_featured"
-                            checked={form.is_featured}
-                            onChange={handleChange}
-                            className="mt-0.5 h-4 w-4 accent-green-600"
-                        />
-
-                        <p className="text-sm text-gray-700">
-                            Jadikan potensi ini sebagai potensi unggulan yang akan
-                            ditampilkan sebagai konten utama di website desa.
-                        </p>
-
-                    </label>
-
-                    </section>
-
 
                     {/* =================================================
                         FOOTER
@@ -858,7 +451,7 @@ export default function PotentialFormModal({
                             type="button"
                             onClick={onClose}
                             disabled={loading}
-                            className="h-10 w-full rounded-lg border border-gray-200 bg-white px-5 text-sm font-medium text-gray-600 transition hover:bg-gray-50 disabled:opacity-50 sm:w-auto"
+                            className="h-10 w-full rounded-lg border border-gray-200 bg-white px-5 text-sm font-medium text-gray-600 transition hover:bg-gray-50 sm:w-auto"
                         >
                             Batal
                         </button>
@@ -868,6 +461,7 @@ export default function PotentialFormModal({
                             disabled={loading}
                             className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-5 text-sm font-medium text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                         >
+
                             <Save size={16} />
 
                             {loading
@@ -875,6 +469,7 @@ export default function PotentialFormModal({
                                 : potential
                                 ? "Simpan Perubahan"
                                 : "Simpan Potensi"}
+
                         </button>
 
                     </div>

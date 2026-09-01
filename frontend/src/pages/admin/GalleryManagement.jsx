@@ -11,9 +11,7 @@ export default function GalleryManagement() {
         gallery,
         loading,
         refresh,
-    } = useGallery({
-        admin: true,
-    });
+    } = useGallery({}, true);
 
     const [selectedGallery, setSelectedGallery] = useState(null);
     const [openForm, setOpenForm] = useState(false);

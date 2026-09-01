@@ -4,6 +4,11 @@ import governmentService from "../services/governmentService";
 
 export default function useGovernment(params = {}) {
 
+    const {
+        admin = false,
+        ...queryParams
+    } = params;
+
     const [government, setGovernment] = useState([]);
 
     const [loading, setLoading] = useState(true);
@@ -18,15 +23,24 @@ export default function useGovernment(params = {}) {
 
             setError(null);
 
-            const response = await governmentService.getAll(params);
+            const response = admin
+                ? await governmentService.getAdmin(queryParams)
+                : await governmentService.getAll(queryParams);
 
-            setGovernment(response.data.data ?? []);
+            setGovernment(
+                response.data?.data ?? []
+            );
 
         } catch (err) {
 
-            console.error(err);
+            console.error(
+                "Gagal mengambil data pemerintahan:",
+                err
+            );
 
             setError(err);
+
+            setGovernment([]);
 
         } finally {
 
@@ -40,7 +54,10 @@ export default function useGovernment(params = {}) {
 
         fetchGovernment();
 
-    }, [JSON.stringify(params)]);
+    }, [
+        admin,
+        JSON.stringify(queryParams)
+    ]);
 
     return {
 
