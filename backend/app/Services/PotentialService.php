@@ -65,81 +65,49 @@ class PotentialService
 
     }
 
-    public function store(
-        array $data
-    ): Potential {
+public function store(
+    array $data
+): Potential {
 
-        return DB::transaction(function () use ($data) {
+    // Membuat slug dari judul
+    $data['slug'] = Str::slug(
+        $data['title']
+    );
 
+    // Mengambil ID user yang sedang login
+    $data['user_id'] = auth()->id();
 
-            if (
-                array_key_exists('thumbnail', $data)
-                && $data['thumbnail']
-            ) {
+    // Jika status published, isi waktu publikasi
+    if (
+        isset($data['status'])
+        && $data['status'] === 'published'
+        && empty($data['published_at'])
+    ) {
 
-                $data['thumbnail'] = $this->fileUploadService->upload(
-                    file: $data['thumbnail'],
-                    folder: self::THUMBNAIL_FOLDER,
-                );
-
-            }
-
-            if (
-                array_key_exists('cover_image', $data)
-                && $data['cover_image']
-            ) {
-
-                $data['cover_image'] = $this->fileUploadService->upload(
-                    file: $data['cover_image'],
-                    folder: self::COVER_FOLDER,
-                );
-
-            }
-
-            $data['slug'] = Str::slug(
-                $data['title']
-            );
-
-            $data['user_id'] = auth()->id();
-
-            if (
-                isset($data['status'])
-                && $data['status'] === 'published'
-                && empty($data['published_at'])
-            ) {
-
-                $data['published_at'] = now();
-
-            }
-
-            if (
-                isset($data['status'])
-                && $data['status'] === 'draft'
-            ) {
-
-                $data['published_at'] = null;
-
-            }
-
-            $potential = Potential::create(
-                $data
-            );
-
-            $this->activityLogService->log(
-                activity: 'Create Potential',
-                module: 'Potential',
-                description: 'Menambahkan data potensi desa.',
-                status: 'success',
-            );
-
-
-            return $potential->fresh([
-                'user'
-            ]);
-
-        });
+        $data['published_at'] = now();
 
     }
+
+    // Jika draft, published_at dikosongkan
+    if (
+        isset($data['status'])
+        && $data['status'] === 'draft'
+    ) {
+
+        $data['published_at'] = null;
+
+    }
+
+    // Simpan data potensi langsung ke database
+    $potential = Potential::create(
+        $data
+    );
+
+    // Ambil ulang data beserta user
+    return $potential->fresh([
+        'user'
+    ]);
+}
 
     public function update(
         Potential $potential,

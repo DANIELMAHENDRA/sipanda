@@ -218,36 +218,31 @@ class PotentialController extends BaseApiController
      *
      * Endpoint ini digunakan oleh admin.
      */
-    public function store(
-        StorePotentialRequest $request
-    ): JsonResponse {
+public function store(
+    StorePotentialRequest $request
+): JsonResponse {
 
-        try {
+    try {
 
-            $potential = $this->potentialService->store(
-                $request->validated()
-            );
+        return response()->json([
+            'success' => true,
+            'debug' => [
+                'validated' => $request->validated(),
+                'all' => $request->all(),
+            ],
+        ]);
 
+    } catch (Throwable $e) {
 
-            return $this->success(
-                data: new PotentialResource(
-                    $potential
-                ),
-                message: 'Potensi desa berhasil ditambahkan.'
-            );
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+        ], 500);
 
-
-            } catch (Throwable $e) {
-
-                return response()->json([
-                    'success' => false,
-                    'message' => $e->getMessage(),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                ], 500);
-
-            }
     }
+}
 
 
     /*
