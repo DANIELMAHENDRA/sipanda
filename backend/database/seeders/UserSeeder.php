@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
 
                 'name'              => 'Super Administrator',
 
-                'email'             => 'superadmin@sipanda.id',
+                'email'             => 'superadmin@gmail.com',
 
                 'email_verified_at' => now(),
 
@@ -71,7 +71,7 @@ class UserSeeder extends Seeder
 
                 'name'              => 'Administrator Desa',
 
-                'email'             => 'admin@sipanda.id',
+                'email'             => 'admin@gmail.com',
 
                 'email_verified_at' => now(),
 

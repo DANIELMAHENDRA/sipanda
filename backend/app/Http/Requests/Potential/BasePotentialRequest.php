@@ -44,6 +44,12 @@ abstract class BasePotentialRequest extends FormRequest
                 'string',
             ],
 
+            'content' => [
+                'required',
+                'string',
+            ],
+
+
             /*
             |--------------------------------------------------------------------------
             | Foto Potensi
@@ -63,6 +69,80 @@ abstract class BasePotentialRequest extends FormRequest
                 'mimes:jpg,jpeg,png,webp',
                 'max:4096',
             ],
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Statistik
+            |--------------------------------------------------------------------------
+            */
+
+            'statistic_1_title' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'statistic_1_value' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'statistic_2_title' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'statistic_2_value' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'statistic_3_title' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'statistic_3_value' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Quote
+            |--------------------------------------------------------------------------
+            */
+
+            'quote' => [
+                'nullable',
+                'string',
+            ],
+
+            'quote_author' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Highlight
+            |--------------------------------------------------------------------------
+            */
+
+            'is_featured' => [
+                'nullable',
+                'boolean',
+            ],
+
 
             /*
             |--------------------------------------------------------------------------
@@ -91,14 +171,24 @@ abstract class BasePotentialRequest extends FormRequest
             |--------------------------------------------------------------------------
             */
 
-            'title.required' =>
+            'title.required' => 
                 'Judul potensi wajib diisi.',
 
-            'category.required' =>
+            'title.max' => 
+                'Judul potensi maksimal 255 karakter.',
+
+            'category.required' => 
                 'Kategori wajib diisi.',
 
-            'excerpt.required' =>
-                'Deskripsi wajib diisi.',
+            'category.max' => 
+                'Kategori maksimal 100 karakter.',
+
+            'excerpt.required' => 
+                'Deskripsi singkat wajib diisi.',
+
+            'content.required' => 
+                'Isi potensi wajib diisi.',
+
 
             /*
             |--------------------------------------------------------------------------
@@ -106,23 +196,34 @@ abstract class BasePotentialRequest extends FormRequest
             |--------------------------------------------------------------------------
             */
 
-            'thumbnail.image' =>
-                'Foto asli harus berupa gambar.',
+            'thumbnail.image' => 
+                'Thumbnail harus berupa gambar.',
 
-            'thumbnail.mimes' =>
-                'Foto asli harus berformat JPG, JPEG, PNG, atau WEBP.',
+            'thumbnail.mimes' => 
+                'Thumbnail harus berformat JPG, JPEG, PNG, atau WEBP.',
 
-            'thumbnail.max' =>
-                'Ukuran foto asli maksimal 4 MB.',
+            'thumbnail.max' => 
+                'Ukuran thumbnail maksimal 4 MB.',
 
-            'cover_image.image' =>
+            'cover_image.image' => 
                 'Foto cover harus berupa gambar.',
 
-            'cover_image.mimes' =>
+            'cover_image.mimes' => 
                 'Foto cover harus berformat JPG, JPEG, PNG, atau WEBP.',
 
-            'cover_image.max' =>
+            'cover_image.max' => 
                 'Ukuran foto cover maksimal 4 MB.',
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Highlight
+            |--------------------------------------------------------------------------
+            */
+
+            'is_featured.boolean' => 
+                'Status highlight harus berupa nilai true atau false.',
+
 
             /*
             |--------------------------------------------------------------------------
@@ -130,10 +231,10 @@ abstract class BasePotentialRequest extends FormRequest
             |--------------------------------------------------------------------------
             */
 
-            'status.required' =>
+            'status.required' => 
                 'Status publikasi wajib dipilih.',
 
-            'status.in' =>
+            'status.in' => 
                 'Status publikasi hanya boleh draft atau published.',
 
         ];
@@ -146,22 +247,52 @@ abstract class BasePotentialRequest extends FormRequest
     {
         return [
 
-            'title' =>
+            'title' => 
                 'Judul Potensi',
 
-            'category' =>
+            'category' => 
                 'Kategori',
 
-            'excerpt' =>
-                'Deskripsi',
+            'excerpt' => 
+                'Deskripsi Singkat',
 
-            'thumbnail' =>
-                'Foto Asli',
+            'content' => 
+                'Isi Potensi',
 
-            'cover_image' =>
+            'thumbnail' => 
+                'Thumbnail',
+
+            'cover_image' => 
                 'Foto Cover',
 
-            'status' =>
+            'statistic_1_title' => 
+                'Judul Statistik 1',
+
+            'statistic_1_value' => 
+                'Nilai Statistik 1',
+
+            'statistic_2_title' => 
+                'Judul Statistik 2',
+
+            'statistic_2_value' => 
+                'Nilai Statistik 2',
+
+            'statistic_3_title' => 
+                'Judul Statistik 3',
+
+            'statistic_3_value' => 
+                'Nilai Statistik 3',
+
+            'quote' => 
+                'Quote',
+
+            'quote_author' => 
+                'Penulis Quote',
+
+            'is_featured' => 
+                'Highlight',
+
+            'status' => 
                 'Status Publikasi',
 
         ];

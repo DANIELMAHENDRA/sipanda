@@ -237,15 +237,16 @@ class PotentialController extends BaseApiController
             );
 
 
-        } catch (Throwable $e) {
+            } catch (Throwable $e) {
 
-            return $this->serverError(
-                app()->hasDebugModeEnabled()
-                    ? $e->getMessage()
-                    : 'Terjadi kesalahan pada server.'
-            );
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ], 500);
 
-        }
+            }
     }
 
 
