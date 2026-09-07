@@ -224,13 +224,16 @@ public function store(
 
     try {
 
-        return response()->json([
-            'success' => true,
-            'debug' => [
-                'validated' => $request->validated(),
-                'all' => $request->all(),
-            ],
-        ]);
+        $potential = $this->potentialService->store(
+            $request->validated()
+        );
+
+        return $this->success(
+            data: new PotentialResource(
+                $potential
+            ),
+            message: 'Potensi desa berhasil ditambahkan.'
+        );
 
     } catch (Throwable $e) {
 
