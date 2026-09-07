@@ -30,7 +30,7 @@ const governmentService = {
     },
 
     update(id, formData) {
-        return api.put(
+        return api.post(
             `/government/${id}`,
             formData,
             {

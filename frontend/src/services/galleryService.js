@@ -38,7 +38,7 @@ const galleryService = {
     },
 
     update(id, data) {
-        return api.put(
+        return api.post(
             `/gallery/${id}`,
             data,
             {

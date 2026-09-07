@@ -18,19 +18,11 @@ const potentialService = {
     },
 
     create(data) {
-        return api.post("/potential", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        return api.post("/potential", data);
     },
 
     update(id, data) {
-        return api.post(`/potential/${id}`, data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        return api.post(`/potential/${id}`, data);
     },
 
     delete(id) {

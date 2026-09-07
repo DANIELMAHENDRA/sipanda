@@ -22,6 +22,7 @@ export default function PotentialFormModal({
         title: "",
         category: "",
         excerpt: "",
+        content: "",
         thumbnail: null,
         cover_image: null,
         status: "draft",
@@ -38,16 +39,14 @@ export default function PotentialFormModal({
     useEffect(() => {
         if (potential) {
             setForm({
-                title: potential.title || "",
-                category: potential.category || "",
-                excerpt:
-                    potential.excerpt ||
-                    potential.content ||
-                    "",
-                thumbnail: null,
-                cover_image: null,
-                status: potential.status || "draft",
-            });
+            title: potential.title || "",
+            category: potential.category || "",
+            excerpt: potential.excerpt || "",
+            content: potential.content || "",
+            thumbnail: null,
+            cover_image: null,
+            status: potential.status || "draft",
+        });
         } else {
             setForm(initialState);
         }
@@ -85,6 +84,7 @@ export default function PotentialFormModal({
             formData.append("title", form.title);
             formData.append("category", form.category);
             formData.append("excerpt", form.excerpt);
+            formData.append("content", form.content);
             formData.append("status", form.status);
 
             if (form.thumbnail) {
@@ -118,10 +118,17 @@ export default function PotentialFormModal({
 
             onClose();
         } catch (error) {
+
             console.error(
                 "Gagal menyimpan data potensi:",
                 error
             );
+
+            console.log(
+                "Response Error:",
+                error.response?.data
+            );
+
         } finally {
             setLoading(false);
         }
@@ -266,6 +273,26 @@ export default function PotentialFormModal({
                                     onChange={handleChange}
                                     rows={5}
                                     placeholder="Tuliskan deskripsi mengenai potensi desa..."
+                                    required
+                                    className="w-full resize-none rounded-lg border border-gray-200 px-3 py-3 text-sm text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                                />
+
+                            </div>
+
+                            {/* Isi Potensi */}
+
+                            <div>
+
+                                <label className="mb-1.5 block text-xs font-medium text-gray-600">
+                                    Isi Potensi
+                                </label>
+
+                                <textarea
+                                    name="content"
+                                    value={form.content}
+                                    onChange={handleChange}
+                                    rows={8}
+                                    placeholder="Tuliskan informasi lengkap mengenai potensi desa..."
                                     required
                                     className="w-full resize-none rounded-lg border border-gray-200 px-3 py-3 text-sm text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
                                 />

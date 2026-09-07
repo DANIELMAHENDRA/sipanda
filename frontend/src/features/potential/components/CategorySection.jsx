@@ -17,12 +17,6 @@ const categories = [
             "Jagung, padi, singkong, cabai, dan berbagai komoditas unggulan desa.",
     },
     {
-        title: "Peternakan",
-        icon: Beef,
-        description:
-            "Pengembangan ternak sapi, kambing, ayam, dan usaha peternakan rakyat.",
-    },
-    {
         title: "UMKM",
         icon: Store,
         description:

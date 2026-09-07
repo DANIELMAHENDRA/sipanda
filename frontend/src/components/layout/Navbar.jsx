@@ -53,123 +53,112 @@ export default function Navbar() {
     return (
         <>
             <header
-    className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-            ? "bg-white/95 backdrop-blur-xl shadow-lg"
-            : "bg-black/20 backdrop-blur-md"
-    }`}
->
-    <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
-
-        {/* Logo */}
-
-        <NavLink
-            to="/"
-            className="flex items-center gap-3 shrink-0 group"
-        >
-            <img
-                src={logo}
-                alt="Logo SIPANDA"
-                className="w-12 h-12 object-contain transition duration-300 group-hover:scale-105"
-            />
-
-            <div className="leading-tight">
-
-                <h1
-                    className={`font-bold text-lg tracking-wide transition-colors ${
-                        scrolled
-                            ? "text-green-700"
-                            : "text-white"
-                    }`}
-                >
-                    SIPANDA
-                </h1>
-
-                <p
-                    className={`text-xs transition-colors ${
-                        scrolled
-                            ? "text-gray-600"
-                            : "text-gray-200"
-                    }`}
-                >
-                    Desa Panca Tunggal
-                </p>
-
-            </div>
-
-        </NavLink>
-
-        {/* Menu Desktop */}
-
-        <nav className="hidden lg:flex items-center gap-8">
-
-            {menus.map((menu) => (
-
-                <NavLink
-                    key={menu.path}
-                    to={menu.path}
-                    className={({ isActive }) =>
-                        `
-                        relative
-                        font-medium
-                        transition-all
-                        duration-300
-                        after:absolute
-                        after:left-0
-                        after:-bottom-2
-                        after:h-[2px]
-                        after:bg-green-500
-                        after:transition-all
-                        after:duration-300
-                        ${
-                            isActive
-                                ? "text-green-500 after:w-full"
-                                : scrolled
-                                ? "text-gray-700 hover:text-green-700 after:w-0 hover:after:w-full"
-                                : "text-white hover:text-green-300 after:w-0 hover:after:w-full"
-                        }
-                        `
-                    }
-                >
-                    {menu.name}
-                </NavLink>
-
-            ))}
-
-        </nav>
-
-        {/* Login */}
-
-        <div className="hidden lg:block">
-
-            <Button to="/login">
-
-                Login
-
-            </Button>
-
-        </div>
-
-        {/* Mobile */}
-
-        <button
-            onClick={() => setMobileOpen(true)}
-            className="lg:hidden"
-        >
-
-            <Menu
-                size={30}
-                className={
+                className={`fixed top-0 left-0 w-full z-50 overflow-x-hidden transition-all duration-300 ${
                     scrolled
-                        ? "text-green-700"
-                        : "text-white"
-                }
-            />
+                        ? "bg-white/95 backdrop-blur-xl shadow-lg"
+                        : "bg-black/20 backdrop-blur-md"
+                }`}
+            >
+                <div className="max-w-7xl mx-auto h-20 px-4 sm:px-6 flex items-center justify-between">
+                    
+                    {/* Logo */}
 
-        </button>
+                    <NavLink
+                        to="/"
+                        className="flex items-center gap-3 min-w-0 group"
+                    >
+                        <img
+                            src={logo}
+                            alt="Logo SIPANDA"
+                            className="w-12 h-12 shrink-0 object-contain transition duration-300 group-hover:scale-105"
+                        />
 
-    </div>
-</header>
+                        <div className="min-w-0 leading-tight">
+                            <h1
+                                className={`font-bold text-lg tracking-wide truncate transition-colors ${
+                                    scrolled
+                                        ? "text-green-700"
+                                        : "text-white"
+                                }`}
+                            >
+                                SIPANDA
+                            </h1>
+
+                            <p
+                                className={`text-xs truncate transition-colors ${
+                                    scrolled
+                                        ? "text-gray-600"
+                                        : "text-gray-200"
+                                }`}
+                            >
+                                Desa Panca Tunggal
+                            </p>
+                        </div>
+                    </NavLink>
+
+                    {/* Menu Desktop */}
+
+                    <nav className="hidden lg:flex items-center gap-8">
+                        {menus.map((menu) => (
+                            <NavLink
+                                key={menu.path}
+                                to={menu.path}
+                                className={({ isActive }) =>
+                                    `
+                                    relative
+                                    font-medium
+                                    transition-all
+                                    duration-300
+                                    after:absolute
+                                    after:left-0
+                                    after:-bottom-2
+                                    after:h-[2px]
+                                    after:bg-green-500
+                                    after:transition-all
+                                    after:duration-300
+                                    ${
+                                        isActive
+                                            ? "text-green-500 after:w-full"
+                                            : scrolled
+                                            ? "text-gray-700 hover:text-green-700 after:w-0 hover:after:w-full"
+                                            : "text-white hover:text-green-300 after:w-0 hover:after:w-full"
+                                    }
+                                    `
+                                }
+                            >
+                                {menu.name}
+                            </NavLink>
+                        ))}
+                    </nav>
+
+                    {/* Login Desktop */}
+
+                    <div className="hidden lg:block">
+                        <Button to="/login">
+                            Login
+                        </Button>
+                    </div>
+
+                    {/* Mobile Menu Button */}
+
+                    <button
+                        type="button"
+                        onClick={() => setMobileOpen(true)}
+                        className="lg:hidden shrink-0 flex items-center justify-center"
+                        aria-label="Buka menu"
+                    >
+                        <Menu
+                            size={30}
+                            className={
+                                scrolled
+                                    ? "text-green-700"
+                                    : "text-white"
+                            }
+                        />
+                    </button>
+
+                </div>
+            </header>
 
             {/* Overlay */}
 
@@ -185,41 +174,44 @@ export default function Navbar() {
             {/* Sidebar */}
 
             <aside
-                className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transition-transform duration-300 lg:hidden ${
+                className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-50 transition-transform duration-300 lg:hidden ${
                     mobileOpen
                         ? "translate-x-0"
                         : "translate-x-full"
                 }`}
             >
-                {/* Header */}
+                {/* Header Sidebar */}
 
                 <div className="flex items-center justify-between border-b p-6">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
                         <img
                             src={logo}
                             alt="Logo"
-                            className="w-12"
+                            className="w-12 shrink-0"
                         />
 
-                        <div>
+                        <div className="min-w-0">
                             <h2 className="font-bold text-lg text-green-700">
                                 SIPANDA
                             </h2>
 
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 truncate">
                                 Desa Panca Tunggal
                             </p>
                         </div>
                     </div>
 
                     <button
+                        type="button"
                         onClick={() => setMobileOpen(false)}
+                        className="shrink-0"
+                        aria-label="Tutup menu"
                     >
                         <X size={28} />
                     </button>
                 </div>
 
-                {/* Menu */}
+                {/* Menu Sidebar */}
 
                 <nav className="flex flex-col px-6 py-8 gap-2">
                     {menus.map((menu) => (
@@ -228,8 +220,7 @@ export default function Navbar() {
                             to={menu.path}
                             onClick={() => setMobileOpen(false)}
                             className={({ isActive }) =>
-                                `rounded-xl px-4 py-3 transition duration-300
-                                ${
+                                `rounded-xl px-4 py-3 transition duration-300 ${
                                     isActive
                                         ? "bg-green-700 text-white font-semibold"
                                         : "text-gray-700 hover:bg-green-50 hover:text-green-700"
